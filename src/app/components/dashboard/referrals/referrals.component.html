@@ -1,0 +1,126 @@
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-header row">
+      <div class="content-header-left col-md-6 col-xs-12">
+        <h3 class="content-header-title mb-0">Referrals</h3>
+        <div class="row breadcrumbs-top">
+          <div class="breadcrumb-wrapper col-xs-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a [routerLink]="['/dashboard']">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <span>Referrals</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-body">
+      <section id="grouped-info">
+        <div class="col-xl-12">
+          <div class="row" [hidden]="showMessage">
+            <div class="alert bg-purple fade in mb-2 m-0" role="alert">
+              <div class="row">
+                <div class="col-xs-12">
+                  New referral program! There is no limit to how much you can earn when you
+                  refer BMG Money to your coworkers.
+                  <button type="button" class="close" aria-label="Close" (click)="showMessage = true">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <app-referrral-panels [page]="'dashboard_referral_page'" [showReferralWarning]="false" ></app-referrral-panels>
+          </div>
+        </div>
+      </section>
+      <section id="grouped-stats">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="m-t-0 overflow-hidden">
+                  <div class="card-body">
+                    <div class="">
+
+                      <div class="row">
+
+                        <div class="col-xl-8 col-lg-8 col-xs-12 p-5">
+                          <div class="col-xs-12 bg-white">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="col-xs-6 col-xl-6 p-l-5">
+                                  <h4 class="p-t-15 p-b-10">My referrals</h4>
+                                </div>
+                                <div class="col-xs-6 col-xl-6 text-xs-right p-r-5">
+                                  <div class="p-t-15 p-b-10">
+                                    <a [routerLink]="['/dashboard/my-referral-contacts']">Manage my contacts</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <app-my-referrals-list></app-my-referrals-list>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-xs-12" *ngIf="isMobile()">
+                          <hr />
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-xs-12 p-5">
+                          <div class="col-xs-12 bg-white p-5 m-h-tips">
+                            <h4 class="p-10">Tips</h4>
+                            <div class="p-15">
+                              <p>1) Help your referrals with the application process.</p>
+
+                              <p>2) Refer BMG Money via social media and group chats.</p>
+
+                              <p>3) Import your referrals for quick and large referral lists.</p>
+
+                              <p>4) A “Referral Applied” means a referral started their application with BMG Money.</p>
+
+                              <p>5) A “Referral Approved” means a referral applied and got approved for a loan with BMG
+                                Money.</p>
+
+                              <p>6) Your referral commissions will be deposited in your bank account on a weekly basis
+                                (every Monday).</p>
+
+                            </div>
+                            <div class="text-xs-right p-10" [hidden]="true">
+                              <a href="#">Next Tip ></a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-xs-12" *ngIf="isMobile()">
+                          <hr />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-btn-back p-t-15">
+              <div class="col-xs-12">
+                <a [routerLink]="['/dashboard']" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-left"></i> Back to dashboard</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-referral-modal #referralModal [page]="'dashboard_referral_page'"></app-referral-modal>

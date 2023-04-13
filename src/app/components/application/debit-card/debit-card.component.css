@@ -1,0 +1,22 @@
+.btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.btn-group .btn-block {
+  margin-right: 20px;
+}
+
+.btn-group .btn-block+.btn-block {
+  margin-top: 0;
+  margin-right: 0;
+}
+
+.card-detail {
+  border: 1px solid #cccc;
+  background-color: #f5f7fa;
+  padding: 5px 5px 10px 10px;
+  width: 100%;
+}

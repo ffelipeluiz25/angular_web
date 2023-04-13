@@ -1,0 +1,13 @@
+<div [ngSwitch]="dataModel.customerVendor">
+  <button class="btn btn-warning btn-darken-4" [ngClass]="{'btn-lg': retokenizeButton, 'btn-block': !retokenizeButton}"
+    *ngSwitchCase="'Paynearme'" (click)="openPayNearMeModal()">{{messageButton}}</button>
+
+  <button class="btn btn-warning btn-darken-4" [ngClass]="{'btn-lg': retokenizeButton, 'btn-block': !retokenizeButton}"
+    *ngSwitchCase="'Repay'" (click)="openRepayModal()">{{messageButton}}</button>
+</div>
+
+
+<app-paynearme-modal #PaynearmeModalComponent [dataModel]="dataModel" (success)="paynearmeEmbeddedIsSuccess($event)">
+</app-paynearme-modal>
+<app-repay-modal #RepayModalComponent [dataModel]="dataModel" (success)="repayEmbeddedIsSuccess($event)">
+</app-repay-modal>

@@ -1,0 +1,36 @@
+.SandboxMessage {
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    color: #fff;
+    display: none;
+    font-size: 15px;
+    left: 0;
+    line-height: 32px;
+    max-height: 66px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    transition-delay: 1000ms;
+    transition-duration: 350ms;
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+    transition-timing-function: ease-in-out;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    width: 100%;
+    word-wrap: break-word
+}
+
+.sandbox .SandboxMessage {
+    display: block
+}
+
+.SandboxMessage--is-inactive {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px)
+}

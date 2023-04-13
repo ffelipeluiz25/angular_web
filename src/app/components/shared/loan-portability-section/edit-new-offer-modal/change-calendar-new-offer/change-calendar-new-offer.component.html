@@ -1,0 +1,66 @@
+<div class="col-md-12 mt-2">
+  <div class="card">
+    <div class="card-header bg-blue-grey bg-lighten-5">
+      <h4 class="cart-title blue-grey darken-1">
+        Change Pay Frequency and First Loan Payment Date
+      </h4>
+    </div>
+    <div class="card-content">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <fieldset>
+              <label for="pay_frequency">Pay Frequency</label>
+              <select id="pay_frequency" name="pay_frequency" class="form-control form-control-lg darken-4" required
+                [(ngModel)]="data_model.calendarId" (change)="onChangePayFrequency()">
+                <option *ngFor="let item of payFrequencyList" value="{{item.calendarId}}">
+                  {{item.calendarName}}</option>
+              </select>
+              <div *ngIf="!data_model.calendarId" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Select a payment frequency</span>
+              </div>
+            </fieldset>
+            <div *ngIf="!hasDynamicCalendar">
+              <div class="mt-2">
+                <fieldset>
+                  <label for="calendar_date">First Loan Payment Date</label>
+                  <select id="calendar_date" name="calendar_date" class="form-control form-control-lg darken-4" required
+                    [(ngModel)]="data_model.firstPaymentDate">
+                    <option *ngFor="let item of payDateList" value="{{item.paymentDate}}">
+                      {{item.paymentDate | date: 'MM/dd/yyyy'}}</option>
+                  </select>
+                  <div *ngIf="!data_model.firstPaymentDate" class="help-block font-small-3 m-t-5">
+                    <span class="error-message">*Select a first loan payment date</span>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div *ngIf="hasDynamicCalendar">
+              <div class="mt-2">
+                <fieldset>
+                  <div class="mt-2" *ngIf="data_model.calendarId">
+                    <label for="first_pay_date">First Loan Payment Date</label>
+                    <div class="input-group date" id="datetimepicker1">
+                      <ngb-datepicker #c [minDate]="minDate" [markDisabled]="disableWeekends" [firstDayOfWeek]="7"
+                        (dateSelect)="onCalendarDateSelect($event)">
+                      </ngb-datepicker>
+                    </div>
+                    <div *ngIf="data_model.firstPaymentDate" class="m-t-5">
+                      <span class="bold">First loan payment date: </span>
+                      <span>
+                        <b>{{data_model.firstPaymentDate |date: 'MMM dd yyyy'}}</b>
+                      </span>
+                    </div>
+                    <div *ngIf="!data_model.firstPaymentDate" class="help-block font-small-3 m-t-5">
+                      <span class="error-message">*Select a first loan payment date</span>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,259 @@
+<section id="icon-tabs" [hidden]="!initialized">
+  <div class="row" *ngIf="!is_production">
+    <div class="col-xs-12">
+      <p class="text-xs-center"><a class="a-link-color" (click)="mockData(false)">Mock Data</a></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-body collapse in">
+          <div class="card-block">
+            <div class="row">
+              <div class="col-xs-12">
+                <form (submit)="onSubmit()" #personalInformationForm="ngForm" autocomplete="off">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-divider">
+                        <img src="assets/images/icons/user.png" />
+                        <h4 class="card-title">Tell us about yourself</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <label for="firstName2">First Name</label>
+                      <fieldset class="form-group" [ngClass]="{'has-error': !first_name.valid && first_name.touched }">
+                        <input type="text" id="first_name" class="form-control" [disabled]="!initialized"
+                          placeholder="Enter your first name" tabindex="1" [(ngModel)]="model.first_name"
+                          name="first_name" #first_name="ngModel" required maxlength="50" LettersOnly>
+                        <div *ngIf="!first_name.valid && first_name.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="first_name.errors.required">First
+                            Name is required</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                      <label for="firstName2">Last Name</label>
+                      <fieldset class="form-group" [ngClass]="{'has-error': !last_name.valid && last_name.touched }">
+                        <input type="text" id="last_name" class="form-control" [disabled]="!initialized"
+                          placeholder="Enter your last name" tabindex="2" [(ngModel)]="model.last_name" name="last_name"
+                          #last_name="ngModel" required maxlength="50" LettersOnly>
+                        <div *ngIf="!last_name.valid && last_name.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="last_name.errors.required">Last
+                            Name is required</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <label for="firstName2">Date of Birth</label>
+                      <fieldset class="form-group"
+                        [ngClass]="{'has-error': !date_of_birth.valid && date_of_birth.touched }">
+                        <input type="tel" id="date_of_birth" class="form-control date-inputmask"
+                          [disabled]="!initialized" data-hj-whitelist placeholder="MM/DD/YYYY" mask='00/00/0000'
+                          tabindex="3" [(ngModel)]="model.date_of_birth" #date_of_birth="ngModel" name="date_of_birth"
+                          validateDate required>
+                        <div *ngIf="!date_of_birth.valid && date_of_birth.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="date_of_birth.errors.required">Date of Birth is
+                            required</span>
+                          <span class="error-message"
+                            *ngIf="date_of_birth.errors.date && date_of_birth.touched && !date_of_birth.errors.required">Please
+                            provide a valid Date of Birth</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                      <fieldset class="form-group position-relative"
+                        [ngClass]="{'has-error': !street_address.valid && street_address.touched }">
+                        <label for="firstName2">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter your Street address"
+                          tabindex="4" autocomplete="new-user-address" [disabled]="!initialized" data-hj-whitelist
+                          [(ngModel)]="model.street_address" #street_address="ngModel" #streetAddress
+                          name="street_address" (keydown)="removeGoogleAddress()" validatePoBox required minlength="4"
+                          maxlength="60" AlphanumericOnly>
+                        <div class="form-control-position btn-mic hidden" data-target="#address">
+                          <i class="ft-mic font-medium-4"></i>
+                        </div>
+                        <div *ngIf="!street_address.valid && street_address.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="street_address.errors.required">Street Address is
+                            required</span>
+                          <span class="error-message"
+                            *ngIf="street_address.errors.pobox && street_address.touched && !street_address.errors.required && !street_address.errors.minlength">Physical
+                            address only</span>
+                          <span class="error-message"
+                            *ngIf="street_address.errors.minlength && street_address.touched && !street_address.errors.required && !street_address.errors.pobox">Street
+                            Address is invalid. Minimum 4 characters.</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                      <fieldset class="form-group position-relative">
+                        <label for="firstName2">Unit Number</label>
+                        <input type="text" class="form-control" id="unit_number" placeholder="Unit Number" tabindex="5"
+                          [disabled]="!initialized" data-hj-whitelist [(ngModel)]="model.unit_number"
+                          #unit_number="ngModel" name="unit_number" maxlength="45" validatePoBox AlphanumericOnly>
+                        <div *ngIf="!unit_number.valid && unit_number.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="unit_number.errors.pobox && unit_number.touched">Physical
+                            address only</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                      <fieldset class="form-group" [ngClass]="{'has-error': !zipcode.valid && zipcode.touched }">
+                        <label for="firstName2">Zipcode</label>
+                        <input type="tel" class="form-control" id="zipcode" placeholder="Zipcode" tabindex="6"
+                          [disabled]="!initialized" data-hj-whitelist [(ngModel)]="model.zipcode" #zipcode="ngModel"
+                          name="zipcode" (blur)="findCityByZipcode()" required NumbersOnly>
+                        <div *ngIf="!zipcode.valid && zipcode.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="zipcode.errors.required">Zipcode
+                            is required</span>
+                        </div>
+                        <div *ngIf="show_zipcode_error" class="help-block font-small-3">
+                          <span class="error-message">{{zipcode_error}}</span>
+                        </div>
+                      </fieldset>
+
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                      <fieldset class="form-group" [ngClass]="{'has-error': !city_name.valid && city_name.touched }">
+                        <label for="firstName2">City</label>
+                        <input type="text" class="form-control" id="city_name" placeholder="Enter City of Residence"
+                          tabindex="7" [disabled]="!initialized" data-hj-whitelist [(ngModel)]="model.city_name"
+                          #city_name="ngModel" name="city_name" (blur)="validateZipcodeAddress()" required>
+                        <div *ngIf="!city_name.valid && city_name.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="city_name.errors.required && cityList.length > 0">Enter a
+                            valid
+                            city</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                      <fieldset class="form-group" [ngClass]="{'has-error': !state.valid && state.touched }">
+                        <label for="firstName2">State</label>
+                        <select id="state" class="form-control" placeholder="Select State of Residence" tabindex="8"
+                          [(ngModel)]="model.state_abbreviation" name="state" #state="ngModel"
+                          (change)="validateZipcodeAddress()" required>
+                          <option [value]="item.value" *ngFor="let item of state_list">
+                            {{item.name}}</option>
+                        </select>
+                        <div *ngIf="!state.valid && state.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="state.errors.required">State is
+                            required</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="form-group" [ngClass]="{'has-error': !ssn.valid && ssn.touched }">
+                        <label for="firstName2">Social Security Number
+                          <i class="fa fa-info-circle"
+                            popover="We use your social security number to help verify your information to issue credit."
+                            popoverTitle="Social Security Number" popoverPlacement="top" [popoverOnHover]="true"></i>
+                        </label>
+                        <input type="tel" class="form-control" id="ssn" placeholder="Enter your SSN" tabindex="8"
+                          [disabled]="!initialized" data-hj-whitelist [(ngModel)]="model.ssn" #ssn="ngModel" name="ssn"
+                          required validateSSN mask="000-00-0000">
+                        <div *ngIf="!ssn.valid && ssn.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="ssn.errors.required">SSN is
+                            required</span>
+                          <span class="error-message"
+                            *ngIf="ssn.errors.ssn && ssn.touched && !ssn.errors.required">Please
+                            provide a valid SSN</span>
+                        </div>
+                        <div class="help-block font-small-3 blue-grey lighten-2 m-t-5"><i
+                            class="fa fa-lock success darken-3"></i> We use high levels of security & encryption
+                          standards to keep your information safe.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="form-group m-b-5">
+                        <label for="emailAddress3">Are you an active duty military member or a
+                          dependent thereof?</label>
+                        <app-choose-buttons [choose-data]="[{value:0, text:'No'},{value:1, text:'Yes'}]"
+                          [choose-selected-value]="model.active_military"
+                          (choose-select)="onActiveMilitaryChange($event)" error-message="Active military is required"
+                          [touched]="activeMilitaryTouched" #chooseActiveMilitary>
+                        </app-choose-buttons>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" [hidden]="!model.is_retirees_agency">
+                    <div class="col-xs-12">
+                      <div class="form-group m-b-5">
+                        <label for="emailAddress3">Can you set up an allotment?</label>
+                        <app-choose-buttons [choose-data]="[{value:0, text:'No'},{value:1, text:'Yes'}]"
+                          [choose-selected-value]="model.retirees_set_up_allotment"
+                          (choose-select)="onRetireeSetUpAllotmentChange($event)"
+                          error-message="set up allotment is required" [touched]="retireesSetUpAllotmentTouched"
+                          #chooseRetireeSetUpAllotment>
+                        </app-choose-buttons>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" [hidden]="model.state_abbreviation != 'CA'">
+                    <div class="col-xs-12">
+                      <div class="form-group m-b-5">
+                        <label for="emailAddress3">What is the purpose of this loan?</label>
+                        <app-choose-buttons [choose-data]="[{value:1, text:'Family'},{value:2, text:'Business'}]"
+                          [choose-selected-value]="model.application_purpose"
+                          (choose-select)="onApplicationPurposeChange($event)"
+                          error-message="Application purpose is required" [touched]="applicationPurposeTouched"
+                          #chooseApplicationPurpose>
+                        </app-choose-buttons>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <hr class="hr-divider" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <p class="blue-grey">By clicking "Next", I authorize BMG Money, Inc. and its related companies to
+                        obtain my personal consumer report at any time and from time to time for purposes of deciding
+                        whether to extend credit or refinance
+                        my loan, or in connection with your review or collection of my loan. In addition, I authorize
+                        BMG Money Inc. to verify my
+                        <span *ngIf="!retiredData?.isRetired">employment</span>
+                        <span *ngIf="retiredData?.isRetired">retirement information</span> and income.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="actions-mobile text-xs-center">
+                    <div class="row">
+                      <div class="col-xs-4 col-xl-6">
+                      </div>
+                      <div class="col-xs-4 hidden-xl-up">
+                      </div>
+                      <div class="col-xs-4 col-xl-6">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-warning btn-darken-4 btn-block"
+                            tabindex="10">Next</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-steps-section [currentStep]="currentStep"></app-steps-section>
+
+    <div class="col-xl-1"></div>
+  </div>
+</section>

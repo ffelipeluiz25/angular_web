@@ -1,0 +1,19 @@
+.btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-group .btn-block {
+  margin-right: 20px;
+}
+
+.btn-group .btn-block+.btn-block {
+  margin-top: 0;
+  margin-right: 0;
+}
+
+.text-center {
+  margin-left: 15px;
+}

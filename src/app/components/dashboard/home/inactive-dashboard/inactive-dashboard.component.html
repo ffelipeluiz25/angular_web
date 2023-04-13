@@ -1,0 +1,109 @@
+<section id="grouped-stats" class="p-b-30">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-pif bg-white alert-icon-left fade in" role="alert">
+                <h4 class="blue-grey">Congratulations!</h4>
+                <p class="blue-grey">Your previous loan is <b>Paid in full</b>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!blocked_customer && isPIFElegibleForNewLoan" class="row">
+        <div class="col-xs-12 col-lg-6" *ngIf="eligibleForCashback">
+            <div class="card p-30 m-b-0">
+                <div class="card-body" *ngIf="showCashbackFront">
+                    <h1 class="display-4 title-cashback">Apply now and get <br class="hidden-xl-down"><span
+                              class="success text-bold-700">{{selectedLoanTerms.amount_of_payment | currency:'$':'symbol':'2.0'}}</span> cash back
+                    </h1>
+                    <h4 class="m-t-15 m-b-30">Directly deposited into your bank account <br class="hidden-xl-down"> after making your first scheduled
+                        payment on time</h4>
+                    <button type="button" class="btn btn-outline-light btn-cashback-learn-more w-100" (click)="toggleCashBack()">Learn more</button>
+                </div>
+                <div class="card-body" *ngIf="showCashbackBack">
+                    <p>Details of the BMG Money Special Offer:</p>
+                    <ol>
+                        <li>You apply for, are approved for, and accept a loan with BMG Money under the terms disclosed to you in the Special Officer
+                            Notice and the Promissory Note.</li>
+                        <li>You make your first loan payment within 15 days or less of the due date.</li>
+                        <li>Only 1 Special Offer is available per customer, and the Special Offer is not transferrable to any other person.</li>
+                    </ol>
+                    <p>It’s that simple! Your Special Offer cash back award will be automatically deposited into your bank account within 15 days of
+                        our receiving and processing your first loan payment.</p>
+                    <button type="button" class="btn btn-outline-light btn-cashback-learn-more w-100" (click)="toggleCashBack()">Back</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 hidden-sm-up" *ngIf="eligibleForCashback">
+            <hr class="m-0">
+        </div>
+        <div class="col-xs-12 col-lg-6">
+            <div class="card p-30">
+                <div>
+                    <div class="cart-title m-b-10"><b>Apply for a new loan</b></div>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="this.loanTermsList.length>0" class="row">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p class="m-b-0 f-12">Loan Amount</p>
+                                    <div class="form-group">
+                                        <select id="loan_amount" name="loan_amount"
+                                                class="form-control form-control-lg form-control-loan-amount success darken-4"
+                                                [(ngModel)]="selectedAmount" (change)="onChangeLoanAmount()" [disabled]="!initialized">
+                                            <option value="{{item.loan_amount}}" *ngFor="let item of loanTermsList">
+                                                {{item.loan_amount | currency:'$':'symbol':'2.0'}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row f-12-mobile">
+                                <div class="col-xs-6 col-sm-4">
+                                    <p class="m-b-0 f-12">Bi-weekly Payment</p>
+                                    <p class="lead">{{selectedLoanTerms.amount_of_payment | currency:'$':'symbol':'2.0'}}</p>
+                                </div>
+                                <div class="col-xs-6 col-sm-4">
+                                    <p class="m-b-0 f-12">Number of Payments</p>
+                                    <p class="lead">{{selectedLoanTerms.number_of_payments}}</p>
+                                </div>
+                                <div class="col-xs-6 col-sm-4">
+                                    <p class="m-b-0 f-12">Term in Months</p>
+                                    <p class="lead">{{selectedLoanTerms.terms_in_months}}</p>
+                                </div>
+                                <div class="col-xs-6 col-sm-4">
+                                    <p class="m-b-0 f-12">Annual Percentage Rate</p>
+                                    <p class="lead">{{(selectedLoanTerms.effective_apr/100.0) | percent:'2.2' }}</p>
+                                </div>
+                                <div class="col-xs-6 col-sm-4">
+                                    <p class="m-b-0 f-12" *ngIf="stateAbbreviation != 'KY'">Credit Origination Fee</p>
+                                    <p class="m-b-0 f-12" *ngIf="stateAbbreviation == 'KY'">Loan Processing Fee</p>
+                                    <p class="lead" *ngIf="selectedLoanTerms.fee > 0">{{selectedLoanTerms.fee | currency:'$':'symbol':'2.0'}}</p>
+                                    <p class="lead" *ngIf="selectedLoanTerms.fee == 0">$0</p>
+                                </div>
+                                <div class="col-xs-6 col-sm-4">
+                                    <p class="m-b-0 f-12">First Payment Date</p>
+                                    <p class="lead">{{selectedLoanTerms.first_payment_date | date:'MMM dd'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-warning btn-darken-4 w-100" (click)="requestNewLoan()">Apply now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="blocked_customer" class="row">
+        <div class="col-xs-12">
+
+            <div class="alert bg-primary alert-icon-left fade in" role="alert">
+                <strong>Your most recent payment is pending.</strong> You need to wait until <b>{{blocked_until | date:'MMMM dd'}}</b> to apply for a
+                new loan.
+            </div>
+        </div>
+    </div>
+</section>

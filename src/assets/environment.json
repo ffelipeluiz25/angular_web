@@ -1,0 +1,74 @@
+{
+  "production": false,
+  "jwt_token_name": "_bm_t",
+  "last_request_token_name": "_bm_lr",
+  "session_expiration": 20,
+  "hotjar_id": "3268309",
+  "api_domain": "localhost:5001",
+  "api_atomic_url": "https://cdn-sandbox.atomicfi.com/transact.js",
+  "api_url": "http://localhost:5001/v1.0",
+  "app_url": "http://localhost:4200",
+  "login_url": "http://localhost:4201/login",
+  "new_ecommerce_url": "http://localhost:4202",
+  "consig_login": "https://stage.bmgmoney.com/ecommerce/login",
+  "search_employer_url": "https://dev-services.bmgmoney.com/search-employer-api/api/autocomplete?source=ecommerce",
+  "auto_decision_url": "https://staging-autodecision.bmgmoney.com/process-application",
+  "ws_states": "https://hmlws-employer.bmgmoney.com/api/states?program=2",
+  "decision_logic_url_widget": "https://widget.decisionlogic.com/Service.aspx?requestCode=",
+  "referral_page_url": "https://staging.bmgmoney.com/referrals#bonus",
+  "social_login_config": {
+    "facebook_id": "647948308740583",
+    "google_id": "1026272567738-ug862ladti1chuclud076549d78j0lo3.apps.googleusercontent.com",
+    "microsoft_id": "5ca2d581-e91d-49be-9e6b-3f33f941e133"
+  },
+  "recaptcha": {
+    "site_key": "6LfDSZEUAAAAAFrf8Cfcj3ygDt81MBcH2OWCv4di"
+  },
+  "plaid": {
+    "env": "sandbox",
+    "public_key": "dfa47ee761b626a6faf3141a02f928"
+  },
+  "ecommerce": {
+    "lff": {
+      "iss": "lff_customer",
+      "base_url": "http://localhost:4200"
+    },
+    "lfa": {
+      "iss": "lfa_customer",
+      "base_url": "http://localhost:4200"
+    },
+    "law": {
+      "iss": "law_customer",
+      "base_url": "http://localhost:4200"
+    }
+  },
+  "utm_cookies_expires_days": 7,
+  "utm_source_cookie_name": "_bmg_utm_source",
+  "utm_campaign_cookie_name": "_bmg_utm_campaign",
+  "utm_medium_cookie_name": "_bmg_utm_medium",
+  "utm_content_cookie_name": "_bmg_utm_content",
+  "utm_term_cookie_name": "_bmg_utm_term",
+  "gclid_cookie_name": "_bmg_gclid",
+  "fbclid_cookie_name": "_bmg_fbclid",
+  "msclkid_cookie_name": "_bmg_msclkid",
+  "gtm_environment": "env-3",
+  "gtm_auth": "YkUjmew_Rugde7YjnG2vmw",
+  "geolocation": {
+    "geolocation_api_endpoint": "https://www.googleapis.com/geolocation/v1/geolocate",
+    "key": "AIzaSyB_ZAtfthpfqZPM88GlLYEKnwME3OS5zPw"
+  },
+  "featureToogleSettings": {
+    "endpoint": "https://feature-toggle-api.bmgmoney.com",
+    "env": "local",
+    "refreshIntervalInSeconds": 60
+  },
+  "bmgMoneyTrackingSettings": {
+    "cloudFunctionName": "event-digestion",
+    "cloudFunctionUrl": "https://us-central1-try-apis-152423.cloudfunctions.net/",
+    "environment": "dev"
+  },
+  "face_id": {
+    "face_id_url": "https://dev-faceid.bmgmoney.com",
+    "customer_status_url": "https://dev-faceid-api.bmgmoney.com/api/Customer/{{customer_id}}/status"
+  }
+}

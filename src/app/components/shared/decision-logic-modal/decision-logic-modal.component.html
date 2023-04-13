@@ -1,0 +1,22 @@
+<ng-template #iframeModal size="lg" let-c="close" let-d="dismiss">
+    <!--
+    <div class="modal-header">
+      <i class="fa fa-mail f-20 p-t-5 p-r-10"></i>
+      <h4 class="p-t-5">Decision Logic</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    !-->
+    <div style="text-align:center">
+        <div class="row">
+            <iframe id="IFrameDecisionLogic" *ngIf="showIframe" frameborder="0" height="450" width="900" [src]="urlIframe">
+            </iframe>
+        </div>
+    </div>
+    <!--
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+    -->
+  </ng-template>

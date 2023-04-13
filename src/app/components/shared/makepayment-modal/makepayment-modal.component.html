@@ -1,0 +1,122 @@
+<ng-template #makePaymentModal let-c="close" let-d="dismiss">
+  <div *ngIf="!debitCardRuleActive">
+    <div class="modal-header">
+      <h4>Make a payment</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Dear {{user.first_name}},</p>
+      <p>You are leaving our BMG Money website and going to our ACH processor's website.</p>
+      <p>This section is only for ACH payments to be withdrawn from your bank account and doesn't apply to payroll
+        deductions or allotments.
+      <p>When selecting withdrawal dates, the date must be two business days from the current date. (i.e. if today is
+        the 12th, the payment date must be the 14th)</p>
+      <p>
+        <b>*****Please note (recurring)= monthly amount being deducted, (nonrecrurring)=means one time payment****</b>
+      </p>
+      <p>
+        <b>ACH Payments do not qualify as allotment payments and will not be considered in your payment streak</b>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+      <a href="https://www.weballotments.com/EFTMaintenance/EFTFormIdentification.aspx" target="_blank"
+        class="btn btn-warning btn-darken-2">Ok</a>
+    </div>
+  </div>
+
+  <div *ngIf="debitCardRuleActive && showModal">
+    <div class="modal-header">
+      <h4>Make a payment</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="card-content container">
+        <div class="card-body p-t-10 p-b-0">
+          <div *ngIf="!ACHWasSelected && !debitCardWasSelected">
+            <p>Dear {{user.first_name}},</p>
+            <p>If you choose to pay via ACH, you will be leaving our BMG Money website and going to our ACH processor's
+              website.</p>
+            <p>If you choose ACH, when selecting pick-up dates, the date must be two business days from the current
+              date. (i.e. if today is the 12th, the payment date must be the 14th)</p>
+            <p>This section is only for ACH or Debit Card payments to be withdrawn from your bank account and
+              doesn't apply to payroll deductions or allotments. <br> <br>
+              <b>ACH Payments do not qualify as allotment payments and will not be considered in your payment streak</b>
+            </p>
+          </div>
+
+          <div *ngIf="ACHWasSelected">
+            <p>Dear {{user.first_name}},</p>
+            <p>You are leaving our BMG Money website and going to our ACH processor's website.</p>
+            <p>This section is only for ACH payments to be withdrawn from your bank account and doesn't apply to payroll
+              deductions or allotments.
+            <p>When selecting withdrawal dates, the date must be two business days from the current date. (i.e. if today
+              is the 12th, the payment date must be the 14th)</p>
+            <p>
+              <b>*****Please note (recurring)= monthly amount being deducted, (nonrecrurring)=means one time
+                payment****</b>
+            </p>
+            <p>
+              <b>ACH Payments do not qualify as allotment payments and will not be considered in your payment streak</b>
+            </p>
+          </div>
+
+          <div *ngIf="debitCardWasSelected">
+            <p>Dear {{user.first_name}},</p>
+            <p>When choosing to pay by Debit Card, you will first have to fill in the pop-up with the amount you choose
+              to pay today.</p>
+            <p>This section is only for Debit Card payments to be withdrawn from your bank account and doesn't apply to
+              payroll deductions or allotments.<br> <br>
+              <b>Debit Card Payments do not qualify as allotment payments and will not be considered in your payment
+                streak</b>
+            </p>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <hr class="m-b-5 m-t-10" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-centered">
+              <p class="text-center">Choose one option to make a payment:</p>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-warning btn-block" (click)="onChangePaymentType('ach')">
+              ACH
+            </button>
+            <button class="btn btn-warning btn-block" (click)="onChangePaymentType('debit_card')">
+              Debit Card (Same Day)
+            </button>
+          </div>
+          <div class="row" *ngIf="confirm">
+            <div class="col-12">
+              <hr class="m-b-5 m-t-10" />
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-success block m-t-10" (click)="save()">
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn grey btn-outline-secondary" (click)="c('Close click')">
+        Close
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<app-payment-amount-modal #PaymentAmountModal [model]="modelEmbedded" [isTokenized]="customerIsTokenized"
+  [customerVendor]="customerVendor" (success)="paidWithDebitCard($event)">
+</app-payment-amount-modal>

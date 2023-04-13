@@ -1,0 +1,81 @@
+<div class="app-content content container-fluid" [hidden]="!initialized">
+  <div class="content-wrapper">
+    <div class="content-body">
+      <app-open-payroll-plugin *ngIf="reconnectOpenPayroll" #openPayrollPluginComponent [step]="step"
+        [alertToConnect]="true" (openPayrollPluginCallback)="openPayrollPluginCallback($event)">
+      </app-open-payroll-plugin>
+      <app-inactive-dashboard #inactiveDashboard [blocked-customer]="blockedCustomer" [blocked-until]="blockedUntil"
+        [hidden]="active"></app-inactive-dashboard>
+
+      <section id="grouped-stats" class="p-b-30" [hidden]="!active">
+        <div [hidden]="dashboardInfo.booked" *ngIf="!showNewCashless">
+          <div class="row" *ngIf="!isRefiCashless">
+            <div class="col-xs-12">
+              <div class="alert bg-success alert-icon-left fade in mb-2 m-0" role="alert">
+                <h4>Congratulations! Your money is on the way!</h4>
+                <p>Your loan details will be visible on your dashboard as early as <b>two business days</b>.</p>
+              </div>
+            </div>
+          </div>
+          <app-referrral-panels (onCallbackHome)="onCallbackHome($event)" [page]="'dashboard_home_page'">
+          </app-referrral-panels>
+        </div>
+        <div [hidden]="!dashboardInfo.booked" *ngIf="!showNewCashless">
+          <app-active-dashboard #activeDashboard [hidden]="dashboardInfo.eligible_to_grow">
+          </app-active-dashboard>
+          <app-refi-dashboard #refiDashboard [dashboardInfo]="dashboardInfo" [applicationStatus]="dashboardInfo.status"
+            [hidden]="!dashboardInfo.eligible_to_grow"></app-refi-dashboard>
+          <app-loan-details #loanDetailsComponent [hidden]="dashboardInfo.eligible_to_grow"
+            [applicationId]="applicationId" [daysPastDue]="daysPastDue" [cashlessEligibility]="cashlessEligibility"
+            [activePaymentRequest]="activePaymentRequest">
+          </app-loan-details>
+        </div>
+
+        <div [hidden]="dashboardInfo.booked" *ngIf="showNewCashless">
+          <div class="row" *ngIf="!isRefiCashless">
+            <div class="col-xs-12">
+              <div class="alert bg-success alert-icon-left fade in mb-2 m-0" role="alert">
+                <h4>Congratulations! Your money is on the way!</h4>
+                <p>Your loan details will be visible on your dashboard as early as <b>two business days</b>.</p>
+              </div>
+            </div>
+          </div>
+          <app-referrral-panels *ngIf="daysPastDue <= 5 || !cashlessEligibility"
+            (onCallbackHome)="onCallbackHome($event)" [page]="'dashboard_home_page'">
+          </app-referrral-panels>
+        </div>
+        <div *ngIf="showNewCashless">
+          <div [hidden]="!dashboardInfo.booked" *ngIf="daysPastDue <= 5 || !cashlessEligibility">
+            <app-active-dashboard #activeDashboard [hidden]="dashboardInfo.eligible_to_grow"></app-active-dashboard>
+            <app-refi-dashboard #refiDashboard [dashboardInfo]="dashboardInfo"
+              [applicationStatus]="dashboardInfo.status"
+              [hidden]="!dashboardInfo.eligible_to_grow"></app-refi-dashboard>
+          </div>
+          <app-loan-details #loanDetailsComponent [hidden]="dashboardInfo.eligible_to_grow"
+            [applicationId]="applicationId" [daysPastDue]="daysPastDue" [cashlessEligibility]="cashlessEligibility"
+            [activePaymentRequest]="activePaymentRequest">
+          </app-loan-details>
+          <app-cashless-refinance *ngIf="daysPastDue > 5 && cashlessEligibility"
+            [cashlessEligibility]="cashlessEligibility" [applicationId]="applicationId" [daysPastDue]="daysPastDue"
+            [activePaymentRequest]="activePaymentRequest">
+          </app-cashless-refinance>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<ng-template #videoTestimonials size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4>Video Testimonial Contest</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" id="modal-body-video-testimonials">
+    <app-video-testimonials page_is_modal="true"></app-video-testimonials>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

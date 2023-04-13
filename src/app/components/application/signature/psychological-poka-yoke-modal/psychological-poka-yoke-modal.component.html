@@ -1,0 +1,75 @@
+<ng-template #psychologicalPokaYokeModal>
+  <div class="card card-modal" id="main-card-modal">
+    <div class="card-content container">
+      <div class="row f-12-mobile">
+        <h5 class="card-title-poka-yoke"><b>If you would you like to be eligible to apply for a refinance loan sooner,
+            which may include higher loan
+            amounts, register a back up payment method in the event of a failed payment.
+            <br>
+            <br><u>We can use your debit
+              card
+              already on file.</u></b>
+        </h5>
+        <div class="col-12 col-centered">
+          <h5 class="text-center"><b>Do you agree?</b></h5>
+        </div>
+      </div>
+      <div class="row f-12-mobile">
+        <div class="btn-group">
+          <div class="col-md-5">
+            <button type="button" class="btn btn-success block m-t-10" (click)="confirm()">
+              I agree
+            </button>
+          </div>
+          <div class="col-md-5">
+            <button type="button" class="btn btn-warning block m-t-10" (click)="close()">
+              No Thanks
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #psychologicalPokaYokePlanCModal>
+  <div class="card card-modal" id="main-card-modal">
+    <div class="card-content container">
+      <div class="row f-12-mobile">
+        <h5 class="card-title-poka-yoke"><b>If you would you like to be eligible to apply for a refinance loan sooner,
+            which may include higher loan
+            amounts, register a back up payment method in the event of a failed payment.
+            <br>
+            <br><u>We can use your debit
+              card and bank information already on file</u></b>
+        </h5>
+        <div class="col-12 col-centered">
+          <h5 class="text-center"><b>To authorize your backup payment method, select from the options shown
+              below:</b></h5>
+        </div>
+      </div>
+      <div class="row f-12-mobile">
+        <div class="btn-group">
+          <div class="col-md-5">
+            <button type="button" class="btn btn-warning block m-t-10" (click)="onAgreedBackupPayment(1)">
+              ACH & Debit Card <br>
+              (Shorter Refinance Timeline)
+            </button>
+          </div>
+          <!-- <div class="col-md-5">
+            <button type="button" class="btn btn-warning block m-t-10" (click)="onAgreedBackupPayment(2)">
+              Debit card only <br>
+              (Shorter Refinance Timeline)
+            </button>
+          </div> -->
+          <div class="col-md-5">
+            <button type="button" class="btn btn-warning block m-t-10" (click)="onAgreedBackupPayment(null)">
+              None <br>
+              (Longer Refinance Timeline)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

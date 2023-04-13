@@ -1,0 +1,59 @@
+<div data-scroll-to-active="true" class="main-menu menu-fixed menu-light menu-accordion menu-shadow">
+  <div class="main-menu-content">
+    <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+      <li class="nav-dashboard nav-item active">
+        <a [routerLink]='["/dashboard"]'><i class="ft-home"></i><span data-i18n=""
+            class="menu-title">Dashboard</span></a>
+      </li>
+      <li class="nav-loan-information nav-item">
+        <a (click)="redirectToNewEcommerce('loan-information')"><i class="ft-info"></i><span data-i18n=""
+            class="menu-title">Loan Information</span></a>
+      </li>
+      <li class="nav-transactions nav-item">
+        <a (click)="redirectToNewEcommerce('transactions')"><i class="ft-check-square"></i><span data-i18n=""
+            class="menu-title">Transactions</span></a>
+      </li>
+      <li class="nav-schedule nav-item">
+        <a (click)="redirectToNewEcommerce('payments')"><i class="ft-clock"></i><span data-i18n=""
+            class="menu-title">Payment Schedule</span></a>
+      </li>
+      <li class="nav-documents nav-item">
+        <a (click)="redirectToNewEcommerce('documents')"><i class="ft-folder"></i><span data-i18n=""
+            class="menu-title">Documents</span></a>
+      </li>
+      <li class="nav-referral nav-item">
+        <a (click)="redirectToNewEcommerce('refer-a-coworker')"><i class="ft-share"></i><span data-i18n=""
+            class="menu-title">Refer-a-Coworker</span></a>
+      </li>
+      <li class="nav-referral nav-item">
+        <a (click)="redirectToNewEcommerce('refinance')"><i class="ft-refresh-ccw"></i><span data-i18n=""
+            class="menu-title">Refinance</span></a>
+      </li>
+      <li class="nav-make-payment nav-item">
+        <a href="#" (click)="openMakePaymentModal()"><i class="ft-upload"></i><span data-i18n="" class="menu-title">Make
+            a payment</span></a>
+      </li>
+      <li class="nav-bank-verification nav-item">
+        <a (click)="redirectToNewEcommerce('verify-bank-account')"><i class="ft-info"></i><span data-i18n=""
+            class="menu-title">Verify Bank Account</span></a>
+      </li>
+      <!-- <li class="nav-video-testimonials nav-item">
+                <a href="#" [routerLink]='["/dashboard/video-testimonials"]'><i class="ft-bookmark"></i>
+                    <span data-i18n="" class="menu-title">$500 Gift card</span>
+                    <span class="tag tag tag-warning tag-pill float-xs-right">New</span>
+                </a>
+            </li> -->
+      <li class="nav-write-your-review nav-item">
+        <a (click)="redirectToNewEcommerce('review')"><i class="ft-mail"></i>
+          <span data-i18n="" class="menu-title">Write Your Review</span>
+        </a>
+      </li>
+      <li class="nav-retokenize nav-item">
+        <a *ngIf="retokenizeDebitCard && customerIsTokenized" (click)="redirectToNewEcommerce('retokenize')"><i
+            class="icon-lock"></i><span data-i18n="" class="menu-title">Card Information</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<app-makepayment-modal #makePaymentModal></app-makepayment-modal>

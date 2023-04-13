@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card bg-purple white overflow-hidden m-b-0">
+                    <div class="card-body">
+                        <div class="card-block cleartfix">
+                            <div class="media m-l-10">
+                                <div class="media-body">
+                                    <h1 class="m-b-15 text-xs-center">
+                                        <b>Share your referral code and earn ${{referral_value}}</b>
+                                    </h1>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-xl-12">
+                                            <fieldset class="form-group position-relative m-b-10">
+                                                <input type="text" class="form-control form-control-lg" #referralLink6 id="referralLink5" #referralLink4 placeholder="Referral Code" aria-describedby="button-addon2" [(ngModel)]="referralLinkCopy" readonly="readonly" (click)="copy()">
+                                                <div class=" form-control-position ico-copy" data-toggle="tooltip" data-placement="top" title="" data-original-title="Copy your referral link" (click)="copy()">
+                                                    <i class="fa fa-clone blue-grey font-medium-4"></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <fieldset class="form-group position-relative m-b-10">
+                                            <div class="col-xs-6 col-xl-6">
+                                                <a href="javascript:void(0)" class="btn btn-md btn-orange w-100" (click)="openModal()">
+                                                    <i class="fa fa-share-alt font-medium-5 float-xs-left"></i>
+                                                    <span *ngIf="!isMobile()">Share my referral Code</span>
+                                                    <span *ngIf="isMobile()">Share Code</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6 col-xl-6">
+                                                <a href="javascript:void(0)" class="btn btn-md btn-purple w-100" (click)="openImportContactsModal()">
+                                                    <i class="fa fa-plus font-medium-5 float-xs-left"></i>
+                                                    <span *ngIf="!isMobile()">Add new referrals</span>
+                                                    <span *ngIf="isMobile()">Add</span>
+                                                </a>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="row" *ngIf="featureReferralFlyer">
+                                        <div class="col-xs-6 col-xl-6">
+                                            <a href="javascript:void(0)" class="btn btn-md btn-orange w-100" (click)="openModalFlyer()">
+                                                <i class="fa fa-share-alt font-medium-5 float-xs-left"></i>
+                                                <span *ngIf="!isMobile()">Share my referral Flyer</span>
+                                                <span *ngIf="isMobile()">Share Flyer</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-referral-modal #referralModal [page]="page"></app-referral-modal>
+<app-referral-modal-flyer-commission #referralFlyerCommissionModal (onCallbackWidget)="onCallbackWidget($event)" [imgBase64]="referral_base64" [page]="page" [referral]="referral"></app-referral-modal-flyer-commission>
+<app-referral-modal-flyer #referralModalFlyer [page]="page"></app-referral-modal-flyer>
+<app-import-contacts-modal #importContactsModal [page]="page"></app-import-contacts-modal>

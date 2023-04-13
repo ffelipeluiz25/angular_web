@@ -1,0 +1,256 @@
+<div class="row" *ngIf="!is_production">
+  <div class="col-xs-12">
+    <p class="text-xs-center"><a class="a-link-color" (click)="mockBankAccount()">Mock Data</a></p>
+  </div>
+</div>
+<section id="icon-tabs">
+  <div class="row">
+    <div class="col-xl-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-body collapse in">
+          <div class="card-block">
+            <form (submit)="onSubmit()" #loanTermsForm="ngForm">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-divider">
+                        <img src="assets/images/icons/bank.png" />
+                        <h4 class="card-title">Bank Information</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="!this.model.bank_account.bank_account_verified">
+                    <div class="row">
+                      <div class="col-xs-12 col-centered">
+                        <p class="verification-info text-center" *ngIf="ft_shareYourEmployer">
+                          <b>
+                            Connect your bank account where you receive your
+                            <span *ngIf="!retiredData?.isRetired">paycheck</span>
+                            <span *ngIf="retiredData?.isRetired">retirement Benefits</span>
+                            for a faster loan decision.
+                          </b>
+                          <br />
+                          We need to verify your income and other information to provide you a
+                          loan offer that fits your budget. <br>
+                          Once approved your loan funds will be deposited into this bank
+                          account.
+                        </p>
+                        <p class="verification-info" *ngIf="!ft_shareYourEmployer">
+                          Connect your bank account instantly and securely <b><u>for a faster
+                              loan decision</u></b>
+                          <br><br>
+                          Link your bank account
+                          <b><u> where you receive your <span *ngIf="!retiredData?.isRetired">paycheck</span> <span
+                                *ngIf="retiredData?.isRetired">retirement
+                                Benefits</span></u></b>
+                          so we can verify your bank account and deposit your loan
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-centered" style="padding-top:20px;">
+                        <button class="btn btn-warning btn-darken-4 btn-lg btn-block" (click)="linkBankAccount()">Link
+                          Your Bank Account</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                          <span>Or</span>
+                        </h6>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="row" *ngIf="!isRefiCashless">
+                    <div class="col-xs-12">
+                      <p>Please provide your primary bank account <span *ngIf="!ft_step_to_capture_debit_card">to
+                          receive your funds and</span> for
+                        underwriting purposes.</p>
+                    </div>
+                  </div>
+                  <div class="bank-account-form">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="form-group m-b-5">
+                          <label for="phoneNumber2">Account Type</label>
+                          <label class="blue-grey lighten-2 f-12"><span class="m-l-5">(Select
+                              one option)</span></label>
+                          <app-choose-buttons [choose-data]="accountTypeList"
+                            [choose-selected-value]="model.bank_account.bank_account_type"
+                            (choose-select)="onSelectAccountType($event)" error-message="Account Type is required"
+                            [touched]="accountTypeTouched" #chooseAccountType>
+                          </app-choose-buttons>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-6">
+                        <div class="form-group"
+                          [ngClass]="{'has-error': !bank_routing_number.valid && bank_routing_number.touched }">
+                          <label for="firstName2">Routing Transit Number</label>
+                          <i class="fa fa-question-circle m-l-5" [ngbPopover]="popContent"
+                            triggers="mouseenter:mouseleave" popoverPlacement="top"></i>
+                          <input type="tel" class="form-control" id="bank_routing_number"
+                            placeholder="Your bank's nine digit routing number" tabindex="1"
+                            [(ngModel)]="model.bank_account.bank_routing_number" #bank_routing_number="ngModel"
+                            data-hj-whitelist name="bank_routing_number" required NumbersOnly maxlength="9"
+                            (keydown)="hideBankNotFoundError()" (blur)="onRoutingNumberBlur()">
+                          <div *ngIf="!bank_routing_number.valid && bank_routing_number.touched"
+                            class="help-block font-small-3">
+                            <span class="error-message" *ngIf="bank_routing_number.errors.required">Routing Transit
+                              Number
+                              is required</span>
+                          </div>
+                          <span class="error-message" *ngIf="showBankNotFoundError">Bank not
+                            found. Please check the
+                            provided routing number.</span>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                          <label for="emailAddress3">Bank Name</label>
+                          <input type="tel" class="form-control" id="bank_account_name" placeholder="Your bank name"
+                            tabindex="2" [(ngModel)]="model.bank_account.bank_name" #bank_account_name="ngModel"
+                            name="bank_account_name" [readonly]="true">
+                          <span class="error-message"
+                            *ngIf="showBankNotFoundError || (!bank_routing_number.valid && bank_routing_number.touched)">&nbsp;</span>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-md-6">
+                        <div class="form-group"
+                          [ngClass]="{'has-error': !bank_account_number.valid && bank_account_number.touched }">
+                          <label for="emailAddress3">Bank Account Number
+                            <i class="fa fa-check-circle info m-l-5" placement="top"
+                              title="Bank account verified with Plaid" ngbTooltip="Bank account verified with Plaid"
+                              *ngIf="model.bank_account.bank_account_verified"></i>
+                          </label>
+                          <i class="fa fa-question-circle m-l-5" [ngbPopover]="popContent"
+                            triggers="mouseenter:mouseleave" popoverPlacement="top"></i>
+                          <input type="tel" class="form-control" id="bank_account_number"
+                            placeholder="Your bank account number" tabindex="3"
+                            [(ngModel)]="model.bank_account.bank_account_number" #bank_account_number="ngModel"
+                            name="bank_account_number" required NumbersOnly maxlength="17">
+                          <div *ngIf="!bank_account_number.valid && bank_account_number.touched"
+                            class="help-block font-small-3">
+                            <span class="error-message" *ngIf="bank_account_number.errors.required">Bank Account
+                              Number is
+                              required</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-md-6">
+                        <div class="form-group"
+                          [ngClass]="{'has-error': !confirm_bank_account_number.valid && confirm_bank_account_number.touched }">
+                          <label for="emailAddress3">Confirm Bank Account Number
+                            <i class="fa fa-check-circle info m-l-5" placement="top"
+                              title="Bank account verified with Plaid" ngbTooltip="Bank account verified with Plaid"
+                              *ngIf="model.bank_account.bank_account_verified"></i>
+                          </label>
+                          <i class="fa fa-question-circle m-l-5" [ngbPopover]="popContent"
+                            triggers="mouseenter:mouseleave" popoverPlacement="top"></i>
+                          <input type="tel" class="form-control" id="confirm_bank_account_number"
+                            placeholder="Confirm your bank account number" tabindex="4"
+                            [(ngModel)]="model.bank_account.confirm_bank_account_number"
+                            #confirm_bank_account_number="ngModel" name="confirm_bank_account_number" required
+                            NumbersOnly matchValidator [compare-with]="'bank_account_number'" [avoid-copy-paste]="true"
+                            maxlength="17">
+                          <div *ngIf="!confirm_bank_account_number.valid && confirm_bank_account_number.touched"
+                            class="help-block font-small-3">
+                            <span class="error-message" *ngIf="!confirm_bank_account_number.valid">Bank Account
+                              Number
+                              doesn't match</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-md-6"
+                        *ngIf="model.bank_account.bank_account_verified && plaid_accounts.length">
+                        <p><a href="#" (click)="linkBankAccount()">Change Bank</a></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="actions-mobile text-xs-center">
+                    <div class="row">
+                      <div class="col-xs-4 col-xl-6">
+                        <div class="form-group">
+                          <a *ngIf="!ft_debit_card_is_enabled" [routerLink]="['/application/personal-information']"
+                            class="btn btn-secondary btn-block" tabindex="6">Back</a>
+                          <a *ngIf="ft_debit_card_is_enabled && !hasPayNearMeParameterization"
+                            [routerLink]="['/application/personal-information']" class="btn btn-secondary btn-block"
+                            tabindex="6">Back</a>
+                          <a *ngIf="ft_debit_card_is_enabled && hasPayNearMeParameterization"
+                            [routerLink]="['/application/debit-card']" class="btn btn-secondary btn-block" (click)="backToPaynearme()"
+                            tabindex="6">Back</a>
+                        </div>
+                      </div>
+                      <div class="col-xs-4 hidden-xl-up">
+
+                      </div>
+                      <div class="col-xs-4 col-xl-6">
+                        <div class="form-group">
+                          <button id="btnNext" type="submit" class="btn  btn-darken-4 btn-block" tabindex="5"
+                            [ngClass]="{'btn-warning': !_disabledSubmitButton, 'btn-secondary': _disabledSubmitButton  }"
+                            [attr.Disabled]="_disabledSubmitButton ? 'disabled' : null"> Submit</button>
+                        </div>
+                        <div *ngIf="_showMessageConnectWithOpenPayrollSection" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="_showMessageConnectWithOpenPayrollSection">
+                            Please, connect to your work account bellow.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div *ngIf="isOpenPayrollEnabledForEmployer">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                    <span>
+                      Express Application
+                    </span>
+                  </h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8 col-centered">
+                  <span class="verification-info">
+                    Share your employment & salary records to qualify <b><u>for Instant
+                        Approval</u>.</b>
+                  </span>
+                </div>
+              </div>
+              <app-open-payroll-plugin [step]="step" [redirectNextStep]="false" [retired-data]="retiredData"
+                [setupAllotmentModeOnly]="false" (onOpenPayrollConnected)="onOpenPayrollConnected($event)"
+                (hasArgyleConnectionEvent)="onHasArgyleConnection($event)">
+              </app-open-payroll-plugin>
+              <div class="row" style="text-align: center; margin-top: 7% !important;">
+                <i class="fa fa-info-circle"></i>
+                <span>
+                  Having difficulty connecting to your payroll system? Please contact customer service
+                  for assistance at 800-316-8507
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-steps-section [currentStep]="currentStep"></app-steps-section>
+
+    <div class="col-xl-1"></div>
+  </div>
+  <div>
+    <img [src]="iheartUrl">
+  </div>
+  <div class="SandboxMessage">
+    You are currently in Sandbox mode. Credentials » username: user_good | password: pass_good
+  </div>
+</section>
+
+<app-open-banking #openBankingComponent [step]="step" (openBankinCallback)="openBankinCallback($event)">
+</app-open-banking>
+<ng-template #popContent><img src="assets/images/check_color.jpg" class="popover-check" /></ng-template>

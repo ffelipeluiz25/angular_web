@@ -1,0 +1,57 @@
+<nav class="header-navbar navbar navbar-with-menu navbar-light" [ngClass]="{ 'navbar-fixed-top': fixed }">
+    <div (click)="clickMenuDropDownMobile()" class="navbar-wrapper">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li *ngIf="showSideMenu" class="nav-item mobile-menu float-xs-left"><a href="javascript:void(0);" class="nav-link nav-menu-main menu-toggle hidden-xs"><i class="ft-menu font-large-1"></i></a>
+                </li>
+                <li class="nav-item float-xs-left">
+                    <a [routerLink]="['/']" class="navbar-brand">
+                        <img alt="BMG Money" src="https://cdn.bmgmoney.com/logo/bmgmoney_Logo_RGB__Orange-Purple_Large.png" class="brand-logo">
+                    </a>
+                </li>
+
+                <li class="nav-item hidden-md-up float-xs-right">
+                    <ul class="nav navbar-nav ul-nav-menu float-xs-right">
+                        <li id="menu_mobile" class="dropdown dropdown-user nav-item">
+                            <a (click)="clickMenuDropDownMobile()" *ngIf="user.first_name==''" href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link"><span
+                                    class="user-name">Menu</span></a>
+                            <a (click)="clickMenuDropDownMobile()" *ngIf="user.first_name!=''" href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link"><span
+                                    class="user-name">{{user.first_name}} {{user.last_name}}</span></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a [routerLink]="['/application/edit']" class="dropdown-item" *ngIf="showEditOnApplication"><i class="ft-edit"></i>
+                                    Update information</a>
+                                <a href="javascript:void(0);" class="dropdown-item" (click)="showChangePassword()"><i
+                                        class="ft-refresh-cw"></i>
+                                    Change password</a>
+                                <a href="javascript:void(0);" class="dropdown-item" (click)="logout()"><i
+                                        class="ft-power"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div (click)="clickMenuDropDown()" class="navbar-container content container-fluid">
+            <div class="collapse navbar-toggleable-sm">
+                <ul class="nav navbar-nav ul-nav-menu float-xs-right">
+                    <li id="menu_web" class="dropdown dropdown-user nav-item">
+                        <a (click)="clickMenuDropDown()" *ngIf="user.first_name==''" href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link"><span
+                                class="user-name">Menu</span></a>
+                        <a (click)="clickMenuDropDown()" *ngIf="user.first_name!=''" href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link"><span
+                                class="user-name">{{user.first_name}} {{user.last_name}}</span></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a [routerLink]="['/application/edit']" class="dropdown-item" *ngIf="showEditOnApplication"><i class="ft-edit"></i> Update
+                                information</a>
+                            <a href="javascript:void(0);" class="dropdown-item" (click)="showChangePassword()"><i
+                                    class="ft-refresh-cw"></i> Change
+                                password</a>
+                            <a href="javascript:void(0);" class="dropdown-item" (click)="logout()"><i
+                                    class="ft-power"></i> Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<app-change-password-modal #changePasswordModal></app-change-password-modal>

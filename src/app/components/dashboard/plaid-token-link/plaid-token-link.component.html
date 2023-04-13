@@ -1,0 +1,36 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="col-xl-10 offset-xl-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 p-0">
+                <div class="card border-grey border-lighten-3 px-2 py-2 row mb-0">
+                    <div class="card-header no-border p-0">
+                        <div class="card-title text-xs-center">
+                            <img src="assets/images/logo/bmgmoney.png" alt="branding logo">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="token-expired">
+                            <div class="row m-t-30 text-xs-center">
+                                <div class="col-xs-12">
+                                    <p>Your link for bank verification has expired or is invalid.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="#" (click)="redirectToLogin()" class="btn btn-secondary btn-darken-4 btn-lg btn-block m-b-10" tabindex="5">Login</a>
+                                </div>
+                                <div class="col-xs-12">
+                                    <a [routerLink]="['https://bmgmoney.com']" class="btn btn-secondary btn-darken-4 btn-lg btn-block m-b-10"
+                                       tabindex="5">Visit BMG Money Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>

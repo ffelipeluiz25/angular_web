@@ -1,0 +1,404 @@
+<div class="row" [ngClass]="{'item-upload-documents': !doc.uploaded}">
+    <div class="col-xs-12">
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.AllotmentProof">
+            <h4 class="font-weight-bold">Proof of Financial Allotment (Payment Setup)</h4>
+            <div *ngIf="!doc.uploaded && !doc.document_setted_with_vendor">
+                <div>
+                    <div *ngIf="doc.show_automatic_allotment">
+                        <div class="row">
+                            <app-open-payroll-plugin #openPayrollPluginComponent
+                                (openPayrollPluginCallback)="openPayrollPluginCallback($event)" [document-data]="doc"
+                                [setupAllotmentModeOnly]="true" [redirectNextStep]="false" [step]="step"
+                                [retired-data]="retiredData">
+                            </app-open-payroll-plugin>
+                        </div>
+                    </div>
+                    <div *ngIf="doc.show_manual_allotment && doc.show_automatic_allotment" class="row">
+                        <div class="col-xs-12">
+                            <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                                <span>Or</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div *ngIf="doc.show_manual_allotment" class="text-sm-center verification-change"
+                        (click)="onClickChangeManualyPayDistribution()">
+                        Set Up Allotment Manually</div>
+                </div>
+            </div>
+            <div *ngIf="allotmentManualyChange">
+                <table class="table table-bordered table-xs tb-allotment-info m-b-0">
+                    <tbody>
+                        <tr>
+                            <td>Bank Routing Number</td>
+                            <td>{{allotmentBankInfo.routing_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>Bank</td>
+                            <td>
+                                {{allotmentBankInfo.name}}
+                                <br>{{allotmentBankInfo.adress_line_1}}
+                                <br>{{allotmentBankInfo.adress_line_2}}
+                                <br>{{allotmentBankInfo.adress_line_3}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Account Number</td>
+                            <td>{{allotmentBankInfo.account_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>Type of account</td>
+                            <td>{{allotmentBankInfo.account_type}}</td>
+                        </tr>
+                        <tr>
+                            <td>Allotment Amount:</td>
+                            <td>
+                                <b>{{paymentAmount | currency:'$':'symbol':'1.2-2'}}</b> *
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>First due date:</td>
+                            <td>
+                                <b>{{firstPaymentDate | date}}</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-sm-right">
+                    <small>* Your Allotment amount must be exactly this amount
+                    </small>
+                </p>
+                <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                    <span><b>Instructions:</b></span>
+                    <ul class="p-l-20">
+                        <li *ngFor="let request of doc.request_reason_list">
+                            {{request}}
+                        </li>
+                    </ul>
+                </div>
+                <span *ngIf="!doc.uploaded">Write down your allotment information above to set up your allotment
+                    which
+                    will
+                    be
+                    used for the repayment of your loan:</span>
+                <ul class="p-l-15 p-b-10 m-t-10 m-b-0 blue-grey"
+                    *ngIf="doc.document_type == documentTypes.AllotmentProof && !doc.uploaded">
+                    <li>
+                        <p class="m-b-5">To set up your allotment access <span *ngIf="lffPayrollSystemType == '1'">
+                                your
+                                {{payroll_program_type}}
+                                system at one of the following websites</span></p>
+                        <ul class="m-b-15">
+                            <!-- <li *ngIf="(lffPayrollSystemType == '1' || lffPayrollSystemType == '2') && sub_program_id != '5'">
+                                <p class="m-0 ">
+                                    <b>Employee Express: </b> <a class="link-default" href="http://www.employeeexpress.gov" target="_blank">www.employeeexpress.gov</a>
+                                </p>
+                            </li> -->
+                            <li *ngIf="lffPayrollSystemType == '1' || lffPayrollSystemType == '3'">
+                                <p class="m-0 ">
+                                    <b>myPay: </b> <a class="link-default" href="https://mypay.dfas.mil/"
+                                        target="_blank">mypay.dfas.mil</a>
+                                </p>
+                            </li>
+                            <!-- <li *ngIf="(lffPayrollSystemType == '1' || lffPayrollSystemType == '4') && sub_program_id != '5'">
+                                <p class="m-0 ">
+                                    <b>Employee Personal Page (EPP): </b> <a class="link-default" href="https://www.nfc.usda.gov/" target="_blank">www.nfc.usda.gov</a>
+                                </p>
+                            </li> -->
+                            <li
+                                *ngIf="(lffPayrollSystemType == '1' || lffPayrollSystemType == '5') && sub_program_id != '5'">
+                                <b>PostalEASE <a class="link-default"
+                                        href="https://storage.googleapis.com/bmgmoney-public-docs/Manual/manual_allotment_usps.pdf"
+                                        target="_blank">(Manual)</a>: </b> <a class="link-default"
+                                    href="https://ewss.usps.gov/" target="_blank">ewss.usps.gov</a>
+                            </li>
+                            <li *ngIf="sub_program_id == '5'">
+                                <b>Office of Personnel Management (OPM):</b> <a class="link-default"
+                                    href="https://www.servicesonline.opm.gov/"
+                                    target="_blank">servicesonline.opm.gov</a> If you do not have a retirement account
+                                set up ONLINE please set
+                                one up at <a class="link-default"
+                                    href="https://www.opm.gov/support/retirement/how-to/getting-started-with-opm-retirement-services-online/"
+                                    target="_blank">opm.gov/support/retirement/how-to/getting-started-with-opm-retirement-services-online”</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li *ngIf="lffPayrollSystemType == '4'">
+                        <p>Allotment setup instructions:</p>
+                        <ol class="p-l-20 m-b-20">
+                            <li>Log in to your “EPP”</li>
+                            <li>Choose the option “Preferences” in the left column on your menu page</li>
+                            <li>Click “Change PII”</li>
+                            <li>Choose option “UnMask” (This will allow you to view your account information in your
+                                allotment screen)</li>
+                            <li>Go back to your allotment page (click “financial allotment” on your left side menu)
+                            </li>
+                            <li>Take a screenshot of your allotment confirmation with the account number showing and
+                                send it to us</li>
+
+                        </ol>
+                    </li>
+                </ul>
+                <div class="row" *ngIf="!doc.uploaded && doc.document_type == documentTypes.AllotmentProof">
+                    <div class="col-xs-12">
+                        <div class="center">
+                            <ngx-file-drop [dropZoneLabel]="dropfileText" customstyle="drop-zone-custom"
+                                (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                                (onFileLeave)="fileLeave($event)" (click)="triggerFileInput(fileInputId);">
+                                <span></span>
+                            </ngx-file-drop>
+                            <input type="file" [name]="fileInputIdDocumentType" [id]="fileInputId"
+                                (change)="onSelectFile($event.target.files)" style="display:none;"
+                                accept=".pdf,.PDF,.jpg,.JPG,.jpeg,.JPEG,.png,.PNG">
+                            <span class="error-message" *ngIf="invalidFormat">Invalid format. Please provide a jpg,
+                                png
+                                or
+                                pdf</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.ProofOfAddress">
+            <h4 class="font-weight-bold">Proof of Address</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+            <span *ngIf="!doc.uploaded">Must meet the following criteria:</span>
+            <ul class="p-l-20" *ngIf="!doc.uploaded">
+                <li class="blue-grey">Utility bill or bank statement</li>
+                <li class="blue-grey">NAME and ADDRESS must match the application</li>
+                <li class="blue-grey">Dated within 45 days of application</li>
+                <li class="blue-grey">
+                    <b>Regular mail is NOT acceptable</b>
+                </li>
+            </ul>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.ID">
+            <h4 class="font-weight-bold">State Driver’s License or State Identification Card</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.Paystub">
+            <h4 class="font-weight-bold">Paystub</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+            <p *ngIf="!doc.uploaded && lffPayrollSystemType != '1'">
+                <span class="blue-grey" *ngIf="lffPayrollSystemType == '2'">To
+                    download your most recent paystub, access your payroll system Employee Express: <a
+                        class="link-default" href="https://www.employeeexpress.gov"
+                        target="_blank">www.employeeexpress.gov</a></span>
+                <span class="blue-grey" *ngIf="lffPayrollSystemType == '3'">To download your most recent paystub,
+                    access
+                    your payroll system MyPay: <a class="link-default" href="https://mypay.dfas.mil"
+                        target="_blank">mypay.dfas.mil</a></span>
+                <span class="blue-grey" *ngIf="lffPayrollSystemType == '4'">To download your most recent paystub,
+                    access
+                    your payroll system Employee Personal Page (EPP): <a class="link-default"
+                        href="https://www.nfc.usda.gov" target="_blank">www.nfc.usda.gov</a></span>
+                <span class="blue-grey" *ngIf="lffPayrollSystemType == '5'">To download your most recent paystub <a
+                        class="link-default"
+                        href="https://storage.googleapis.com/bmgmoney-public-docs/Manual/manual_paystub_usps.pdf"
+                        target="_blank">(Instruction)</a>, access
+                    your payroll system LiteBlue: <a class="link-default" href="https://liteblue.usps.gov"
+                        target="_blank">liteblue.usps.gov</a>
+                </span>
+                <br><b><span class="blue-grey">*{{payrollSystemMapping}}</span></b>
+            </p>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.SplitDirectDepositProof">
+            <h4 class="font-weight-bold">Split Direct Deposit</h4>
+            <div class="m-b-10 danger"
+                *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list && doc.show_manual_allotment">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.SocialSecurityCard">
+            <h4 class="font-weight-bold">Social Security Card</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.BenefitsStatementLetter">
+            <h4 class="font-weight-bold">Retirement Account Statement /Benefits Statement Letter</h4>
+            <br>
+            <div class="row" *ngIf="retiredData?.retired == '3' || retiredData?.retired == '7'">
+                <div class="col-xs-12">
+                    <app-open-payroll-plugin #openPayrollPluginComponent [redirectNextStep]="false" [step]="step"
+                        [retired-data]="retiredData" [document-data]="doc"
+                        (openPayrollPluginCallback)="openPayrollPluginCallback($event)"
+                        (skipOpenPayrollEvent)="skipOpenPayrollEvent()">
+                    </app-open-payroll-plugin>
+                </div>
+            </div>
+            <div class="row"
+                *ngIf="(retiredData?.retired == '3' || retiredData?.retired == '7') && showAddRetiredStatementsManualy">
+                <div class="col-xs-12">
+                    <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                        <span>Or</span>
+                    </h6>
+                </div>
+                <div class="text-sm-center verification-change" (click)="onClickChangeManualyBenefits()">
+                    Send it manually
+                </div>
+            </div>
+            <div *ngIf="allotmentManualyChangeBenefits || (retiredData?.retired != '3' && retiredData?.retired != '7')">
+                <div [ngClass]="{'row': (retiredData?.retired == '3' || retiredData?.retired == '7')}">
+                    <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                        <span><b>Instructions:</b></span>
+                        <ul class="p-l-20">
+                            <li *ngFor="let request of doc.request_reason_list">
+                                {{request}}
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="m-b-5" *ngIf="!doc.uploaded">Must meet the following criteria:</p>
+                    <ul *ngIf="!doc.uploaded">
+                        <li>Full name must be visible</li>
+                    </ul>
+                    <div class="row" *ngIf="!doc.uploaded">
+                        <div class="col-xs-12">
+                            <div class="center">
+                                <ngx-file-drop [dropZoneLabel]="dropfileText" customstyle="drop-zone-custom"
+                                    (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                                    (onFileLeave)="fileLeave($event)" (click)="triggerFileInput(fileInputId);">
+                                    <span></span>
+                                </ngx-file-drop>
+                                <input type="file" [name]="fileInputIdDocumentType" [id]="fileInputId"
+                                    (change)="onSelectFile($event.target.files)" style="display:none;"
+                                    accept=".pdf,.PDF,.jpg,.JPG,.jpeg,.JPEG,.png,.PNG">
+                                <span class="error-message" *ngIf="invalidFormat">Invalid format. Please provide a jpg,
+                                    png
+                                    or
+                                    pdf</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.ProofOfNamChange">
+            <h4 class="font-weight-bold">Proof Of Name Change</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.W2">
+            <h4 class="font-weight-bold">W-2 Form</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.MilitaryID">
+            <h4 class="font-weight-bold">Military ID</h4>
+            <div class="m-b-10 danger" *ngIf="!doc.uploaded && doc.request_reason && doc.request_reason_list">
+                <span><b>Instructions:</b></span>
+                <ul class="p-l-20">
+                    <li *ngFor="let request of doc.request_reason_list">
+                        {{request}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.Selfie">
+            <h4 class="font-weight-bold">Selfie</h4>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.DriverLicenseFront">
+            <h4 class="font-weight-bold">Driver’s License Front</h4>
+        </div>
+        <div class="m-b-5" *ngIf="doc.document_type == documentTypes.DriverLicenseBack">
+            <h4 class="font-weight-bold">Driver’s License Back</h4>
+        </div>
+        <div class="m-t-10 m-b-10"
+            *ngIf="(doc.uploaded || doc.document_setted_with_vendor) && (doc.document_type != documentTypes.BankStatement)">
+            <span class="tag tag-primary tag-uploaded darken-4 resp-w-100 m-r-5 bg-success darken-1 bg-darken-4"
+                style="color: white;"
+                *ngIf="(doc.uploaded && doc.review_status !== '0' && doc.review_status !== '1') || doc.document_setted_with_vendor">
+                <i class="fa fa-check"></i> Uploaded
+            </span>
+
+            <span class="tag tag-danger tag-uploaded darken-4 resp-w-100 m-r-5 bg-success darken-1 bg-darken-4"
+                style="color: white;" *ngIf="doc.uploaded && doc.review_status === '0'">
+                <i class="fa fa-times"></i> Declined
+            </span>
+
+            <span class="tag tag-success tag-uploaded darken-4 resp-w-100 m-r-5 bg-success darken-1 bg-darken-4"
+                style="color: white;" *ngIf="doc.uploaded && doc.review_status === '1'">
+                <i class="fa fa-check"></i> Accepted
+            </span>
+
+            <a class="link-default" *ngIf="!doc.document_setted_with_vendor"
+                class="btn btn-secondary btn-sm resp-w-100 m-r-5 bg-success darken-1 bg-darken-4" style="color: white;"
+                href="javascript:void(0);" (click)="viewDocument()">View
+                document</a>
+
+            <a class="link-default" class="btn btn-secondary btn-sm resp-w-100 m-r-5 bg-success darken-1 bg-darken-4"
+                style="color: white;" href="#" (click)="uploadAnotherDocument()"
+                *ngIf="(doc.document_type != documentTypes.DriverLicenseFront && doc.document_type != documentTypes.DriverLicenseBack && doc.document_type != documentTypes.Selfie) && doc.uploaded && doc.review_status !== '0' && doc.review_status !== '1' && !doc.document_setted_with_vendor">Upload
+                another document</a>
+        </div>
+        <div class="m-b-5 danger" *ngIf="doc.uploaded && doc.review_status === '0' && doc.decline_reason_list">
+            <span><b>Reason:</b></span>
+            <ul class="p-l-20">
+                <li *ngFor="let decline of doc.decline_reason_list">
+                    {{decline}}
+                </li>
+            </ul>
+        </div>
+        <hr *ngIf="doc.uploaded && doc.review_status !== '1'">
+        <div class="row"
+            *ngIf="!doc.uploaded && doc.document_type != documentTypes.BenefitsStatementLetter && doc.document_type != documentTypes.AllotmentProof">
+            <div class="col-xs-12">
+                <div class="center">
+                    <ngx-file-drop [dropZoneLabel]="dropfileText" customstyle="drop-zone-custom"
+                        (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+                        (click)="triggerFileInput(fileInputId);">
+                        <span></span>
+                    </ngx-file-drop>
+                    <input type="file" [name]="fileInputIdDocumentType" [id]="fileInputId"
+                        (change)="onSelectFile($event.target.files)" style="display:none;"
+                        accept=".pdf,.PDF,.jpg,.JPG,.jpeg,.JPEG,.png,.PNG">
+                    <span class="error-message" *ngIf="invalidFormat">Invalid format. Please provide a jpg, png or
+                        pdf</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-preview-modal #previewModal (confirm-preview)='saveFile($event)'></app-preview-modal>

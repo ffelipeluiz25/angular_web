@@ -1,0 +1,276 @@
+﻿@media(min-width:1200px){
+    .xl-p-l-0{
+        padding-left: 0px !important;
+    }
+    .xl-p-r-0{
+        padding-right: 0px !important;
+    }
+    .xl-pull-right{
+        float: right;
+    }
+
+    .modal-lg {
+        max-width: 1000px;
+    }
+
+    .modal-lg .modal-body{
+
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .fix-select-mac{
+        text-indent: 38px;
+    }
+
+    .content-header{
+        padding: 15px 0;
+    }
+}
+
+@media(max-width:1200px){
+    .xl-p-l-0{
+        padding-left: 0px !important;
+    }
+    .xl-p-r-0{
+        padding-left: 0px !important;
+    }
+
+    .border-right-blue-grey, .border-right-blue-grey.border-right-lighten-5{
+        border-right: none !important;
+    }
+
+    .fix-select-mac{
+        text-indent: 35px;
+    }
+
+}
+
+
+
+
+@media (max-width: 991px) {
+    html, body {
+        background: #fff !important;
+        background-color: #fff !important;
+        font-size:16px;
+    }
+    .card .card-title {
+        font-size: 0.97rem;
+    }
+    .lnk-send-another-document{
+        position:initial;
+    }
+    .f-12-mobile{
+        font-size:12px;
+    }
+    .actions-mobile {
+        margin-top:20px;
+        margin-bottom:20px;
+        width: 100%;
+        background:#fff;
+    }
+
+    .form-control {
+        font-size: 16px;
+    }
+
+    .header-navbar .navbar-header .navbar-brand {
+         position: initial;
+         left: initial;
+         top: initial;
+         transform: initial;
+    }
+
+
+
+    .row-dash-loan-details .card-block {
+        padding: 15px 15px 15px 0;
+        border-right: none !important;
+    }
+
+      .row-dash-loan-details h4 {
+        font-size: 1.0rem;
+    }
+
+    .row-dash-loan-details h1 {
+        font-size: 1.4rem;
+        text-align:right
+    }
+
+
+
+    .card-login-padding{
+        padding: 0 10px;
+    }
+
+    .dashboard-wrapper-how-grow-works-button{
+        display: inline-block;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .dashboard-wrapper-how-grow-works-button .btn{
+        width: 100%;
+    }
+
+    .dashboard-wrapper-grow-next-level{
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+        padding: 0;
+    }
+    .dashboard-wrapper-grow-next-level h1{
+        margin: 0 !important;
+    }
+
+    .dashboard-wrapper-grow-next-level-description{
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .card.card-responsive{
+        margin-bottom: 0;
+    }
+
+
+    .card.card-responsive .card-block{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .ul-loan-information{
+        margin-top: 15px;
+        margin-bottom: 0;
+    }
+
+    .icon-loan-information-responsive{
+        display: none;
+    }
+
+    .h4-loan-information-responsive{
+        font-size: 1.1rem;
+    }
+
+    .card-responsive-center .media-body, .card-responsive-center .media-left, .card-responsive-center .media-left h1{
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .loan-information-disclaimer{
+        padding: 15px 25px;
+    }
+
+    .fix-select-mac{
+        text-indent: 43px;
+    }
+}
+
+@media (max-width: 767px) {
+    .resp-m-l-0{
+        margin-left:0px !important;
+    }
+    .resp-m-t-10{
+        margin-top:10px;
+    }
+
+    .resp-m-b-0 {
+        margin-bottom: 0px;
+    }
+
+    .resp-p-t-0 {
+        padding-top: 0px !important;
+    }
+
+    .resp-p-l-0 {
+        padding-left: 0px !important;
+    }
+
+    .btn-choose {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .resp-w-100{
+        width:100%;
+    }
+
+    .btn-survey{
+        width: 100%;
+        margin-bottom: 10px;
+        padding-right: 0 !important;
+    }
+
+    .btn-sm{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .tag-uploaded{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .dashboard-wrapper-grow-next-level{
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+    }
+    .dashboard-wrapper-grow-next-level h1{
+        margin: 0 !important;
+    }
+    .dashboard-wrapper-grow-next-level-description{
+        text-align: center !important;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .row-dash-loan-details .card-block{
+        padding: 1.5rem;
+    }
+
+    .user-name{
+        max-width: 100px;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .popover-check{
+        max-width: 100%;
+    }
+
+    .form-control-position{
+        display: none;
+    }
+
+    .has-icon-left .form-control.input-lg{
+        padding-left: 15px;
+    }
+
+    .fix-select-mac{
+        text-indent: 8px;
+    }
+
+    .content-header{
+        padding: 15px;
+    }
+
+    .row-btn-back{
+        margin: 0;
+        padding: 0 23px;
+    }
+
+    .row-btn-back .btn{
+        width: 100%;
+    }
+
+    .navbar-header{
+        padding-top: 0 !important;
+    }
+
+
+
+}

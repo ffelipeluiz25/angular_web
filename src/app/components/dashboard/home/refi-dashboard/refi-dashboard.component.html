@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="card p-b-20">
+      <div class="card-body">
+        <div class="alert bg-warning alert-icon-left" role="alert" (click)="goToRefiPage()"
+          *ngIf="ft_refiLFF && applicationStatus == '1'">
+          <strong>You are still eligible for Refinance, please click here to proceed with the application.</strong>
+        </div>
+        <div class="row p-t-20">
+          <div class="col-xs-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="col-xs-12">
+              <div class="col-xs-12" *ngIf="eligible_for_cashback">
+                <div class="row" *ngIf="showCashbackFront">
+                  <div class="col-xs-12 text-xs-center">
+                    <h1 class="display-5 title-cashback">Apply now and get <span
+                        class="success text-bold-700">{{cashback_payment_amount | currency:'$':'symbol':'2.0'}}</span>
+                      cash back
+                    </h1>
+                    <h4 class="m-t-15 m-b-10">Directly deposited into your bank account after making
+                      your first scheduled payment on time</h4>
+                    <a href="#" (click)="toggleCashBack()">Learn more</a>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showCashbackBack">
+                  <div class="col-xs-12">
+                    <p>Details of the BMG Money Special Offer:</p>
+                    <ol>
+                      <li>You apply for, are approved for, and accept a loan with BMG Money under
+                        the terms disclosed to you in the Special Officer
+                        Notice and the Promissory Note.</li>
+                      <li>You make your first loan payment within 15 days or less of the due date.
+                      </li>
+                      <li>Only 1 Special Offer is available per customer, and the Special Offer is
+                        not transferrable to any other person.</li>
+                    </ol>
+                    <p>It’s that simple! Your Special Offer cash back award will be automatically
+                      deposited into your bank account within 15 days of
+                      our receiving and processing your first loan payment.</p>
+
+                  </div>
+                  <div class="col-xs-12">
+                    <a href="#" (click)="toggleCashBack()">
+                      < Back</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="row text-xs-center display-5 red darken-1 hide">
+                  <div class="col-xs-12">
+                    <a [hidden]="hasEmployerAgency" class="text-warning" href="#" (click)="goToUpdateEmployer()">[Please
+                      click
+                      here to update your employer]</a>
+                  </div>
+                </div>
+                <div class="card-block resp-p-t-0 text-xs-center">
+                  <div class="card-header p-b-0">
+                    <span class="success darken-2">Current Payments in Row</span>
+                    <h3 class="display-5 blue-grey darken-1">
+                      {{ dashboardInfo.payments_in_row | number }} Payments</h3>
+                  </div>
+                  <div class="card-body">
+                    <input type="text" [value]="100" class="knob hide-value responsive angle-offset"
+                      data-angleOffset="0" data-thickness=".15" data-linecap="round" data-width="125" data-height="125"
+                      data-readOnly="true" data-inputColor="#16D39A" data-fgColor="#16D39A" data-knob-icon="ft-check"
+                      #inputPointsChart>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row m-t-15 text-xs-center">
+              <div class="col-xs-12">
+                <ul class="list-inline clearfix">
+                  <li class="">
+                    <h2 class="blue-grey darken-1 text-bold-400">You may be Eligible</h2>
+                  </li>
+                </ul>
+                <div class="dash-button bg-success bg-darken-3" (click)="goToRefiPage()">
+                  <div class="dash-button-info">{{ dashboardInfo.next_amount_available | currency }}
+                  </div>
+                  <div class="dash-button-action"><b>Apply<br>now</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-xs-center m-b-10">
+              <div class="col-xs-12">
+                <a href="#" (click)="goToRefiPage()" class="text-underline">Select another amount</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-refi-modal #appRefiModal (call-yodlee)="startFastLink()"></app-refi-modal>
+
+
+<form [action]='yoodleFastLink.node_url' method='post' id='rsessionPost' [target]='yoodleFastLinkTarget'
+  #formFastLink="ngForm" [hidden]="true">
+  RSession :
+  <input type='text' name='rsession' placeholder='rsession' [(ngModel)]='yoodleFastLink.user_session' id='rsession' />
+  <br /> FinappId :
+  <input type='text' name='app' placeholder='FinappId' value='10003600' id='finappId' />
+  <br /> Redirect :
+  <input type='text' name='redirectReq' placeholder='true/false' value='true' />
+  <br /> Token :
+  <input type='text' name='token' placeholder='token' [(ngModel)]='yoodleFastLink.token' id='token' />
+  <br /> Extra Params :
+  <input type='text' name='extraParams' placeholer='Extra Params' [(ngModel)]='yoodleFastLink.callback'
+    id='extraParams' />
+  <br />
+</form>
+
+<ng-template #fastLinkModal size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <iframe src="" id="iframeFastLink" name="iframeFastLink" class="w-100" height="520px" border="0"
+      style="border:none;"></iframe>
+  </div>
+</ng-template>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>BMG Money - LoansForFeds</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="facebook-domain-verification" content="ligl018g2gdld9o763jkfdgmyrx9ne" />
+</head>
+
+<body data-open="click" data-menu="vertical-menu" data-col="2-columns">
+    <app-root></app-root>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_ZAtfthpfqZPM88GlLYEKnwME3OS5zPw&libraries=places&language=en" async></script>
+    <script src="https://plugin.argyle.io/argyle.web.v3.js"></script>
+    <style>
+        ._pnm_ifr{
+            height: 100%;
+            width: 100%;
+            border: none;
+        }
+    </style>
+
+    <script src="https://cdn.getpinwheel.com/pinwheel-v2.js"></script>
+    <div id="divAtomic"></div>
+
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '647948308740583',
+                cookie: false, // enable cookies to allow the server to access
+                // the session
+                xfbml: true, // parse social plugins on this page
+                version: 'v2.8' // use graph api version 2.5
+            });
+        }
+    </script>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+    <!-- TrackJS -->
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+        window.TrackJS && TrackJS.install({
+            token: "95f15811d7a24a728245a81e45212173",
+            application: "lff_app"
+        });
+    </script>
+    <!-- end TrackJS -->
+
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+    <script>
+        (function(w,t,c,p,s,e){p=new Promise(function(r){w[c]={client:function(){if(!s){
+        s=document.createElement(t);s.src='https://js.cobrowse.io/CobrowseIO.js';s.async=1;
+        e=document.getElementsByTagName(t)[0];e.parentNode.insertBefore(s,e);s.onload=function()
+        {r(w[c]);};}return p;}};});})(window,'script','CobrowseIO');
+
+        CobrowseIO.license = "u_y72YK_9icfGQ";
+        CobrowseIO.client().then(function(){
+            CobrowseIO.start();
+        });
+    </script>
+
+    <script
+        id="__ada"
+        data-handle="bmgmoney"
+        src="https://static.ada.support/embed2.js"
+    ></script>
+
+</body>
+
+</html>

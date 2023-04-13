@@ -1,0 +1,9 @@
+@media (min-width: 992px) {
+  #modal-body-video-testimonials .vertical-layout.vertical-menu .content,
+  #modal-body-video-testimonials
+    .vertical-layout.vertical-layout.vertical-menu
+    .footer {
+    margin-left: 0px !important;
+  }
+}
+

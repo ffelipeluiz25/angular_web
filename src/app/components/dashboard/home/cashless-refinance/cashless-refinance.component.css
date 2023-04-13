@@ -1,0 +1,73 @@
+#card-refinance {
+  background-color: #ED7F30;
+  color: white;
+}
+
+#title-card {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+#row-of-title {
+  align-items: center;
+  margin-top: 22px;
+  margin-left: 5px;
+}
+
+@media(max-width: 768px) {
+  #title-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+  }
+
+  #row-of-title {
+    margin-left: 15px;
+  }
+
+  #warning {
+    margin-top: 18px !important;
+  }
+}
+
+
+#button-refinance-mobile {
+  color: white;
+  background-color: #022060;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+#button-refinance-web {
+  color: white;
+  background-color: #022060;
+  border-radius: 8px;
+  margin-top: 5px !important;
+  margin-left: 130px !important;
+}
+
+#div-button-mobile {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+@media(max-width: 1280px) {
+  #button-refinance-web {
+    margin-left: 90px !important;
+  }
+}
+
+@media(max-width: 820px) {
+  #button-refinance-web {
+    margin-left: 35px !important;
+  }
+}
+
+#row-of-items {
+  padding-top: 5px !important;
+}
+

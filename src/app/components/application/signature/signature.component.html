@@ -1,0 +1,224 @@
+<section id="icon-tabs" *ngIf="initialized">
+  <div class="row">
+    <div class="col-xl-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-body collapse in">
+          <div class="card-block">
+            <div class="row hidden-sm-up">
+              <div class="col-md-12">
+                <div class="form-divider m-b-0">
+                  <h4 class="card-title m-l-0 success darken-4 w-100">Your application has been
+                    approved!</h4>
+                  <p>Please read the documents below and click in "I Agree" to sign your loan
+                    documents, complete
+                    the application process, and fund your loan.</p>
+                </div>
+              </div>
+            </div>
+            <div class="row hidden-sm-up">
+              <div class="col-xs-12">
+                <hr />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-divider">
+                  <img src="assets/images/icons/signing.png" />
+                  <h4 class="card-title">Sign Your Loan</h4>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p>By checking the boxes and clicking "I Agree", I confirm that I have read, understood
+                  and
+                  agreed to be bound by all terms and conditions of the:</p>
+                <span style="color: #9fa6b2; font-style: italic;">Fields with (*) are required to check.</span>
+
+                <ul class="ul-agreements mt-1">
+                  <li>
+                    <fieldset class="checkbox">
+                      <label class="blue-grey">
+                        <input class="check-big" type="checkbox" value="" checked
+                          [(ngModel)]="agreements.pd_promissory_note" name="agreements" (change)="hideError()">
+                        <a class="link_default m-l-10" href="javascript:void(0);"
+                          (click)="getPromissoryNote()">{{titlePromissoryNoteHead}} Promissory Note*</a>
+                      </label>
+                    </fieldset>
+                  </li>
+                  <li *ngIf="customer.eligible_for_cashback">
+                    <fieldset class="checkbox">
+                      <label class="blue-grey">
+                        <input class="check-big" type="checkbox" value="" checked="checked" disabled
+                          [(ngModel)]="agreements.cashback" name="agreements" (change)="hideError()">
+                        <a class="link_default m-l-10" href="javascript:void(0);" (click)="getCashbackOffer()">Cashback
+                          Offer</a>
+                      </label>
+                    </fieldset>
+                  </li>
+                  <div *ngIf="signatureDocumentsList.length > 0">
+                    <li *ngFor="let document of signatureDocumentsList">
+                      <fieldset class="checkbox">
+                        <label class="blue-grey">
+                          <input class="check-big" type="checkbox" value="" checked
+                            [(ngModel)]="signatureDocumentsList[signatureDocumentsList.indexOf(document)].value"
+                            (change)="hideError(document.name)">
+                          <a class="link_default m-l-10" href="javascript:void(0);"
+                            (click)="getSignatureDocument(document.name, 'onlyPreviewDocument')">{{document.name}}</a>
+                        </label>
+                      </fieldset>
+                    </li>
+                  </div>
+                  <li *ngIf="customer.state_abbreviation === 'KS'">
+                    <fieldset class="checkbox">
+                      <label class="blue-grey">
+                        <input class="check-big" type="checkbox" value="" checked [(ngModel)]="agreements.apa"
+                          name="agreements" (change)="hideError()">
+                        <a class="link_default m-l-10" href="javascript:void(0);"
+                          (click)="openAuthorizationModal()">Authorization/Revocation of Payroll Allotments*</a>
+                      </label>
+                    </fieldset>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row" *ngIf="show_error">
+              <div class="col-xs-12">
+                <p class="error-message">* You must agree, by checking the required boxes, with all terms and
+                  conditions with (*) above</p>
+              </div>
+            </div>
+            <div class="actions-mobile text-xs-center">
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-xs-12 col-md-4">
+                  <div class="form-group m-b-0">
+                    <button [disabled]="is_processing" type="button" class="btn btn-warning btn-darken-4 btn-block"
+                      tabindex="5" (click)="onSubmit()">I Agree</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 hidden-lg-down">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card blue-grey">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-divider">
+                          <img src="assets/images/icons/information.png" />
+                          <h4 class="card-title job">Good news!</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <p class="card-title m-l-0 m-b-10 success darken-4 w-100">Your
+                          application has been approved!</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <p>Please read and click in "I Agree" to sign your loan documents,
+                          complete
+                          the application process, and fund your loan.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <hr />
+                  </div>
+                </div>
+                <div class="row m-b-5">
+                  <div class="col-xs-12">
+                    <div class="p-10 text-xs-center">
+                      <app-footer-message></app-footer-message>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-1"></div>
+  </div>
+</section>
+
+<app-authorization-modal #authorizationModal></app-authorization-modal>
+<app-psychological-poka-yoke-modal #psychologicalPokaYokeModal [paymentType]="paymentType"
+  (agreedTerms)="agreedPokaYokeTerms($event)"
+  (agreedBackupPayment)="agreedPokaYokeWithPlanCTerms($event)"></app-psychological-poka-yoke-modal>
+
+<ng-template #signatureDocumentModal size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    Signature Document
+    <button type="button" class="close" aria-label="Close" (click)="closeSignatureModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <app-pdf-viewer #pdfViewerPN [src]="signatureDocumentB64Img" class="w-100"></app-pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="closeSignatureModal()">Close</button>
+  </div>
+</ng-template>
+
+
+<ng-template #promissoryNoteModal size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    {{titlePromissoryNoteHead}}
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <app-pdf-viewer #pdfViewerPN [src]="promissoryNoteB64Img" class="w-100"></app-pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #paymentTransferFormModal size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    Payment Transfer Form
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <app-pdf-viewer #pdfViewerPN [src]="paymentTransferFormB64Img" class="w-100"></app-pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #cashbackModal size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    {{titlePromissoryNoteHead}} Cashback Document
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <app-pdf-viewer #pdfViewerPN [src]="cashbackB64Img" class="w-100"></app-pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

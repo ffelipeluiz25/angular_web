@@ -1,0 +1,116 @@
+<div *ngIf="!env_prd" class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+      <section
+        class="col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 p-0">
+        <div class="card border-grey border-lighten-3 px-2 py-2 row mb-0">
+          <div class="card-header no-border p-0">
+            <div class="card-title text-xs-center">
+              <img src="https://cdn.bmgmoney.com/logo/bmgmoney_Logo_RGB__Orange-Purple_Large.png" alt="branding logo" class="logo">
+            </div>
+
+          </div>
+          <div class="card-body collapse in">
+            <div class="card-block card-login-padding">
+              <form class="form-horizontal" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                      <span>Login</span></h6>
+                  </div>
+                </div>
+                <div class="social-signup" *ngIf="showSocialLoginButtons">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <button type="button" class="btn btn-facebook btn-block" (click)="socialSignIn('facebook')">
+                        <i class="fa fa-facebook m-r-10"></i> Log in with Facebook</button>
+                    </div>
+                  </div>
+                  <div class="row m-t-10">
+                    <div class="col-xs-12">
+                      <button type="button" class="btn btn-google  btn-block" (click)="socialSignIn('google')">
+                        <i class="fa fa-google m-r-10"></i> Log in with Google</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                        <span>Or</span>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <fieldset class="form-group position-relative has-icon-left"
+                      [ngClass]="{'has-error': !email.valid && email.touched}">
+                      <input type="text" id="email" class="form-control input-lg" placeholder="Email" tabindex="1"
+                        [(ngModel)]="model.email" name="email" #email="ngModel" required email maxlength="100">
+                      <div class="form-control-position">
+                        <i class="ft-mail"></i>
+                      </div>
+                      <div *ngIf="!email.valid && email.touched" class="help-block font-small-3">
+                        <span class="error-message" *ngIf="email.errors.required">Email is required</span>
+                        <span class="error-message"
+                          *ngIf="email.errors.email && email.touched && !email.errors.required">Please provide a valid
+                          email</span>
+                      </div>
+
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <fieldset class="form-group position-relative has-icon-left"
+                      [ngClass]="{'has-error': !password.valid && password.touched }"
+                      (keydown)="hideWrongPasswordError()">
+                      <input [type]="passwordType" id="password" class="form-control input-lg" placeholder="Password"
+                        tabindex="2" [(ngModel)]="model.password" name="password" #password="ngModel" required
+                        minlength="6" maxlength="20">
+                      <div class="form-control-position">
+                        <i class="fa fa-key"></i>
+                      </div>
+                      <div class="btn-show-password blue-grey pull-right" (click)='onChangePasswordInputType()'>
+                        Show
+                      </div>
+                      <div *ngIf="!password.valid && password.touched" class="help-block font-small-3">
+                        <span class="error-message" *ngIf="password.errors.required">Password is required</span>
+                        <span class="error-message"
+                          *ngIf="password.errors.minlength && password.touched && !password.errors.required">Please
+                          provide
+                          a password with a least 6 chars</span>
+                      </div>
+                      <div class="help-block font-small-3 m-t-5" *ngIf="wrongPassword">
+                        <span class="error-message">The password you entered is incorrect. Try again, or choose another
+                          login option.</span>
+                      </div>
+                      <span class="f-12 pull-right m-t-5"><a [routerLink]="['/reset-password']">Forgot your
+                          password?</a></span>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button type="submit" class="btn btn-warning btn-darken-4 btn-lg btn-block"
+                      tabindex="3">Login</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="">
+              <p class="float-sm-right text-xs-center m-0">New customer?
+                <a href="#" (click)="redirectToSignup()" class="card-link">Sign Up</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-warning-modal #warningModal></app-warning-modal>

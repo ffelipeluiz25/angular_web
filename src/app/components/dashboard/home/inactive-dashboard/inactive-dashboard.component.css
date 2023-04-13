@@ -1,0 +1,36 @@
+.img-wrapper{
+    margin-bottom: 20px;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.btn-cashback-learn-more{
+    margin-top: 20px;
+}
+
+.alert.alert-pif[class*=alert-icon-]:after {
+    content: '\f005';
+}
+
+.alert.bg-primary[class*=alert-icon-]:after {
+    content: '\f129';
+}
+
+
+
+@media (max-width: 767px) {
+    .alert-pif{
+        margin: 10px 10px 0 10px;
+        border: 1px solid #dedede;
+        border-left-width: 4rem;
+    }
+
+    .btn-cashback-learn-more{
+        margin-top: 0px;
+    }
+
+    .title-cashback{
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,4 @@
+/* You can add global styles to this file, and also import other style files */
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){
+    overflow: scroll !important;
+}

@@ -1,0 +1,19 @@
+.blink {
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+    color: blue;
+  }
+}
+
+.ellipse {
+  background-color: #fa6300;
+  color: #504865;
+  border-radius: 50%;
+}

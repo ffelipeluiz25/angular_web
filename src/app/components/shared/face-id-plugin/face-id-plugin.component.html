@@ -1,0 +1,21 @@
+<div *ngIf="featureFaceIdEnabled">
+    <h4 _ngcontent-serverapp-c170="" class="font-weight-bold">Identity Verification</h4>
+    <span *ngIf="customerStatus.response.status=='DONE'" class="tag tag-primary tag-uploaded darken-4 resp-w-100 m-5">
+        <i class="fa fa-check"></i> Done
+    </span>
+    <span *ngIf="customerStatus.response.status=='NO_REQUEST'"
+        class="tag tag-warning tag-uploaded darken-4 resp-w-100 m-5">
+        <i class="fa fa-check"></i> Liveness Proof not needed
+    </span>
+    <p *ngIf="customerStatus.response.status=='PENDING'" class="m-20">
+        <!-- <span class="m-b-10 di-block">Take a picture of your driver's
+            license and a selfie to validate
+            your identity.</span> -->
+        <span class="m-b-10 di-block">Take a selfie to validate your identity</span>
+        <span>
+            <a class="btn btn-darken-4 btn-block btn-warning" tabindex="13" [href]="faceIdUrl" target="_blank"
+                (click)="tickStatus()">Start
+                validation</a>
+        </span>
+    </p>
+</div>

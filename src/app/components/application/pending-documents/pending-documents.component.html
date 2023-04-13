@@ -1,0 +1,237 @@
+<section id="icon-tabs" [hidden]="!initialized">
+  <div class="row">
+    <div class="col-xl-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-body collapse in">
+          <div class="card-block">
+            <div class="row m-b-0">
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-divider">
+                          <img *ngIf="!is_mobile" src="assets/images/icons/doc.png" />
+                          <h4 class="card-title-pending-document">Upload Required Documents or Connect to Data Providers
+                          </h4>
+                          <small class="card-custom-subtitle blue-grey">All documents must be
+                            a full-page copy formatted in:
+                            .PDF, .JPEG, .PNG or Screenshot</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row"
+                      *ngIf="(retiredData?.retired != '3' && retiredData?.retired != '7') || reconnectOpenPayroll">
+                      <div class="col-xs-12">
+                        <h3 class="m-b-20">Work Account Verification</h3>
+                        <app-open-payroll-plugin #openPayrollPluginComponent [step]="step" [retired-data]="retiredData"
+                          (openPayrollPluginCallback)="openPayrollPluginCallback($event)">
+                        </app-open-payroll-plugin>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div *ngIf="featureBankStatementPlaidDocsUnknow">
+                          <app-doc-open-banking #docOpenBanking (document-uploaded)="onUploadDocumentBank()"
+                            [retired-data]="retiredData" [step]="step" [has_bank_link]="hasBankLink"
+                            [bank-statement-data]="bankStatementsList">
+                          </app-doc-open-banking>
+                        </div>
+                        <div *ngIf="bankStatementsList.length > 0">
+                          <div *ngIf="featureBankStatementPlaidDocsUnknow">
+                            <app-bank-statement #bankStatementComponent (document-uploaded)="onUploadDocumentBank()"
+                              [retired-data]="retiredData" [step]="step" [bank-statement-data]="bankStatementsList">
+                            </app-bank-statement>
+                          </div>
+                          <div *ngIf="!featureBankStatementPlaidDocsUnknow">
+                            <app-bank-statement-2 #bankStatementComponent (document-uploaded)="onUploadDocumentBank()"
+                              [retired-data]="retiredData" [step]="step" [bank-statement-data]="bankStatementsList"
+                              [documents-already-saved]="documentsAlreadySaved" [has_bank_link]="hasBankLink">
+                            </app-bank-statement-2>
+                          </div>
+                        </div>
+
+                        <div *ngIf="debitCardRuleActive && cashlessHasDebitCard">
+                          <h4 class="font-weight-bold">Payment method</h4>
+                          <div class="col-md-12 col-centered">
+                            <app-debit-card-modal-adapter [dataModel]="dataModel" (success)="embeddedIsSuccess($event)"
+                              *ngIf="!callBackSuccessMessage && ft_debitCardMultipleVendors">
+                            </app-debit-card-modal-adapter>
+                            <button class="btn btn-warning btn-darken-4 btn-block"
+                              *ngIf="!callBackSuccessMessage && !ft_debitCardMultipleVendors"
+                              (click)="openPayNearMeModal()">Register payment method</button>
+                          </div>
+                          <h3 class="success-message-paynearme" *ngIf="callBackSuccessMessage">Your payment method has
+                            been successfully registered</h3>
+                        </div>
+                        <hr>
+
+                        <ul class="p-l-15 list-unstyled" *ngIf="pendingDocumentsList.length > 0">
+                          <li class="li-upload-documents" *ngFor="let item of pendingDocumentsList">
+                            <app-upload-document [sub-program-id]="sub_program_id" [document-data]="item"
+                              (document-uploaded)="onUploadDocument($event)" [payment-amount]="amountOfPayment"
+                              [customer-ssn]="customerSSN" [lff-payroll-system-type]="lffPayrollSystemType"
+                              [payroll-system-mapping]="payrollSystemMapping" [first-payment-date]="first_payment_date"
+                              [allotment-bank-info]="allotment_bank_info" [step]="step" [retired-data]="retiredData">
+                            </app-upload-document>
+                          </li>
+                        </ul>
+                        <hr>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="customerIdentityStatus && !featureFaceIdEnabled">
+                      <div class="col-xs-12">
+                        <h3 class="m-b-10">Customer Identity</h3>
+                        <span class="tag tag-primary tag-uploaded darken-4 resp-w-100 m-5"
+                          *ngIf="customerIdentityStatus == 'done'">
+                          <i class="fa fa-check"></i> Done
+                        </span>
+                        <p *ngIf="customerIdentityStatus == 'pending'" class="m-20">
+                          <span class="m-b-10 di-block">Take a picture of your driver's
+                            license and a selfie to validate
+                            your identity.</span>
+                          <span *ngIf="isMobile()">
+                            <a class="btn btn-darken-4 btn-block btn-warning" tabindex="13" [href]="urlCustomerIdentity"
+                              target="_blank" (click)="tickCustomerIdentityStatus()">Start
+                              validation</a>
+                          </span>
+                          <span *ngIf="!isMobile()">
+                            <button type="button" class="btn btn-darken-4 btn-block btn-warning" tabindex="13"
+                              (click)="continueOnMobile('customer_identity')">Start
+                              validation on your mobile
+                              phone</button>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <ul *ngIf="featureFaceIdEnabled && requestFaceId" class="p-l-15 list-unstyled">
+                      <li class="li-upload-documents">
+                        <div class="row item-upload-documents">
+                          <div class="col-xs-12">
+                            <app-face-id-plugin (faceIdPluginCallback)="faceIdPluginCallback($event)">
+                            </app-face-id-plugin>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <div class="row m-t-10">
+                      <div class="col-xs-12">
+                        <hr>
+                        <app-upload-documents-generic></app-upload-documents-generic>
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="customerIdentityStatus || requestFaceId">
+                      <div class="col-xs-12">
+                        <hr>
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="acceptedDocumentsList.length > 0">
+                      <div class="col-xs-12">
+                        <h3 class="m-b-20">Accepted Documents</h3>
+                        <ul class="p-l-15 list-unstyled">
+                          <li class="li-upload-documents" *ngFor="let item of acceptedDocumentsList">
+                            <app-upload-document [document-data]="item" (document-uploaded)="onUploadDocument($event)"
+                              [payment-amount]="amountOfPayment" [customer-ssn]="customerSSN"
+                              [lff-payroll-system-type]="lffPayrollSystemType"
+                              [payroll-system-mapping]="payrollSystemMapping" [first-payment-date]="first_payment_date"
+                              [allotment-bank-info]="allotment_bank_info">
+                            </app-upload-document>
+                          </li>
+                        </ul>
+                        <hr>
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="declinedDocumentsList.length > 0">
+                      <div class="col-xs-12">
+                        <h3 class="m-b-20">Declined Documents</h3>
+                        <ul class="p-l-15 list-unstyled">
+                          <li class="li-upload-documents" *ngFor="let item of declinedDocumentsList">
+                            <app-upload-document [document-data]="item" (document-uploaded)="onUploadDocument($event)"
+                              [payment-amount]="amountOfPayment" [customer-ssn]="customerSSN"
+                              [lff-payroll-system-type]="lffPayrollSystemType"
+                              [payroll-system-mapping]="payrollSystemMapping" [first-payment-date]="first_payment_date"
+                              [allotment-bank-info]="allotment_bank_info">
+                            </app-upload-document>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="(!uploadedAllDocuments && bankStatementsList.length < 0)">
+                  <div class="col-xs-12">
+                    <div class="p-10">
+                      <p class="" style="text-align:center;">
+                        <b class="danger darken-1">* Your application will NOT be reviewed until
+                          all required documents have
+                          been submitted correctly.</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="(!uploadedAllDocuments && bankStatementsList.length < 0)">
+              <div class="col-xs-12">
+                <hr />
+              </div>
+            </div>
+            <div class="actions-mobile text-xs-center">
+              <div class="row">
+                <div class="col-xs-4 col-xl-6">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-secondary btn-block" tabindex="11"
+                      (click)="saveForLater()">{{saveButtonText}}</button>
+                  </div>
+                </div>
+                <div class="col-xs-4 hidden-xl-up">
+
+                </div>
+                <div class="col-xs-4 col-xl-6">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-darken-4 btn-block btn-next" tabindex="10"
+                      [disabled]="!uploadedAllDocuments" (click)="onSubmit()"
+                      [ngClass]="{'btn-secondary': !uploadedAllDocuments, 'btn-warning': uploadedAllDocuments}">Submit
+                      <span class="hidden-md-down">your application</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-steps-section [currentStep]="currentStep"></app-steps-section>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 hidden-lg-down">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="p-10">
+            <p>
+              <button type="button" class="btn btn-darken-4 btn-block btn-warning" tabindex="11"
+                (click)="continueOnMobile('pending_documents')">Continue
+                on Mobile Phone</button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-1"></div>
+  </div>
+</section>
+<!-- <app-plaid-pending-documents-modal #plaidPendingDocumentsModal></app-plaid-pending-documents-modal> -->
+
+<app-continue-on-mobile-modal #continueOnMobileModal></app-continue-on-mobile-modal>
+<app-paynearme-modal #PaynearmeModalComponent [dataModel]="dataModel" (success)="embeddedIsSuccess($event)">
+</app-paynearme-modal>

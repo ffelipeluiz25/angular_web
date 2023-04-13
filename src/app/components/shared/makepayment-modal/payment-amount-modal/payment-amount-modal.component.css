@@ -1,0 +1,15 @@
+#payment_amount {
+  text-align-last: center;
+  color: #53A653;
+}
+
+#pay_day {
+  text-align-last: center !important;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}

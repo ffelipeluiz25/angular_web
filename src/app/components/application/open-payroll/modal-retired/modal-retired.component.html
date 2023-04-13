@@ -1,0 +1,42 @@
+<ng-template #modalRetired size="lg" let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4>Do you have access to your online retirement/annuity account?</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <div class="row">
+            Yes - Click the Connect to Retirement Account {{retiredData?.retired == '7' ? 'OPM' : 'Mypay'}} button and type “{{retiredData?.retired == '7' ? 'Office of Personnel Management' : 'Mypay/DFAS'}}”.
+        </div> -->
+        <div class="row">
+            Yes - Click on the button and input your credentials for your retirement account.
+        </div>
+        <div class="row">
+            No - Follow the step-by-step instructions below.
+        </div>
+        <br>
+        <div class="row" *ngIf="retiredData?.retired == '7'">
+            <ol>
+                <li> Call the Office of Personnel Management (OPM) at 1-800-767- 6738 and set up the password for your OPM Retirement Services Online Account. </li>
+                <li> Have the new password sent to your email.</li>
+                <li> Confirm you have access to your OPM Retirement Services Online account with your new password by clicking <a target="_blank" class="cant-connect-text" href="http://servicesonline.opm.gov">servicesonline.opm.gov</a> (you will need access
+                    to this account later in the application).
+                </li>
+                <li> Continue with your loan application. </li>
+            </ol>
+        </div>
+        <div class="row" *ngIf="retiredData?.retired == '3'">
+            <ul>
+                <li> Call MyPay/DFAS at 1-888-332-7411 and set up the password for your online retirement/annuity account. </li>
+                <li> Have the new password sent to your email.</li>
+                <li> After you’ve set up your online account. Access your MyPay/DFAS online retirement/annuity account with your new password by clicking <a target="_blank" class="cant-connect-text" href="http://mypay.dfas.mil/#/">mypay.dfas.mil/#/</a> (you
+                    will need access to this account later in the application). </li>
+                <li> Continue with your loan application. </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>

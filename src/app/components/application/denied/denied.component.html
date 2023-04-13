@@ -1,0 +1,65 @@
+<section id="icon-tabs" *ngIf="initialized">
+    <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-10">
+            <div class="card">
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row" *ngIf="!blocked">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <p>
+                                            <b>Unfortunately, we are unable to approve your loan application at this time.</b>
+                                        </p>
+                                        <p>We will send you an email with additional information.</p>
+                                        <p>If you need further assistance, please contact us via email at
+                                            <a href="mailto:customer.service@bmgmoney.com" target="_blank">customer.service@bmgmoney.com</a>.</p>
+                                        <p>Thank you.</p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-30" *ngIf="employer_new_enable">
+                                    <div class="col-xs-12">
+                                        <div class="form-group m-b-0">
+                                            <button
+                                                type="button"
+                                                class="btn btn-warning btn-darken-4"
+                                                tabindex="1"
+                                                (click)="createNewApplication()"
+                                                [disabled]="!newApplicationButtonEnabled ? 'disabled' : ''">Request a new loan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="blocked">
+                            <div class="col-xs-12" *ngIf="blocked_type === '1'">
+                                <p>
+                                    <b>Unfortunately, we are unable to approve your loan application at this time.</b>
+                                </p>
+                                <p>We are unable to move forward with your loan application at this time as explained
+                                    in your Statement of Credit Denial; which you will receive via email.</p>
+                                <p>We suggest that you do not reapply before
+                                    <b>{{blocked_until | date:'MMMM dd'}}</b>, because it is our understanding that multiple credit inquiries may affect
+                                    your credit score.</p>
+                                <p>We apologize for any inconvenience.</p>
+                                <p>Thank you.</p>
+                            </div>
+                            <div class="col-xs-12" *ngIf="blocked_type === '2'">
+                                <p>
+                                    <b>Unfortunately, you are unable to apply at this time.</b>
+                                </p>
+                                <p>Your most recent payment is pending.</p>
+                                <p>Please log back after
+                                    <b>{{blocked_until | date:'MMMM dd'}}</b> to check your eligibility status.</p>
+                                <p>Once again, we apologize for any inconvenience.</p>
+                                <p>Thank you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-1"></div>
+    </div>
+</section>

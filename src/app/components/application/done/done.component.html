@@ -1,0 +1,216 @@
+<section id="icon-tabs" [hidden]="!initialized">
+    <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+            <div class="card">
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row row-done">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-divider">
+                                                    <img src="assets/images/icons/thumbs-up.png" />
+                                                    <h4 class="card-title">Done!</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4 class="m-l-0 m-b-10 success darken-4">Your application was submitted
+                                                    and is currently under review!</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>A loan specialist will review your application and will contact you
+                                                    if needed.
+                                                </p>
+                                                <p *ngIf="!isRefiCashless">If approved, you will receive your money no
+                                                    later than <b>two business
+                                                        days
+                                                    </b>.</p>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!isArgyleConnected || !open_bankin_connection" class="row">
+                                            <div class="col-xs-12">
+                                                <hr>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <h5 class="m-b-10">Express Application</h5>
+                                                <b>Speed up your application!</b>
+                                            </div>
+                                            <div class="col-xs-12 m-t-15" *ngIf="!isArgyleConnected">
+                                                <div class="col-12" style="text-align: center;"
+                                                    *ngIf="!hasConnectedWithAnyVendor">
+                                                    Connect with your payroll system to get a <b>faster loan
+                                                        decision.</b>
+                                                </div>
+                                                <app-open-payroll-plugin #openPayrollPluginComponent
+                                                    (openPayrollPluginCallback)="openPayrollPluginCallback($event)"
+                                                    [step]="'done'" [redirectNextStep]="false"
+                                                    [setupAllotmentModeOnly]="false"
+                                                    (skipOpenPayrollEvent)="continueWithRegular()">
+                                                </app-open-payroll-plugin>
+                                            </div>
+                                            <div class="col-xs-12 m-t-15" *ngIf="!open_bankin_connection">
+                                                <div class="col-12" style="text-align: center;">
+                                                    Link the bank account where you receive your salary <b>to bypass
+                                                        the need to upload certain documents.</b>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 p-t-0 col-md-10 col-lg-10 col-centered">
+                                                        <button type="button"
+                                                            class="btn btn-warning btn-darken-4 btn-lg btn-block"
+                                                            (click)="linkBankAccount()">Link your Bank
+                                                            Account</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row m-t-10">
+                                            <div class="col-xs-12">
+                                                <hr>
+                                                <app-upload-documents-generic></app-upload-documents-generic>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="featureFaceIdEnabled && requestFaceId">
+                                            <div class="row">
+                                                <div class="col-xs-12  m-t-15">
+                                                    <hr>
+                                                    <app-face-id-plugin
+                                                        (faceIdPluginCallback)="faceIdPluginCallback($event)"></app-face-id-plugin>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form (submit)="onSubmit()" #referralForm="ngForm" *ngIf="!hasReferral">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-divider m-b-0">
+                                                        <img src="assets/images/icons/share.png" />
+                                                        <h4 class="card-title"> Did someone refer you?
+                                                            <br />
+                                                            <span class="f-10 blue-grey lighten-2"
+                                                                style="text-transform:capitalize;">
+                                                                <i>Optional</i>
+                                                            </span>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p>If someone referred you, please type their code here. If not,
+                                                        leave it blank.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" id="emailAddress3"
+                                                            placeholder="Referral code" tabindex="2"
+                                                            [(ngModel)]="model.referral_code" #referral_code="ngModel"
+                                                            name="referral_code" required maxlength="10">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-darken-4 btn-block"
+                                                            tabindex="10" style="min-height: 42.8px;"
+                                                            [disabled]="!referralForm.valid"
+                                                            [ngClass]="{'btn-secondary': !referralForm.valid, 'btn-warning': referralForm.valid}">Apply
+                                                            Code
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 hidden-lg-down">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card blue-grey">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-divider">
+                                                    <img src="assets/images/icons/information.png" />
+                                                    <h4 class="card-title job">Done!</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="vert-wizard">
+                                            <li class="done">
+                                                <div class="vert-wizard-step">
+                                                    <i class="fa fa-user ico-wizard"></i>
+                                                    <i class="fa fa-check ico-done"></i>
+                                                </div>
+                                                <h4>Tell us about yourself</h4>
+                                            </li>
+                                            <li class="done">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="vert-wizard-step">
+                                                            <i class="fa fa-phone ico-wizard"></i>
+                                                            <i class="fa fa-check ico-done"></i>
+                                                        </div>
+                                                        <h4>Loan terms and bank account</h4>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="done">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="vert-wizard-step">
+                                                            <i class="fa fa-phone ico-wizard"></i>
+                                                            <i class="fa fa-check ico-done"></i>
+                                                        </div>
+                                                        <h4>Upload your documents</h4>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="p-10 text-xs-center">
+                                            <app-footer-message></app-footer-message>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-1"></div>
+    </div>
+</section>
+<app-open-banking #openBankingComponent [step]="step"
+    (openBankinCallback)="openBankinCallback($event)"></app-open-banking>

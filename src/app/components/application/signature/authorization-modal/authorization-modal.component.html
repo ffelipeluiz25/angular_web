@@ -1,0 +1,46 @@
+<ng-template #authorizationModal size="lg" let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4>Authorization/Revocation of Payroll Allotments</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="ul-agreements">
+                    <li>
+                        <fieldset class="checkbox">
+                            <label class="blue-grey">
+                                <input type="checkbox" value="" checked disabled>
+                                I have authorized and requested that my employer, on each date upon which wages,
+                                salary, commissions, or other similar compensation are payable to me, allot (or cause
+                                the allotment of) a portion of such wages, salary, commissions or other similar
+                                compensation in the amount of my payment obligations as set forth under the Note dated
+                                <span class="text-underline"><b>{{date}}</b></span> for the number of payments set forth in the Note to an allotment savings
+                                account. I do not by this authorization sell, assign or make an order for the payment
+                                of my salary, wages, commissions or other compensation for services to you as security
+                                for my loan or otherwise. I HAVE THE RIGHT TO REVOKE THIS AUTHORIZATION. If I revoke
+                                this authorization, I am still responsible to fulfill my payment obligations as set
+                                forth under the Note.
+                            </label>
+                        </fieldset>
+                    </li>
+                    <li>
+                        <fieldset class="checkbox">
+                            <label class="blue-grey">
+                                <input type="checkbox" value="" disabled>
+                                I am revoking my authorization of payroll allotment. I understand that even though I
+                                have revoked this authorization of payroll allotment, I am still responsible to fulfill
+                                my payment obligations as set forth under the Note with BMG LoansAtWork, LLC.
+                            </label>
+                        </fieldset>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>

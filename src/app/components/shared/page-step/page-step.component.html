@@ -1,0 +1,24 @@
+<div class="progress-container">
+    <div class="progress-bar-container">
+        <div class="progress">
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                 [style.width.%]="step.completion_percent"></div>
+        </div>
+    </div>
+    <div class="progress-text-container small p-l-10">
+        About {{step.minutes_remaining}} min left
+    </div>
+</div>
+<hr *ngIf="show_divider">
+
+<!-- <div class="m-t-5">
+    <div>
+        <div class="progress">
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                 [style.width.%]="step.completion_percent">{{step.completion_percent}}%</div>
+        </div>
+    </div>
+    <div class="small m-t-5">
+        About {{step.minutes_remaining}} min left
+    </div>
+</div> -->

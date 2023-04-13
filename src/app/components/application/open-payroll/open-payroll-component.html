@@ -1,0 +1,80 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
+            <section
+                class="col-xl-10 offset-xl-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 p-0">
+                <div class="card border-grey border-lighten-3 px-2 py-2 row mb-0">
+                    <div class="card-body collapse in">
+                        <div class="card-block card-login-padding">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="m-t-20">
+                                        <app-page-step [pipe_step]="step" [show_divider]="false"></app-page-step>
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                                        <span>
+                                            Express Application
+                                        </span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="!retiredData?.isRetired">
+                                <div class="col-xs-12 col-md-8 col-lg-8 col-centered">
+
+                                    <p class="verification-info" *ngIf="!ft_shareYourEmployer">
+                                        Share your employment & salary records to qualify <b><u>for Instant Approval</u>.</b>
+                                    </p>
+                                    <p class="verification-info text-center" *ngIf="ft_shareYourEmployer">
+                                        <b>Share your employment & salary records to qualify for Instant Approval.</b>
+                                        <br>
+                                        Eligibility for a loan is based on employment, not a credit score. Let's verify
+                                        your employer and employment status.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="retiredData?.isRetired">
+                                <div class="col-xs-12 col-md-8 col-lg-8 col-centered">
+                                    <span class="verification-info">
+                                        Share your retirement account statement/annuity summary records to
+                                        qualify <b>for Instant
+                                            Approval.</b>
+                                        <a href="#" (click)="retiredModalOpen()"
+                                            *ngIf="retiredData?.retired == '3' || retiredData?.retired == '7'"> <span
+                                                class="cant-connect-text"> Learn more</span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row text-xs-center">
+                                <div class="col-xs-12" *ngIf="retiredData?.retired == '3'">
+                                    <img alt="Mypay Platform" id="img_retired" width="100" height="100"
+                                        src="../../../../assets/images/mypay_platform.png" class="brand-logo">
+                                </div>
+                                <div class="col-xs-12" *ngIf="retiredData?.retired == '7'">
+                                    <img alt="Office Of Personnel Management" id="img_retired" width="100" height="100"
+                                        src="../../../../assets/images/office_of_personnel_management.png"
+                                        class="brand-logo">
+                                </div>
+                            </div>
+                            <br>
+                            <app-open-payroll-plugin #openPayrollPluginComponent
+                                (openPayrollPluginCallback)="openPayrollPluginCallback($event)" [step]="step"
+                                [redirectNextStep]="true" [retired-data]="retiredData" [setupAllotmentModeOnly]="false"
+                                (skipOpenPayrollEvent)="continueWithRegular()">
+                            </app-open-payroll-plugin>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="text-xs-center m-0">
+                            <a *ngIf="!isVendorMandatory || ft_skip_vendor_enabled" (click)="continueWithRegular()">
+                                <span class="cant-connect-text"> Can't connect? Continue with regular application.</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<app-modal-retired #modalRetired [retiredData]="retiredData"></app-modal-retired>

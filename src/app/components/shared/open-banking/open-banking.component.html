@@ -1,0 +1,13 @@
+<ng-template #decisionLogicModal size="lg" let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div style="text-align:center; min-height: 580px;">
+        <div class="row">
+            <iframe [src]="url_decision_logic_iframe" id="IFrameDecisionLogic" name="IFrameDecisionLogic" *ngIf="show_decision_logic_iframe"
+                    border="0" height="580" style="border:none; width: 94% !important;"></iframe>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,32 @@
+<ng-template #continueOnMobileModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <i class="fa fa-mail f-20 p-t-5 p-r-10"></i>
+    <h4 class="p-t-5">Continue on Mobile Phone</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" [ngSwitch]="type">
+      <h6 style="padding:15px" *ngSwitchCase="'customer_identity'">
+        We sent you a text message link. Please take a picture of your Driver's License from your Mobile Phone.
+        You can also scan the QR-Code below to get started.</h6>
+      <h6 style="padding:15px" *ngSwitchDefault>
+        We sent you a Text Message with the link to finish the application from your Mobile Phone.
+        You can also scan the QR-Code below.</h6>
+    </div>
+    <div style="text-align:center">
+      <div class="row">
+        <ngx-qrcode [elementType]="url" [value]="qrCodeValue" qrc-class="qrSizeImg">
+        </ngx-qrcode>
+      </div>
+      <div class="row resendsms">
+        <img src="assets/images/icons/smartphone.png" />&nbsp;
+        <a class="link-default" href="javascript:void(0);" (click)="resendHash(1, type)">Resend SMS</a>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

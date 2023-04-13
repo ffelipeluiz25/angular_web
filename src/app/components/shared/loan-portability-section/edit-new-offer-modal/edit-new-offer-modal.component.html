@@ -1,0 +1,72 @@
+<ng-template #editNewOfferModal size="sm" let-c="close" let-d="dismiss">
+  <div class="modal-header border-none">
+    <h4>Update Payment Information</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeWithoutSave()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-l-25 p-r-25 p-t-0">
+    <div class="row">
+      <div class="col-md-12">
+        <app-user-info-header [application_item]="user_info"></app-user-info-header>
+      </div>
+    </div>
+    <div class="row" *ngIf="showChangeEmployer">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <app-change-employer-new-offer [data_model]="data_model"></app-change-employer-new-offer>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn grey btn-primary w-100" (click)="goToChangeAddress()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="showChangeAddress">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <app-change-address-new-offer [data_model]="data_model.currentInfo.customerAddress">
+            </app-change-address-new-offer>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="button" class="btn grey btn-outline-secondary w-100"
+              (click)="goToChangeEmployer()">Back</button>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn grey btn-primary w-100" (click)="goToChangeCalendar()">Save and
+              Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="showChangeCalendar">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <app-change-calendar-new-offer [data_model]="data_model.currentInfo"></app-change-calendar-new-offer>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="button" class="btn grey btn-outline-secondary w-100"
+              (click)="goToChangeAddress()">Back</button>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn grey btn-primary w-100" (click)="save()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn grey btn-outline-secondary" (click)="closeWithoutSave()">Close</button>
+  </div>
+</ng-template>

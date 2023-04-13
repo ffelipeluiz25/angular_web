@@ -1,0 +1,19 @@
+@media (max-width: 767px) {
+  .alert-pif {
+    margin: 10px 10px 0 10px;
+    border: 1px solid #dedede;
+    border-left-width: 4rem;
+  }
+
+  .btn-cashback-learn-more {
+    margin-top: 0px;
+  }
+
+  .title-cashback {
+    font-size: 2rem;
+  }
+}
+
+.alert.bg-warning.alert-icon-left {
+  cursor: pointer;
+}

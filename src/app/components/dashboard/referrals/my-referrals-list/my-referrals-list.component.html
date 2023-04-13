@@ -1,0 +1,90 @@
+<div class="row col-xl-12 col-lg-12 col-xs-12 m-0 p-0">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-xs-12 p-5">
+      <div class="col-xl-4 col-lg-4 col-xs-12 text-xs-left">
+        <fieldset class="form-group">
+          <label for="basicInput">Status</label>
+          <select class="form-control" id="basicInput" (change)="getList($event.target.value)">
+            <option *ngFor="let x of statusList" [value]="x.value" [selected]="x.value === ''">{{x.name}}</option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-xs-12 text-xs-right"></div>
+      <div class="col-xl-4 col-lg-4 col-xs-12 text-xs-right">
+        <div [ngClass]="{ 'p-t-25': !isMobile(), '' : isMobile() }">
+          <fieldset class="form-group position-relative has-icon-left m-0">
+            <input type="text" (input)="applyFilter()" [(ngModel)]="search_term" class="form-control" id="iconLeft4"
+              placeholder="Search in results">
+            <div class="form-control-position">
+              <i class="ft-search blue-grey lighten-2"></i>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="min-height: 340px;">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header p-t-5 p-b-0">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-striped table-slim">
+                <thead>
+                  <tr class="blue-grey">
+                    <th (click)="sort('name', !sort_asc)" class="text-left cursor-pointer" scope="col" width="40%">
+                      Contact
+                      <i *ngIf="sort_asc && sort_field=='name'" class="fa fa-sort-asc"></i>
+                      <i *ngIf="!sort_asc && sort_field=='name'" class="fa fa-sort-desc"></i>
+                    </th>
+                    <th (click)="sort('status', !sort_asc)" class="text-center cursor-pointer" scope="col">
+                      Status
+                      <i *ngIf="sort_asc && sort_field=='status'" class="fa fa-sort-asc"></i>
+                      <i *ngIf="!sort_asc && sort_field=='status'" class="fa fa-sort-desc"></i>
+                    </th>
+                    <th (click)="sort('updated_at', !sort_asc)" class="text-center cursor-pointer" scope="col">
+                      Updated at
+                      <i *ngIf="sort_asc && sort_field=='updated_at'" class="fa fa-sort-asc"></i>
+                      <i *ngIf="!sort_asc && sort_field=='updated_at'" class="fa fa-sort-desc"></i>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="filtered_list.length > 0">
+                  <tr
+                    *ngFor="let item of filtered_list | paginate: { id: 'parameters-pag', itemsPerPage: itemsPerPage, currentPage: page }">
+                    <td class="text-left" scope="col">{{item.name}} <i>({{item.email}})</i></td>
+                    <td class="text-center" scope="col" style="text-transform:capitalize;" [ngSwitch]="item.status">
+                      <span class="badge badge-success" *ngSwitchCase="'approved'">{{ item.status }}</span>
+                      <span class="badge badge-warning" *ngSwitchCase="'applied'">{{ item.status }}</span>
+                    </td>
+                    <td class="text-left" scope="col">{{item.updated_at | date:'MM/dd/yyyy HH:mm'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row text-xs-right" *ngIf="filtered_list.length > 0">
+              <div class="col-xl-12 col-lg-12 col-xs-12">
+
+                <div class="col-xl-6 col-lg-6 col-xs-12 text-xs-left">
+                  <fieldset>
+                    <div [ngClass]="{ 'm-t-5': !isMobile() }">
+                      <div *ngIf="filtered_list.length == 0" class="blue-grey lighten-2">No data found</div>
+                      <div *ngIf="filtered_list.length == 1" class="blue-grey lighten-2">1 item found</div>
+                      <div *ngIf="filtered_list.length > 1" class="blue-grey lighten-2">{{filtered_list.length}} items
+                        found</div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-xs-12 text-xs-right">
+                  <pagination-controls id="parameters-pag" (pageChange)="page = $event" previousLabel="" nextLabel=""
+                    *ngIf="filtered_list.length > 0">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

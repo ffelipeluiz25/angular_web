@@ -1,0 +1,104 @@
+<section id="icon-tabs">
+  <div class="row" *ngIf="initialized">
+    <div class="col-xl-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-body collapse in">
+          <div class="card-block">
+            <div class="row">
+              <div class="col-xs-12">
+                <form (submit)="onSubmit()" #editForm="ngForm" autocomplete="off">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-divider">
+                        <img src="assets/images/icons/user.png" />
+                        <h4 class="card-title">Update your information</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <fieldset class="form-group" [ngClass]="{'has-error': !first_name.valid && first_name.touched }">
+                        <input type="text" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1"
+                               [(ngModel)]="model.first_name"
+                               name="first_name" #first_name="ngModel" required maxlength="50" LettersOnly>
+
+                        <div *ngIf="!first_name.valid && first_name.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="first_name.errors.required">First Name is required</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="col-xs-12">
+                      <fieldset class="form-group" [ngClass]="{'has-error': !last_name.valid && last_name.touched }">
+                        <input type="text" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2"
+                               [(ngModel)]="model.last_name"
+                               name="last_name" #last_name="ngModel" required maxlength="50" LettersOnly>
+
+                        <div *ngIf="!last_name.valid && last_name.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="last_name.errors.required">Last Name is required</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <fieldset class="form-group" [ngClass]="{'has-error': !email.valid && email.touched }">
+                        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="3"
+                               [(ngModel)]="model.email"
+                               name="email" #email="ngModel" required email maxlength="100">
+
+                        <div *ngIf="!email.valid && email.touched" class="help-block font-small-3">
+                          <span class="error-message" *ngIf="email.errors.required">Email is required</span>
+                          <span class="error-message" *ngIf="email.errors.email && email.touched && !email.errors.required">Please provide a valid
+                            email</span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="actions-mobile text-xs-center">
+                    <div class="row">
+                      <div class="col-xs-4 col-xl-6">
+                        <a (click)='redirect()' class="btn btn-secondary btn-block" tabindex="11">Cancel</a>
+                      </div>
+                      <div class="col-xs-4 hidden-xl-up">
+                        <div class="mobile-step current"></div>
+                        <div class="mobile-step"></div>
+                        <div class="mobile-step"></div>
+                        <div class="mobile-step"></div>
+                      </div>
+                      <div class="col-xs-4 col-xl-6">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-warning btn-darken-4 btn-block" tabindex="10">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 hidden-lg-down">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card  blue-grey">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="p-10 text-xs-center">
+                      <app-footer-message></app-footer-message>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-1"></div>
+  </div>
+</section>

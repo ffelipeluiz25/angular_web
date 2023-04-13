@@ -1,0 +1,13 @@
+<div [ngSwitch]="dataModel.customerVendor">
+  <app-paynearme-embedded 
+    *ngSwitchCase="'Paynearme'" 
+    [dataModel]="dataModel" 
+    (success)="paynearmeEmbeddedIsSuccess($event)" 
+    (unlockSubmitButton)="paynearmeEnableSubmitButton($event)"></app-paynearme-embedded>
+
+  <app-repay-embedded 
+    *ngSwitchCase="'Repay'" 
+    [dataModel]="dataModel"
+    (success)="repayEmbeddedIsSuccess($event)" 
+    (unlockSubmitButton)="repayEnableSubmitButton($event)"></app-repay-embedded>
+</div>

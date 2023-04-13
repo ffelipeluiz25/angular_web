@@ -1,0 +1,282 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
+            <section
+                class="col-xl-10 offset-xl-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 p-0">
+                <div class="card border-grey border-lighten-3 px-2 py-2 row mb-0">
+                    <div class="card-body collapse in">
+                        <div class="card-block card-login-padding">
+                            <form class="form-horizontal" #bankSelectionForm="ngForm">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="m-t-20">
+                                            <app-page-step [pipe_step]="step" [show_divider]="false"></app-page-step>
+                                        </div>
+                                        <h6
+                                            class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                                            <span>
+                                                Express Application
+                                            </span>
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 col-lg-8 col-centered">
+                                        <p class="verification-info text-center" *ngIf="ft_shareYourEmployer">
+                                            <b>
+                                                Connect your bank account where you receive your
+                                                <span *ngIf="!retiredData?.isRetired">paycheck.</span>
+                                                <span *ngIf="retiredData?.isRetired">retirement Benefits.</span>
+                                            </b>
+                                            <br />
+                                            By authorizing us to review your bank information, we can verify your
+                                            income and other information to decision your loan application faster. <br>
+                                            If approved, we will deposit your funds into this bank account.
+                                            We may use this information when servicing your loan account with us.
+                                        </p>
+                                        <p class="verification-info" *ngIf="!ft_shareYourEmployer">
+                                            Connect your bank account instantly and securely
+                                            <br><br>
+                                            Link your bank account
+                                            <b><u> where you receive your <span
+                                                        *ngIf="!retiredData?.isRetired">paycheck</span> <span
+                                                        *ngIf="retiredData?.isRetired">retirement
+                                                        Benefits</span></u></b>
+                                            <br />
+                                            By authorizing us to review your bank information, we can verify your
+                                            income and other information to decision your loan application faster. <br>
+                                            If approved, we will deposit your funds into this bank account.
+                                            We may use this information when servicing your loan account with us.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12 col-lg-8 col-centered" style="padding-top:20px;">
+                                        <button class="btn btn-warning btn-darken-4 btn-lg btn-block"
+                                            (click)="linkBankAccount()">Link Your Bank Account</button>
+                                    </div>
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card-footer" *ngIf="applicationType == '1' || applicationType == null">
+                        <div *ngIf="!open_banking_mandatory || ft_skip_vendor_enabled" class="">
+                            <p class="text-xs-center m-0">
+                                <a (click)="continueWithRegular()">
+                                    <span class="verification-change">Can't find your bank? Continue with regular
+                                        application.</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer" *ngIf="applicationType == '2'">
+                        <div *ngIf="!open_banking_mandatory" class="">
+                            <p class="text-xs-center m-0">
+                                <a (click)="continueWithRegular()">
+                                    <span class="verification-change">Can't find your bank? Continue with regular
+                                        application.</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <div class="SandboxMessage">
+        You are currently in Sandbox mode. Credentials » username: user_good | password: pass_good
+    </div>
+</div>
+
+<app-open-banking #openBankingComponent [step]="step" (openBankinCallback)="openBankinCallback($event)">
+</app-open-banking>
+
+<!-- OLD <div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="col-xl-10 offset-xl-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 p-0">
+                <div class="card border-grey border-lighten-3 px-2 py-2 row mb-0">
+                    <div class="card-header no-border p-0">
+                        <div class="card-title text-xs-center">
+                            <img src="assets/images/logo/bmgmoney.png" alt="branding logo">
+                        </div>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="card-block card-login-padding">
+                            <form class="form-horizontal" #bankSelectionForm="ngForm">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                                            <span>
+                                                Express Application
+                                            </span>
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 col-lg-8 col-centered">
+                                        <span class="verification-info">
+                                            Get your application reviewed <b><u>FASTER</u></b>. Link your bank account where you <u>receive your
+                                                paycheck</u>. <br>
+                                            Not connecting your bank account may require additional documents.
+                                        </span>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 col-lg-8 col-centered">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <label for="firstName2">Select your bank:</label>
+                                                    <input type="text" class="form-control" id="bank_search"
+                                                           placeholder="Search your bank"
+                                                           tabindex="1" [disabled]="!initialized" data-hj-whitelist
+                                                           [(ngModel)]="model.bank"
+                                                           [ngbTypeahead]="search"
+                                                           [inputFormatter]="formatter"
+                                                           [resultFormatter]="formatter"
+                                                           (selectItem)="institutionSelect($event,bank)"
+                                                           (keyup)="onSearchInput($event)"
+                                                           #bank="ngModel"
+                                                           name="bank">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/navy_federal.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/wells_fargo.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/bofa.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/chase.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/usaa.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/capital_one.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/regions.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/sun_trust.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/citi_wide.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/us_bank.png">
+                                                    </div>
+                                                </div>
+
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/pnc.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/td_bank.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/bbt.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/charles_schwab.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/fidelity.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/citizen.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/huntington.png">
+                                                    </div>
+                                                </div>
+                                                <div (click)="openPlaid('')" class="bank-container">
+                                                    <div class="bank-img">
+                                                        <img src="https://cdn.bmgmoney.com/ecommerce-assets/us_banks_logo/merril_edge.png">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="">
+                            <p class="text-xs-center m-0">
+                                <a (click)="continueWithRegular()">
+                                    <span class="verification-change">Can't find your bank? Continue with regular application.</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #decisionLogicModal size="lg" let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div style="text-align:center">
+        <div class="row">
+            <iframe [src]="urlIframe" id="IFrameDecisionLogic" name="IFrameDecisionLogic" *ngIf="showIframe"
+                    height="520px" border="0" style="border:none; width: 93% !important;"></iframe>
+        </div>
+    </div>
+</ng-template> -->

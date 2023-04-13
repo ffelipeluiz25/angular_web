@@ -1,0 +1,24 @@
+<ng-template #previewModal let-c="close" let-d="dismiss">
+  <div class="modal-body p-30">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 class="card-title text-xs-center">Preview</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12">
+        <div *ngIf="file_extension=='PDF'" class="text-xs-center m-t-10">
+          <i class="fa fa-file-pdf-o" style="font-size: 150px;"></i>
+        </div>
+        <div *ngIf="file_extension!='PDF'" class="text-xs-center m-t-10">
+          <img [src]="content_b64" class="w-100">
+        </div>
+        <div class="text-xs-center m-t-15">{{file_name}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="closeModal()">Cancel</button>
+    <button type="button" class="btn btn-lg btn-warning btn-darken-4" (click)="confirmPreview()">Upload</button>
+  </div>
+</ng-template>

@@ -1,0 +1,74 @@
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-header row">
+      <div class="content-header-left col-md-6 col-xs-12 mb-2">
+        <h3 class="content-header-title mb-0">Card Information</h3>
+        <div class="row breadcrumbs-top">
+          <div class="breadcrumb-wrapper col-xs-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a [routerLink]="['/dashboard']">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <span>Card Information</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="card card-responsive bg-white">
+
+            <div class="card-body">
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 class="font-weight-bold">Debit card active</h4>
+                    <div *ngFor="let card of cardModel.list" class="debit-card-active">
+                      <div *ngIf="card.active">
+                        <p>The information below pertains to your currently registered debit card</p>
+                        <ul>
+                          <li><b>Card Brand:</b> {{card.cardBrand}}</li>
+                          <li><b>Last 4 digits:</b> {{card.cardNumber}}</li>
+                          <li><b>Expiration date:</b> {{card.expiration}}</li>
+                        </ul>
+                        <hr>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body" *ngIf="initialized">
+              <div class="card-block">
+                <h4 class="font-weight-bold">Update Card Information</h4>
+                <app-debit-card-modal-adapter [dataModel]="dataModel" (success)="embeddedIsSuccess($event)"
+                  *ngIf="!callBackSuccessMessage && ft_debitCardMultipleVendors" [retokenizeButton]="true">
+                </app-debit-card-modal-adapter>
+                <button class="btn btn-warning btn-darken-4 btn-lg mt-1"
+                  *ngIf="!callBackSuccessMessage && !ft_debitCardMultipleVendors" (click)="openPayNearMeModal()">Click
+                  Here to Update</button>
+                <h3 class="success-message-paynearme" *ngIf="callBackSuccessMessage">Your
+                  debit card information has been successfully updated</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <a [routerLink]="['/dashboard']" class="btn btn-secondary"><i class="fa fa-angle-double-left"></i> Back to
+            dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-paynearme-modal #PaynearmeModalComponent [dataModel]="dataModel" (success)="embeddedIsSuccess($event)">
+</app-paynearme-modal>

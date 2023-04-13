@@ -1,0 +1,232 @@
+<div class="app-content content content-video-testimonial container-fluid">
+    <div class="content-wrapper">
+        <section id="icon-tabs" *ngIf="initialized">
+            <div class="row">
+                <div class="col-xl-1"></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-10">
+                    <div class="card">
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <div class="row" *ngIf="!isRefiCashless && !isWriteYourReview">
+                                    <div class="col-md-12">
+                                        <div class="form-divider">
+                                            <img src="assets/images/icons/thumbs-up.png" />
+                                            <h4 class="card-title success darken-4">Your money is on its way!</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="!isRefiCashless && !isWriteYourReview">
+                                    <div class="col-md-12">
+                                        <p>Thank you for your business. You will receive your funds in the amount of
+                                            <b>{{fundingAmount | currency}}, </b>
+                                            as early as
+                                            <b>two business days.</b>
+                                        </p>
+                                        <p *ngIf="fundingMethod == 'ach' "> Bank Name: <b>{{bankName}}</b> | Account
+                                            Number ending: <b>{{lastBankAccountNumber}}.</b></p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="!isWriteYourReview">
+                                    <div class="col-xs-12">
+                                        <hr />
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!showReferral">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-divider">
+                                                <img src="assets/images/icons/question.png" />
+                                                <h4 class="card-title">How did we do?</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showNPS">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>Your feedback is very important to us.</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>
+                                                    <b>How likely are you to recommend us to your coworkers?</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button type="button"
+                                                    class="btn btn-float btn-square btn-nps btn-secondary"
+                                                    *ngFor="let score of npsScore"
+                                                    (click)="onNpsScoreSelect(score)">{{score}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showReviewButtons">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>Thank you very much! We really appreciate it.</p>
+                                                <p>
+                                                    <b>Would you kindly share your review on one of the sites below?</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <a target="_blank"
+                                                        href="https://www.google.com.br/search?q=BMG+Money,+Inc.,+1221+Brickell+Ave+%231170,+Miami,+FL+33131,+EUA&ludocid=9428259705815568850#lrd=0x88d9b68112ce8353:0x82d7e83fd74411d2,1,,,"
+                                                        class="btn btn-survey btn-social btn-google m-b-10">
+                                                        <span class="fa fa-google font-medium-3"></span>Review on
+                                                        Google</a>
+                                                    <a target="_blank"
+                                                        href="https://www.facebook.com/pg/bmgmoney/reviews/"
+                                                        class="btn btn-survey btn-social btn-facebook m-b-10">
+                                                        <span class="fa fa-facebook font-medium-3"></span>Review on
+                                                        Facebook</a>
+                                                    <a target="_blank"
+                                                        href="https://www.yelp.com/writeareview/biz/H7yMQuEUAPBtzk5h9YDpTQ?return_url=%2Fbiz%2FH7yMQuEUAPBtzk5h9YDpTQ"
+                                                        class="btn btn-survey btn-social btn-pinterest m-b-10">
+                                                        <span class="fa fa-yelp font-medium-3"></span>Review on Yelp</a>
+                                                    <a target="_blank"
+                                                        href="https://www.bbb.org/south-east-florida/business-reviews/consumer-finance-companies/bmg-money-in-miami-fl-90115312/reviews-and-complaints?review=true"
+                                                        class="btn btn-survey btn-social btn-bitbucket m-b-10">
+                                                        <span class="fa fa-star font-medium-3"></span>Review on Better
+                                                        Business Bureau</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>Score:
+                                                    <b>{{npsSelectedScore}}</b>
+                                                    <a href="#" (click)="changeScore()">(Change score)</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showSuggestionForm">
+                                        <div class="row" *ngIf="npsSelectedScore > 6">
+                                            <div class="col-md-12">
+                                                <p>Thank you!</p>
+                                                <p>What changes would this company have to make for you to give it an
+                                                    even higher rating?</p>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="npsSelectedScore <= 6">
+                                            <div class="col-md-12">
+                                                <p>What should we do differently for you to give us a higher rating?</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-xl-6">
+                                                <div class="form-group">
+                                                    <textarea type="tel" class="form-control" id="feedback"
+                                                        placeholder="" tabindex="3" [(ngModel)]="model.feedback"
+                                                        name="feedback" #feedback="ngModel" required></textarea>
+                                                    <p>Score: {{npsSelectedScore}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-warning btn-darken-4 resp-w-100 m-b-10"
+                                                        (click)="onSubmitFeedback()">Submit feedback</button>
+                                                    <button type="button"
+                                                        class="btn btn-secondary btn-darken-4 resp-w-100 m-b-10"
+                                                        (click)="changeScore()">Change Score</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showThanks">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>Thank you for your feedback!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="showReferral">
+                                    <form #referralForm="ngForm">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-divider m-b-0">
+                                                    <img src="assets/images/icons/share.png" />
+                                                    <h4 class="card-title"> Did someone refer you?
+                                                        <br />
+                                                        <span class="f-10 blue-grey lighten-2"
+                                                            style="text-transform:capitalize;">
+                                                            <i>Optional</i>
+                                                        </span>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>If someone referred you, please type their code here. If not, leave
+                                                    it blank.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="emailAddress3"
+                                                        placeholder="Referral code" tabindex="2"
+                                                        [(ngModel)]="model.referral_code" #referral_code="ngModel"
+                                                        name="referral_code" required maxlength="10">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-3">
+                                                <div class="form-group">
+                                                    <button type="button" (click)="payReferal()"
+                                                        class="btn btn-success btn-darken-4 btn-block" tabindex="9"
+                                                        style="min-height: 42.8px;"
+                                                        [disabled]="!referralForm.valid">Apply
+                                                        Code
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-3">
+                                                <div class="form-group">
+                                                    <button [routerLink]="['/dashboard']" type="button"
+                                                        class="btn btn-warning btn-darken-4 btn-block" tabindex="10"
+                                                        style="min-height: 42.8px;">I was not referred
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="actions-mobile text-xs-center m-t-30">
+                                    <div class="row">
+                                        <div class="col-md-8" *ngIf="!isWriteYourReview"></div>
+                                        <div class="col-xs-12 col-md-8" *ngIf="isWriteYourReview">
+                                            <div class="form-group m-b-0 m-t-10">
+                                                <a [routerLink]="['/dashboard']"
+                                                    class="btn btn-secondary pull-left resp-w-100">
+                                                    <i class="fa fa-angle-double-left"></i> Back to dashboard</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-4" *ngIf="!isWriteYourReview">
+                                            <div class="form-group m-b-0 m-t-10">
+                                                <a *ngIf="!showReferral" (click)="showReferralForm()"
+                                                    class="btn btn-secondary pull-right resp-w-100">Done</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-1"></div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="alert bg-danger alert-icon-left fade in mb-2" role="alert" *ngIf="!selected && touched && !disabled">
+    {{errorMessage}}
+  </div>
+  <div class="row">
+  <div class="col-xs-12" [ngClass]="{'col-md-6': (!size || size == 'xl')}" *ngFor="let item of data">
+    <button type="button" class="btn btn-secondary btn-choose w-100 font-amount" [ngClass]="{'active' : item.selected, 'text-xs-left': (textAlign == 'left')}" (click)="select(item)" [disabled]="disabled">
+      <i class="fa fa-check"></i> {{item.text}}<span class="m-l-5 font-months" [ngClass]="{'blue-grey' : !item.selected}"> ({{item.payments}} payments over {{item.months}} months)</span>
+    </button>
+  </div>
+  </div>

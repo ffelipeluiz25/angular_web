@@ -1,0 +1,47 @@
+<div class="col-xl-12">
+  <div class="row">
+    <div class="card overflow-hidden m-b-0" id="card-refinance">
+      <div class="media-body">
+        <h5 class="m-b-15 text-xs-center">
+          <div id="title-card">
+            <img type="image/png" width="48" height="48" src="assets/images/warning.png" id="warning">
+            <div class="row" id="row-of-title">
+              <h3 *ngIf="!isMobile()"><b>
+                  We noticed you are behind on your payments.
+                </b> </h3>
+              <h5 *ngIf="isMobile()" id="title-text"><b>
+                  We noticed you are <br>
+                  behind on your payments. </b>
+              </h5>
+            </div>
+          </div>
+          <br>
+          <p>
+            Regardless of your employment status, we are here to help!
+            <br>
+            Get you payments and your credit score back on track to qualify for additional funding in the
+            future.
+          </p>
+          <p><b><br>
+              See if you qualify for lower payments or up to 50% of your outstanding balance.
+            </b></p>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group row" *ngIf="showNewCashless">
+  <div class="col-md-4" *ngIf="daysPastDue > 5 && cashlessEligibility && !isMobile()"></div>
+  <div class="col-md-4" *ngIf="daysPastDue > 5 && cashlessEligibility && !isMobile()">
+    <button class="btn btn-secondary" (click)="openCashlessOptionsMenuModal()" id="button-refinance-web">
+      <b>Let's Get Started</b></button>
+  </div>
+  <div class="col-md-4" *ngIf="daysPastDue > 5 && cashlessEligibility && !isMobile()"></div>
+  <div class="col-12" *ngIf="daysPastDue > 5 && cashlessEligibility && isMobile()" id="div-button-mobile">
+    <button class="btn btn-secondary" (click)="openCashlessOptionsMenuModal()" id="button-refinance-mobile">
+      <b>Let's Get Started</b></button>
+  </div>
+</div>
+
+<app-cashless-options-menu [applicationId]="applicationId" [activePaymentRequest]="activePaymentRequest"
+  #cashlessOptionsMenuModal></app-cashless-options-menu>

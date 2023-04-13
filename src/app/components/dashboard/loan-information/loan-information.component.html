@@ -1,0 +1,267 @@
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-body">
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-xs-12">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="media">
+
+                  <div class="media-body text-xs-left"  *ngIf="featureToggleEnabled">
+                    <h3 *ngIf="!outstandingBalanceShow" class="showPayoff-h3">
+                      <button type="button" class="btn btn-custom btn-sm btn-icon btn-pure success"  (click)="showPayoffQuote(false, true)">
+                        <i class="fa fa-eye"></i>
+                      </button>
+                    </h3>
+                    <h3 *ngIf="outstandingBalanceShow">
+                      {{loan.dashboard_info.current_outstanding_loan_balance | currency}}
+                    </h3>
+                    <span class="blue-grey lighten-1">Outstanding balance</span>
+                  </div>
+
+
+                  <div class="media-body text-xs-left"  *ngIf="!featureToggleEnabled">
+                    <h3>
+                      {{loan.dashboard_info.current_outstanding_loan_balance | currency}}
+                    </h3>
+                    <span class="blue-grey lighten-1">Outstanding balance</span>
+                  </div>
+
+                  <div class="media-right media-middle">
+                    <i class="icon-pie-chart primary font-large-2 float-xs-right"></i>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-xs-12">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="media">
+                  <div class="media-body text-xs-left">
+                    <h3>{{loan.dashboard_info.amount_paid | currency}}</h3>
+                    <span class="blue-grey lighten-1">Amount paid</span>
+                  </div>
+                  <div class="media-right media-middle">
+                    <i class="icon-check success font-large-2 float-xs-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xs-12 " [ngClass]="{'col-xl-3': !isPaidInFull() }">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="media">
+                  <div class="media-body text-xs-left">
+                    <h3>{{loan.loan_info.amount_of_payment | currency}}</h3>
+                    <span class="blue-grey lighten-1">Amount of payment</span>
+                  </div>
+                  <div class="media-right media-middle">
+                    <i class="icon-wallet warning font-large-2 float-xs-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isPaidInFull()" class="col-xl-3 col-lg-6 col-xs-12">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="media">
+                  <div class="media-body text-xs-left">
+                    <h3>{{loan.dashboard_info.next_due_date | date:'MMM dd'}}</h3>
+                    <span class="blue-grey lighten-1">Next payment date</span>
+                  </div>
+                  <div class="media-right media-middle">
+                    <i class="icon-calendar danger font-large-2 float-xs-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row hidden-xl-up">
+        <div class="col-xs-12">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p class="m-b-0">Loan Information</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <ul class="list-unstyled ul-loan-information">
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">Loan number:
+                        <span class="ng-binding text-muted">{{loan.loan_info.loan_number}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">Amount paid directly to me:
+                        <span class="ng-binding text-muted">{{loan.loan_info.amount_paid_to_customer | currency}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1" *ngIf="loan.loan_info.state_abbreviation == 'KY'">
+                        Loan processing fee:
+                        <span class="ng-binding text-muted">{{loan.loan_info.loan_fee | currency}}</span>
+                      </div>
+                      <div class="p-b-5 blue-grey lighten-1" *ngIf="loan.loan_info.state_abbreviation != 'KY'">
+                        Credit investigation fee:
+                        <span class="ng-binding text-muted">{{loan.loan_info.loan_fee | currency}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">Loan amount:
+                        <span class="ng-binding text-muted">{{loan.loan_info.amount_funded | currency}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">Number of pay periods:
+                        <span class="ng-binding text-muted">{{loan.loan_info.number_of_payments}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">Number of months:
+                        <span class="ng-binding text-muted">{{loan.loan_info.term_in_months}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">Amount per pay period:
+                        <span class="ng-binding text-muted">{{loan.loan_info.amount_of_payment | currency}}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">APR:
+                        <span class="ng-binding text-muted">{{ (loan.loan_info.effective_apr/100) | percent:'2.2' }}</span>
+                      </div>
+                    </li>
+                    <li class="col-lg-4">
+                      <div class="p-b-5 blue-grey lighten-1">First loan payment date:
+                        <span class="ng-binding text-muted">{{loan.loan_info.first_payment_date | date:'MMM dd, yyyy'}}</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row hidden-xl-up">
+        <div class="col-xs-12">
+          <hr>
+        </div>
+      </div>
+      <div class="row" *ngIf="loan.dashboard_info.booked">
+        <div class="col-xs-12 col-xl-6">
+          <div class="card card-responsive">
+            <div class="card-body">
+              <div class="card-block cleartfix">
+                <div class="media">
+                  <div class="media-body">
+                    <div class="row">
+                      <div class="col-xs-12 col-xl-6">
+                        <div class="form-group m-b-5">
+                          <div class="input-group date" id="datetimepicker1">
+                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" (ngModelChange)="onSelectDate($event, true)"
+                                   name="dp" [(ngModel)]="model" [readonly]="true" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                            <span class="input-group-addon cursor-pointer" (click)="d.toggle()">
+                              <span class="fa fa-calendar"></span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-xl-6">
+                        <a href="#" class="btn btn-warning btn-request-payoff btn-block" (click)="getPayoffQuote()">Request payoff quote</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-xl-6" *ngIf="!featureToggleEnabled">
+          <div class="card card-responsive card-responsive-center">
+            <div class="card-body">
+              <div class="card-block cleartfix">
+                <div class="media">
+                  <div class="media-left media-middle">
+                    <h1 class="mr-2">{{payoffQuote.amount | currency}}</h1>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="h4-loan-information-responsive">Payoff Quote</h4>
+                    <span class="blue-grey lighten-1">{{payoffDate | date:'MM/dd/yy'}}
+                    </span>
+                  </div>
+                  <div class="media-right media-middle">
+                    <i class="icon-wallet success font-large-2 icon-loan-information-responsive"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-xl-6" *ngIf="featureToggleEnabled">
+          <div class="card card-responsive card-responsive-center">
+            <div class="card-body">
+              <div class="card-block cleartfix">
+                <div class="media">
+
+                  <div *ngIf="!payoffQuoteShow" class="media-left media-middle">
+                      <button type="button" class="btn btn-icon btn-sm btn-custom  btn-pure warning mr-1"  (click)="showPayoffQuote(true, false)">
+                        <i class="fa fa-eye  success font-large-2 icon-loan-information-responsive"></i>
+                      </button>
+                  </div>
+
+                  <div  *ngIf="payoffQuoteShow" class="media-left media-middle">
+                    <h1 class="mr-2">{{payoffQuote.amount | currency}}</h1>
+                  </div>
+
+                  <div  *ngIf="!payoffQuoteShow"  class="media-body"> </div>
+
+                  <div  *ngIf="payoffQuoteShow"  class="media-body">
+                    <h4 class="h4-loan-information-responsive">Payoff quote</h4>
+                    <span class="blue-grey lighten-1">{{payoffDate | date:'MM/dd/yy'}}
+                    </span>
+                  </div>
+
+                  <div class="media-right media-middle">
+                    <i class="icon-wallet success font-large-2 icon-loan-information-responsive"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="loan.dashboard_info.booked">
+        <div class="col-xs-12">
+          <p class="blue-grey lighten-1 loan-information-disclaimer">
+            <small>* The loan payoff quote amount displayed above assumes the customer’s loan payoff funds are received in our office
+              on the date selected above. If the loan payoff funds are not received in our office by the date selected by
+              the customer, the loan may continue to have an outstanding balance. Additionally, if the customer is actively
+              making payments through automatic payroll deductions, the loan payoff quote amount displayed above assumes
+              that all scheduled payments are made in accordance with the customer’s Payroll Allotment Promissory Note.</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

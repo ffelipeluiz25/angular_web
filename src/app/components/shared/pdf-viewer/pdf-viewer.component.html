@@ -1,0 +1,24 @@
+<div class="pdfViewerContainer">
+    <div class="navigation">
+    <span class="button" (click)="pdfViewer.firstPage()"><span class="icon fa fa-angle-double-left"></span></span>
+    <span class="button" (click)="pdfViewer.prevPage()"><span class="icon fa fa-angle-left"></span></span>
+    <span class="button">&nbsp;{{pdfViewer.getCurrentPage()}}&nbsp;/&nbsp;{{pdfViewer.getNumberOfPages()}}&nbsp;</span>
+    <span class="button" (click)="pdfViewer.nextPage()"><span class="icon fa fa-angle-right"></span></span>
+    <span class="button" (click)="pdfViewer.lastPage()"><span class="icon fa fa-angle-double-right"></span></span>
+    <span class="button" class="separator"> | </span>
+    <span class="button" (click)="pdfViewer.zoomIn()"><span class="icon fa fa-search-plus"></span></span>
+    <span class="button" (click)="pdfViewer.zoomOut()"><span class="icon fa fa-search-minus"></span></span>
+    <span class="button" (click)="pdfViewer.zoomPageWidth()"><span class="icon fa fa-arrows-alt"></span></span>
+    </div>
+    <simple-pdf-viewer #pdfViewer [src]="src" [removePageBorders]="false" [disableTextLayer]="true" 
+        (onError)="onError($event)" (onProgress)="onProgress($event)" (onLoadComplete)="onLoadComplete()"
+        [class]="'pageViewer'">
+        <br/>
+        <br/>
+    </simple-pdf-viewer>
+    <br/>
+    <div *ngIf="!pdfViewer.isDocumentLoaded()" class="infoBox">
+        <div class="fa fa-circle-o-notch fa-spin" *ngIf="!errorMsg"></div>
+        <div class="errorMsg" *ngIf="errorMsg">{{errorMsg}}</div>
+    </div>
+</div>

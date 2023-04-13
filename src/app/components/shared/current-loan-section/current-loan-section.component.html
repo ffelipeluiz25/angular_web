@@ -1,0 +1,78 @@
+<div class="card card-modal m-t-10">
+  <div class="card-header bg-blue-grey bg-lighten-5 p-b-10 p-t-15">
+    <div class="row">
+      <div class="col-12">
+        <h6 class="card-title blue-grey darken-1">
+          Current Loan&nbsp;
+          <span class="black">{{ data_model?.loanNumber }}</span>
+        </h6>
+      </div>
+    </div>
+  </div>
+  <div class="card-content container">
+    <div class="card-body p-t-10 p-b-5">
+      <div class="row f-12-mobile">
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Employer:</label>
+            <span>{{ data_model?.employerName }}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">State:</label>
+            <span>{{ data_model?.stateAbbreviation }}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Program:</label>
+            <span>{{ data_model?.programName }}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Product:</label>
+            <span>{{ data_model?.productName }}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Payment Method:</label>
+            <app-payment-type-label [paymentType]="data_model?.paymentType"></app-payment-type-label>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">DPD:</label>
+            <span>{{ data_model?.daysPastDue }}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Loan Amount:</label>
+            <span>{{ data_model?.loanAmount | currency:'$':'symbol':'2.2'}}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">APR:</label>
+            <span>{{ data_model?.apr}}%</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Outstanding Balance:</label>
+            <span>{{ data_model?.outstandingBalance | currency:'$':'symbol':'2.2'}}</span>
+          </fieldset>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <fieldset class="form-group m-b-0">
+            <label for="basicInput" class="blue-grey lighten-1">Remaining Payments:</label>
+            <span>{{ data_model?.remainingPayments }}</span>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

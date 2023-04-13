@@ -1,0 +1,71 @@
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p class="m-b-0">Customer Information</p>
+                  </div>
+                </div>
+                <div class="row m-t-15">
+                  <div class="col-xs-12">
+                    <form (submit)="onSubmit()" #customerInfoForm="ngForm" autocomplete="off">
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12" *ngIf="customerInfo.program!=1">
+                          <div class="form-group" [ngClass]="{'has-error':  federal_agency.touched && !customerInfo.employer_agency.id }">
+                            <label for="federal_agency" class="blue-grey lighten-1">Federal Agency</label>
+                  
+                            <input type="text" 
+                              [disabled]="customerInfo.employer_agency_id"
+                              (keydown)="removeFederalAgency($event)"
+                              class="form-control" 
+                              [disabled]="customerInfo.program!=2"
+                              id="federal_agency" 
+                              placeholder="{{customerInfo.program!=2 ? 'N/A' : 'Type the employer name where you work'}}"
+                              tabindex="7" data-hj-whitelist 
+                              [(ngModel)]="customerInfo.employer_agency"
+                              [ngbTypeahead]="search" 
+                              [inputFormatter]="formatter" 
+                              [resultFormatter]="formatter"
+                              #federal_agency="ngModel" 
+                              name="federal_agency" 
+                              required>
+                            <div *ngIf="!federal_agency.valid && federal_agency.touched" class="help-block font-small-3">
+                              <span class="error-message" *ngIf="federal_agency.errors && federal_agency.errors.required">Federal Agency is
+                                required</span>
+                            </div>
+                            <div *ngIf="federal_agency.valid && federal_agency.touched && !customerInfo.employer_agency.id"
+                              class="help-block font-small-3">
+                              <span class="error-message">Please select a valid federal agency from the list</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12" *ngIf="customerInfo.program==1">
+                          <fieldset class="form-group">
+                            <label for="basicInput" class="blue-grey lighten-1">Employee ID</label>
+                            <input type="text" [disabled]="refi_param" name="employee_registration" maxlength="25" class="form-control" id="basicInput"
+                              [(ngModel)]="customerInfo.employee_registration">
+                          </fieldset>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-12 pull-right text-xs-right">
+                            <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+                          <button type="submit" class="btn btn-warning">Update</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

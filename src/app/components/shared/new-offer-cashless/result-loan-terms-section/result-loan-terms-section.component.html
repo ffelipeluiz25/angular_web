@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row f-12-mobile">
+    <div class="col-md-4">
+      <p class="blue-grey m-b-0 m-t-10">
+        New Outstanding Balance
+      </p>
+      <span style="font-size: x-large; color: #53a653">
+        {{data_model?.amountFunded | currency:'$':'symbol':'2.2'}}
+      </span>
+    </div>
+    <div class="col-md-4">
+      <p class="blue-grey m-b-0 m-t-10">Discount *</p>
+      <span style="font-size: x-large; color: #53a653">
+        {{ data_model?.discountPercent | percent}} ({{data_model?.discount | currency:'$':'symbol':'2.2'}})
+      </span>
+    </div>
+    <div class="col-md-4">
+      <p class="blue-grey m-b-0 m-t-10">
+        Payment Amount
+      </p>
+      <span style="font-size: x-large; color: #53a653">
+        {{data_model?.paymentAmount | currency:'$':'symbol':'2.2'}}
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <hr class="m-b-5 m-t-10" />
+    </div>
+  </div>
+  <div class="row f-12-mobile">
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Payoff Amount</p>
+      <p class="lead">{{data_model?.outstandingBalance | currency:'$':'symbol':'2.2'}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Amount Paid to Customer</p>
+      <p class="lead">{{data_model?.amountPaidToCustomer | currency:'$':'symbol':'2.2'}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Total Loan Amount</p>
+      <p class="lead">{{data_model?.totalLoanAmount | currency:'$':'symbol':'2.2'}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Amount of Each Payment</p>
+      <p class="lead">{{data_model?.paymentAmount | currency:'$':'symbol':'2.2'}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Number of Payments</p>
+      <p class="lead">{{data_model?.numberOfPayments}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Terms in Months</p>
+      <p class="lead">{{data_model?.termsInMonths}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">Credit Origination Fee</p>
+      <p class="lead">{{data_model?.feeAmount | currency:'$':'symbol':'2.2'}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">First Loan Payment Date</p>
+      <p class="lead">{{data_model?.firstPaymentDate | date: 'MM/dd/yyyy'}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="m-b-0">APR</p>
+      <p class="lead">{{ data_model?.apr }}%</p>
+    </div>
+  </div>
+</div>

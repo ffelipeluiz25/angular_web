@@ -1,0 +1,80 @@
+<section id="paynearme" *ngIf="initialized">
+  <div class="row">
+    <div class="col-xl-6 col-md-12 offset-xl-1">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-block">
+
+            <div class="row">
+              <div class="col-12 col-centered">
+                <div class="form-divider">
+                  <img src="assets/images/icons/bank.png" />
+                  <h4 class="card-title">{{cardTitleMessage}}</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-centered">
+                <div class="col-12 col-centered" *ngIf="dibursementMethodActive && showChangeLoanFundingButtons">
+
+                  <div class="btn-group">
+                    <button class="btn btn-block"
+                            [ngClass]="{'btn-warning btn-darken-4': disbursementMethod, 'btn-secondary': !disbursementMethod}"
+                            (click)="changeDisbursementMethod(true)">Instantly (Free)</button>
+                    <button class="btn btn-block"
+                            [ngClass]="{'btn-warning btn-darken-4': !disbursementMethod, 'btn-secondary': disbursementMethod}"
+                            (click)="changeDisbursementMethod(false)">3 Business days</button>
+                  </div>
+                </div>
+
+                <div class="m-l-10" [innerHTML]="cardTextMessage"></div>
+
+                <div *ngIf="!isTokenizationRequired && debitCardRegistered.length>0">
+                  <div class="row m-10">
+                    <div class="col-xs-12 card-detail">
+                      <h5><b>Debit card registered</b></h5>
+                      <div><b>Last 4:</b> {{debitCardRegistered[0].cardNumber}}</div>
+                      <div><b>Card brand:</b> {{debitCardRegistered[0].cardBrand}}</div>
+                      <div><b>Expiration Date:</b> {{this.debitCardRegistered[0].expiration}}</div>
+                      <button class="btn btn-orange btn-sm m-t-5" (click)="changeDebitCard()">Change</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="(disbursementMethod || debitCardIsPaymentsOnly) && isTokenizationRequired">
+                  <app-debit-card-adapter [dataModel]="dataModel" (success)="embeddedIsSuccess($event)"
+                                          *ngIf="ft_debitCardMultipleVendors">
+                  </app-debit-card-adapter>
+                  <app-paynearme-embedded [dataModel]="dataModel" (success)="embeddedIsSuccess($event)"
+                                          *ngIf="!ft_debitCardMultipleVendors">
+                  </app-paynearme-embedded>
+
+                  <h3 class="success-message-paynearme" *ngIf="callBackSuccessMessage && !dibursementMethodActive">Your
+                    payment method has been successfully registered</h3>
+                  <h3 class="success-message-paynearme" *ngIf="callBackSuccessMessage && dibursementMethodActive">Your
+                    loan funding method has been successfully registered</h3>
+
+                  <p class="m-l-10">We will NOT use this as a payment method without your express written consent.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-block" (click)="back()">Back</button>
+                <button class="btn btn-warning btn-darken-4 btn-block" [disabled]="!enableButtonSubmit"
+                        (click)="save()">Submit</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-steps-section [currentStep]="currentStep"></app-steps-section>
+
+  </div>
+</section>

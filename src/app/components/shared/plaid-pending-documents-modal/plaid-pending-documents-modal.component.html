@@ -1,0 +1,27 @@
+<ng-template #plaidPendingDocumentsModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4>Link Bank Account</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card-body collapse in">
+            <div class="card-block card-login-padding">
+                <div class="row">
+                    <p>Want to <b>speed up</b> the approval process?</p>
+                    <p>Link the bank account where you receive your salary to bypass the need to upload certain documents.</p>
+                </div>
+                <div class="row">
+                    <div style="padding-top:20px;">
+                        <button class="btn btn-warning btn-darken-4 btn-lg btn-block"
+                                (click)="redirect()">Link Your Bank Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>

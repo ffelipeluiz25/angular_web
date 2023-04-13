@@ -1,0 +1,109 @@
+<ng-template #newCashlessOfferModal>
+  <div class="card card-modal" id="big-card-modal">
+    <div class="card-header bg-blue-grey bg-lighten-5 p-b-10 p-t-15">
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="close" aria-label="Close" (click)="close()" style="float: right;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h6 class="card-title blue-grey darken-1">Cashless Refinance Offer</h6>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+      </div>
+    </div>
+    <div class="card-content container">
+      <div class="card-body p-b-10">
+        <div class="row">
+          <div class="col-md-12">
+            <app-current-loan-section [data_model]="dataModel.currentLoan"></app-current-loan-section>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-modal">
+              <div class="card-header bg-blue-grey bg-lighten-5 p-b-10 p-t-15">
+                <div class="row">
+                  <div class="col-12">
+                    <h6 class="card-title blue-grey darken-1">New offer
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content container">
+                <div class="card-body p-t-10 p-b-5">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <app-loan-portability-section [data_model]="dataModel"
+                        (refreshLoanTerms)="reloadSearchLoanTerms($event)">
+                      </app-loan-portability-section>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <hr class="m-b-5 m-t-10" />
+                    </div>
+                  </div>
+                  <div class="row f-12-mobile">
+                    <div class="col-md-12">
+                      <fieldset class="form-group m-b-0">
+                        <label for="basicInput" class="blue-grey lighten-1">Payment Amount:</label>
+                        <input id="payment_amount" name="payment_amount" [(ngModel)]="paymentAmount" type="text"
+                          currencyMask placeholder="{{paymentAmount}}" class="form-control" maxlength="11" />
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button" class="btn btn-success block m-t-10" (click)="searchLoanTerms()">
+                        <i class=" fa fa-search"></i> Search loan terms
+                      </button>
+                      <br>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="card card-modal m-t-10">
+                      <div class="card-content container">
+                        <div class="card-body p-t-10 p-b-10">
+                          <app-result-loan-terms-section [data_model]="loanTerms">
+                          </app-result-loan-terms-section>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <hr class="m-b-5 m-t-10" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button" class="btn btn-success block m-t-10" (click)="save()">
+                        Confirm
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container h-100 ">
+      <div class="col-md-12 f-12-mobile">
+        <p class="m-b-0 terms-disclaimer-text">* Terms are subject to change based on underwriting review</p>
+      </div>
+      <div class="card-footer text-right">
+        <button type="button" class="btn grey btn-outline-secondary" (click)="close()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-paynearme-modal #PaynearmeModalComponent [dataModel]="modelEmbedded" (success)="embeddedIsSuccess($event)">
+</app-paynearme-modal>

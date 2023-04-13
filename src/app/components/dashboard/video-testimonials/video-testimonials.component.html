@@ -1,0 +1,101 @@
+<div class="app-content content content-video-testimonial container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row" *ngIf="!page_is_modal">
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h3 class="content-header-title mb-0">Video testimonial contest</h3>
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-xs-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a [routerLink]="['/dashboard']">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span>$500 Gift Card</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="content-body">
+                <section id="grouped-stats">
+                    <div class="col-xl-3"></div>
+                    <div class="col-xs-12 col-xl-6 video-testimonial-default">
+                        <div class="video-testimonial-title p-t-30">
+                            <div class="row">
+                                Tell us why you
+                            </div>
+
+                            <div class="row video-testimonial-orange">
+                                L&hearts;VE
+                            </div>
+
+                            <div class="row">
+                                <img src="assets/images/logo/bmgmoney_big_logo.png" alt="branding logo" width="290px"
+                                    height="80px">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            The
+                            <span class="video-testimonial-orange">first 100 testimonials</span>
+                            will receive a $25 gift card.
+                        </div>
+                        <br>
+                        <div class="row"> To enter our video testimonial contest create a video on why you love BMG
+                            Money.
+                            Start
+                            the
+                            video
+                            by sharing your name and where you work. Then submit your video here:</div>
+
+                        <br>
+                        <a (click)="onClickUploadVideo();" id="btnUpload" class="btn btn-warning btn-darken-4 btn-block">
+                            Upload your video</a>
+                        <input id="input_upload" type="file" (change)="onSelectFile($event.target.files)"
+                            [hidden]="true">
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="row">1st Place
+                            <br><span class="video-testimonial-orange">$500 Amazon Gift Card</span>
+                        </div>
+
+                        <br>
+                        <div class="row"> 2nd Place
+                            <br><span class="video-testimonial-orange">$200 Amazon Gift Card</span>
+                        </div>
+
+                        <br>
+                        <div class="row"> 3rd Place
+                            <br><span class="video-testimonial-orange">$100 Amazon Gift Card</span>
+                        </div>
+
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="row m-t-10">
+                            <a href="https://bmgmoney.com/contest-rules" target="_blank" (click)="onClickSeeContestRules();" class="lnk-rules">
+                                Click here to see the Contest Rules</a>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </section>
+                <br>
+                <div class="row">
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <div class="row row-btn-back p-t-15 video-testimonial-back" *ngIf="!page_is_modal">
+            <div class="col-xs-12">
+                <a [routerLink]="['/dashboard']" class="btn btn-secondary">
+                    <i class="fa fa-angle-double-left"></i> Back to dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-preview-modal #previewModal (confirm-preview)='saveFile($event)'></app-preview-modal>

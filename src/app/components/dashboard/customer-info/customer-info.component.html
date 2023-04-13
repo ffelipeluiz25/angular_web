@@ -1,0 +1,238 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card card-responsive bg-white">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="m-b-0">Customer Information</p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-15">
+                                    <div class="col-xs-12">
+                                        <form (submit)="onSubmit()" #customerInfoForm="ngForm" autocomplete="off">
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !first_name.valid && first_name.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">First name</label>
+                                                        <input type="text" [disabled]="refi_param" class="form-control" id="basicInput" name="first_name" [(ngModel)]='customerInfo.first_name' #first_name="ngModel" name="first_name" required>
+                                                        <div *ngIf="!first_name.valid && first_name.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !last_name.valid && last_name.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Last name</label>
+                                                        <input type="text" [disabled]="refi_param" class="form-control" id="basicInput" name="last_name" [(ngModel)]='customerInfo.last_name' #last_name="ngModel" name="last_name" required>
+                                                        <div *ngIf="!last_name.valid && last_name.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': invalidDateError}">
+                                                        <label for="basicInput" class="blue-grey lighten-1">DOB</label>
+                                                        <input id="date_of_birth" [disabled]="refi_param" type="tel" class="form-control" placeholder="Date" mask='00/00/0000' [(ngModel)]="customerInfo.date_of_birth" #date_of_birth="ngModel" name="date_of_birth" (blur)="onChangeDateOfBirth()" (click)="d.toggle();"
+                                                        />
+                                                        <input type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onChangeDateOfBirthCalendar($event)" style="opacity: 0; width: 100%; height: 0;display: inherit;">
+                                                        <div *ngIf="invalidDateError" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">{{invalidDateError}}</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12" *ngIf="customerInfo.program!=1 && !is_employer_credit_policy">
+                                                    <div class="form-group" [ngClass]="{'has-error': federal_agency.valid && federal_agency.touched || federal_agency.valid && federal_agency.touched && !customerInfo.employer_agency.id }">
+                                                        <label for="federal_agency" class="blue-grey lighten-1">Federal Agency</label>
+
+                                                        <input type="text" [disabled]="customerInfo.employer_agency_id" (keydown)="removeFederalAgency($event)" class="form-control" [disabled]="customerInfo.program!=2" id="federal_agency" placeholder="{{customerInfo.program!=2 ? 'N/A' : 'Employer name where you work'}}"
+                                                            tabindex="7" data-hj-whitelist [(ngModel)]="customerInfo.employer_agency" [ngbTypeahead]="search" [inputFormatter]="formatter" [resultFormatter]="formatter" #federal_agency="ngModel" name="federal_agency"
+                                                            required>
+                                                        <div *ngIf="!federal_agency.valid && federal_agency.touched" class="help-block font-small-3">
+                                                            <span class="error-message" *ngIf="federal_agency.errors && federal_agency.errors.required">Federal Agency is
+                                required</span>
+                                                        </div>
+                                                        <div *ngIf="federal_agency.valid && federal_agency.touched && !customerInfo.employer_agency.id" class="help-block font-small-3">
+                                                            <span class="error-message">Please select a valid federal agency from the list</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12" *ngIf="customerInfo.program==1">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Employee ID</label>
+                                                        <input type="text" [disabled]="refi_param" name="employee_registration" maxlength="25" class="form-control" id="basicInput" [(ngModel)]="customerInfo.employee_registration">
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !email.valid && email.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Email</label>
+                                                        <input type="text" class="form-control" id="basicInput" name="email" [(ngModel)]='customerInfo.email' #email="ngModel" name="email" required>
+                                                        <div *ngIf="!email.valid && email.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !phone_number.valid && phone_number.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Phone #</label>
+                                                        <input type="text" type="tel" mask='(000) 000-0000' class="form-control" id="basicInput" name="phone_number" [(ngModel)]='customerInfo.phone_number' #phone_number="ngModel" name="phone_number" required>
+                                                        <div *ngIf="!phone_number.valid && phone_number.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Secondary phone #</label>
+                                                        <input type="text" type="tel" mask='(000) 000-0000' class="form-control" id="basicInput" name="secondary_phone_number" [(ngModel)]='customerInfo.secondary_phone_number' #secondary_phone_number="ngModel" name="secondary_phone_number">
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Work phone #</label>
+                                                        <input type="text" type="tel" mask='(000) 000-0000' class="form-control" id="basicInput" name="work_phone_number" [(ngModel)]='customerInfo.work_phone_number' #work_phone_number="ngModel" name="work_phone_number">
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group position-relative" [ngClass]="{'has-error': !street_address.valid && street_address.touched }">
+                                                        <label for="firstName2" class="blue-grey lighten-1">Address</label>
+                                                        <input type="text" class="form-control" id="address" placeholder="Enter your Street address" tabindex="2" [(ngModel)]="customerInfo.street_address" #street_address="ngModel" #streetAddress name="street_address" required validatePoBox>
+                                                        <div *ngIf="!street_address.valid && street_address.touched" class="help-block font-small-3">
+                                                            <span class="error-message" *ngIf="street_address.errors.required">Street Address is required</span>
+                                                            <span class="error-message" *ngIf="street_address.errors.pobox && street_address.touched && !street_address.errors.required">Physical address only</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group position-relative">
+                                                        <label for="firstName2" class="blue-grey lighten-1">Unit Number</label>
+                                                        <input type="text" class="form-control" id="unit_number" placeholder="Unit Number" tabindex="3" data-hj-whitelist [(ngModel)]="customerInfo.unit_number" #unit_number="ngModel" name="unit_number">
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !zipcode.valid && zipcode.touched }">
+                                                        <label for="firstName2" class="blue-grey lighten-1">Zipcode</label>
+                                                        <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" tabindex="4" data-hj-whitelist [(ngModel)]="customerInfo.zipcode" #zipcode="ngModel" name="zipcode" (blur)="findCityByZipcode()" required>
+                                                        <div *ngIf="!zipcode.valid && zipcode.touched" class="help-block font-small-3">
+                                                            <span class="error-message" *ngIf="zipcode.errors.required">Zipcode is required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !city.valid && city.touched }">
+                                                        <label for="firstName2" class="blue-grey lighten-1">City/State</label>
+                                                        <select class="form-control" id="city" placeholder="City/State" tabindex="5" data-hj-whitelist [(ngModel)]="customerInfo.city" #city="ngModel" name="city" required>
+                              <option value="">-- Select --</option>
+                              <option value="{{item.city_code}}" *ngFor="let item of city_list">{{item.city}},
+                                {{item.state}} </option>
+                            </select>
+                                                        <div *ngIf="!city.valid && city.touched" class="help-block font-small-3">
+                                                            <span class="error-message" *ngIf="city.errors.required && city_list.length > 0">Select a
+                                valid city</span>
+                                                            <span class="error-message" *ngIf="city.errors.required && city_list.length == 0">Provide
+                                a valid zipcode</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Employment Lenght</label>
+                                                        <select class="form-control" (change)="onChangeEmploymentLength($event.target.value)" name="employment_length_range_id" id="basicSelect" [(ngModel)]="customerInfo.employment_length_range_id">
+                              <option *ngFor="let range of this.employment_lengths" [value]="range.id">{{range.name}}</option>
+                            </select>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" name="pay_frequency" class="blue-grey lighten-1">Pay frequency</label>
+                                                        <input type="text" class="form-control" id="basicInput" name="pay_frequency_name" #pay_frequency_name [(ngModel)]='customerInfo.pay_frequency_name' disabled="disabled">
+                                                    </fieldset>
+                                                </div>
+                                                <div *ngIf="customerInfo.program=='2' || customerInfo.program=='4'" class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Bi-weekly gross salary</label>
+                                                        <select class="form-control" (change)="onChangeSalaryRange($event.target.value)" name="salary_range_id" id="basicSelect" [(ngModel)]="customerInfo.salary_range_id">
+                              <option *ngFor="let range of this.salary_ranges" [value]="range.id">{{range.name}}</option>
+                            </select>
+                                                    </fieldset>
+                                                </div>
+                                                <div *ngIf="customerInfo.program=='1'" class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !salary_field.valid && salary_field.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Bi-weekly gross salary</label>
+                                                        <input currencyMask maxlength="11" type="text" class="form-control" id="basicInput" name="salary" [(ngModel)]='customerInfo.salary' #salary_field="ngModel" required>
+                                                        <div *ngIf="!salary_field.valid && salary_field.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Funding Method</label>
+                                                        <select class="form-control" name="funding_method" id="basicSelect" [(ngModel)]="customerInfo.funding_method" [disabled]="ruleIsParameterized">
+                                                            <option value="ach">ACH</option>
+                                                            <!-- <option value="check">Check</option> -->
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="customerInfo.funding_method=='ach'">
+                                                <div class="col-xl-3 col-lg-6 col-md-12">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !bank_routing_number.valid && bank_routing_number.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Bank routing number</label>
+                                                        <input required (blur)="onChangeRoutingNumber($event.target.value)" type="text" pattern="\d*" maxlength="9" #bank_routing_number="ngModel" name="bank_routing_number" class="form-control" id="basicInput" [(ngModel)]="customerInfo.bank_routing_number" [disabled]="ruleIsParameterized">
+                                                        <div *ngIf="!bank_routing_number.valid && bank_routing_number.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Bank Name</label>
+                                                        <input type="text" name="bank_name" class="form-control" id="basicInput" [(ngModel)]="customerInfo.bank_name" disabled="disabled">
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group" [ngClass]="{'has-error': !bank_account_number.valid && bank_account_number.dirty }">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Account number</label>
+                                                        <input required type="text" pattern="\d*" maxlength="17" class="form-control" id="basicInput" #bank_account_number="ngModel" name="bank_account_number" [(ngModel)]="customerInfo.bank_account_number" [disabled]="ruleIsParameterized">
+                                                        <div *ngIf="!bank_account_number.valid && bank_account_number.dirty" class="help-block font-small-3 m-t-5">
+                                                            <span class="error-message">*required</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-6 col-md-12 ">
+                                                    <fieldset class="form-group">
+                                                        <label for="basicInput" class="blue-grey lighten-1">Type of account</label>
+                                                        <select class="form-control" name="bank_account_type" id="basicSelect" [(ngModel)]="customerInfo.bank_account_type" [disabled]="ruleIsParameterized">
+                                                            <option value="1">Checking</option>
+                                                            <option value="2">Savings</option>
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 pull-right text-xs-right">
+                                                    <button type="button" class="btn btn-secondary pull-left" (click)="back()">Back</button>
+                                                    <button type="submit" class="btn btn-warning pull-right">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

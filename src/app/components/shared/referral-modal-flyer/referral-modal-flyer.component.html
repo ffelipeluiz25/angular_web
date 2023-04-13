@@ -1,0 +1,29 @@
+<ng-template #referralModalFlyer size="lg" let-c="close" let-d="dismiss">
+    <div class="modal-body p-30">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="card-title text-xs-center">Refer a friend and earn {{referralValue | currency}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-10">
+                <img [src]="content_b64" class="w-100">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-4 text-xs-center">
+                <button type="button" class="btn btn-outline-dark" (click)="download()" *ngIf="content_b64 != ''">
+                    Download </button>
+            </div>
+            <div class="col-xs-4 text-xs-center">
+                <button id="btnShare" type="button" class="btn btn-outline-dark" *ngIf="content_b64 != ''">Share</button>
+            </div>
+            <div class="col-xs-4 text-xs-center">
+                <button type="button" class="btn btn-outline-dark" (click)="c('Close click');closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,189 @@
+<section id="icon-tabs" [hidden]="!initialized">
+    <div class="row" *ngIf="!is_production">
+        <div class="col-xs-12">
+            <p class="text-xs-center"><a class="a-link-color" (click)="mockData()">Mock Phone Number</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+            <div class="card">
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-enter-phone" [hidden]="!showFormPhone">
+                                    <form (submit)="onSubmitPhoneNumber()" #phoneNumberForm="ngForm">
+                                        <div class="row">
+                                            <div class="m-b-20">
+                                                <app-page-step [pipe_step]="step"></app-page-step>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-divider">
+                                                    <img src="assets/images/icons/smartphone.png" />
+                                                    <h4 class="card-title">Verify your phone number</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <p>Please provide your phone number and we will send you a message with a verification code to ensure that this number belongs to you.</p>
+                                                        <div class="form-group" [ngClass]="{'has-error': !phone_number.valid && phone_number.touched }">
+                                                            <label for="firstName2">Mobile Phone Number</label>
+                                                            <input type="tel" class="form-control" id="phone_number" placeholder="Mobile Phone Number" tabindex="6" [(ngModel)]="model.phone_number" #phone_number="ngModel" name="phone_number" required mask="(000) 000-0000">
+                                                            <div *ngIf="!phone_number.valid && phone_number.touched" class="help-block font-small-3">
+                                                                <span class="error-message" *ngIf="phone_number.errors.required">Mobile Phone
+                                                                    Number
+                                                                    is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="form-group" [ngClass]="{'has-error': !secondary_phone_number.valid && secondary_phone_number.touched }">
+                                                            <label for="firstName3">Alternate Phone Number <small
+                                                                    class="blue-gray">(Optional)</small>
+                                                            </label>
+                                                            <input type="tel" class="form-control" id="secondary_phone_number" placeholder="Alternate Phone Number" tabindex="7" [(ngModel)]="model.secondary_phone_number" #secondary_phone_number="ngModel" name="secondary_phone_number" mask="(000) 000-0000">
+                                                            <div *ngIf="!secondary_phone_number.valid && secondary_phone_number.touched" class="help-block font-small-3">
+                                                                <span class="error-message" *ngIf="secondary_phone_number.errors.required">Alternate
+                                                                    Phone Number is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="actions-mobile text-xs-center">
+                                            <div class="row">
+                                                <div class="col-xs-4 col-xl-6">
+
+                                                </div>
+                                                <div class="col-xs-4 hidden-xl-up">
+
+                                                </div>
+                                                <div class="col-xs-12 col-xl-6">
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning btn-darken-4 btn-block" tabindex="7">{{sendButtonText}}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="form-phone-verification" [hidden]="!showVerifyPhone">
+                                    <form (submit)="onSubmitVerificationCode()" #verificationCodeForm="ngForm">
+                                        <div class="row">
+                                            <div class="m-b-20">
+                                                <app-page-step [pipe_step]="step"></app-page-step>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-divider">
+                                                    <img src="assets/images/icons/smartphone.png" />
+                                                    <h4 class="card-title">Verify your phone number</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <p>We have sent a text verification code to
+                                                            <b>{{model.phone_number | phone}}</b>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="form-group" [ngClass]="{'has-error': !verification_code.valid && verification_code.touched }">
+                                                            <label for="firstName2">Verification code</label>
+                                                            <input type="tel" class="form-control" id="verification_code" placeholder="Verification code" tabindex="9" [(ngModel)]="model.verification_code" #verification_code="ngModel" name="verification_code" required mask="{{code_mask}}">
+                                                            <div *ngIf="!verification_code.valid && verification_code.touched" class="help-block font-small-3">
+                                                                <span class="error-message" *ngIf="verification_code.errors.required">Verification
+                                                                    code is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row p-b-20">
+                                            <div class="col-xs-12">
+                                                <p class="m-b-5">Haven't received a text message?</p>
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="#" class="link-default" (click)="submitPhone()">Send a
+                                                            new text verification
+                                                            code to {{model.phone_number | phone}}</a>
+                                                    </li>
+                                                    <li class="p-t-10">
+                                                        <a href="#" class="link-default" (click)="changePhoneNumber()">Change the phone
+                                                            number</a>
+                                                    </li>
+                                                    <li class="mt-2">
+                                                        <fieldset class="icheck_minimal skin">
+                                                            <label for="input-6"><b>Stay up to date with special offers and
+                                                                promotions</b></label>
+                                                            <label for="input-6">
+                                                                <input type="checkbox" id="optin-mkt"
+                                                                    [(ngModel)]="model.allow_communication_sms"
+                                                                    #allow_communication_sms="ngModel"
+                                                                    name="allow_communication_sms"
+                                                                    (change)="model.allow_communication_sms = $event.target.checked ? 1: 0">
+                                                                I agree to receive marketing SMS text messages including
+                                                                financial offers, special promotions, or other services
+                                                                from BMG Money, sent to my mobile phone number using an
+                                                                automatic dialing system
+                                                            </label>
+                                                            <label>
+                                                                Agreeing to the SMS program is optional. Msg frequency
+                                                                varies. Msg&Data rates may apply. Reply HELP for help,
+                                                                STOP to cancel
+                                                                Click to view our <a href="#"
+                                                                    (click)="openTermsModal()">Terms of Use</a> and <a
+                                                                    href="#" (click)="openPolicyModal()">Privacy
+                                                                    Policy</a>.</label>
+                                                        </fieldset>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="actions-mobile text-xs-center">
+                                            <div class="row">
+                                                <div class="col-xs-4 col-xl-6">
+                                                    <div class="form-group">
+                                                        <a href="#" class="btn btn-secondary btn-block" tabindex="11" (click)="changePhoneNumber()">Back</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 hidden-xl-up">
+
+                                                </div>
+                                                <div class="col-xs-4 col-xl-6">
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning btn-darken-4 btn-block" tabindex="10">Verify</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-1"></div>
+    </div>
+</section>
+
+<app-policy-modal #policyModal></app-policy-modal>
+<app-terms-modal #termsModal></app-terms-modal>

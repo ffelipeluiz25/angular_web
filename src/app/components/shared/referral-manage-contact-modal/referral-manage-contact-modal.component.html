@@ -1,0 +1,44 @@
+<ng-template #referralManageContactModal size="md" let-c="close" let-d="dismiss">
+  <div *ngIf="initialized">
+    <div class="modal-header">
+      <h4 *ngIf="!isEdit">Add Contact</h4>
+      <h4 *ngIf="isEdit">Edit Contact</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm">
+      <div class="modal-body">
+        <fieldset class="form-group"
+          [ngClass]="{'has-error': (submitted && model.name === '') || !name.valid && name.touched }">
+          <label for="basicInput" class="blue-grey lighten-1">Name*</label>
+          <input type="text" class="form-control" id="basicInput" name="name" [(ngModel)]='model.name' #name="ngModel"
+            required>
+          <div *ngIf="(submitted && model.name === '') || !name.valid && name.touched"
+            class="help-block font-small-3 m-t-5">
+            <span class="error-message">*required</span>
+          </div>
+        </fieldset>
+        <fieldset class="form-group"
+          [ngClass]="{'has-error': (submitted && model.email === '') || !email.valid && email.touched }">
+          <label for="basicInput" class="blue-grey lighten-1">Email*</label>
+          <input type="text" class="form-control" id="basicInput" name="email" [(ngModel)]='model.email' [email]="true"
+            #email="ngModel" required [readonly]="getReadonlyEmail()">
+          <div *ngIf="(submitted && model.email === '') || !email.valid && email.touched"
+            class="help-block font-small-3 m-t-5">
+            <span class="error-message">*required</span>
+          </div>
+        </fieldset>
+        <fieldset class="form-group">
+          <label for="basicInput" class="blue-grey lighten-1">Phone</label>
+          <input type="text" class="form-control" id="basicInput" name="phone" [(ngModel)]='model.phone'
+            #phone="ngModel" mask="(000) 000-0000">
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-lg btn-success btn-darken-2">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

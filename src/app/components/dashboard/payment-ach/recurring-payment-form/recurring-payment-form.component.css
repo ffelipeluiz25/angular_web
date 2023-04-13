@@ -1,0 +1,13 @@
+legend {
+    font-size: 14px;
+}
+
+.group-border{
+    border: 1px solid #CCCCCC;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.group-border .row{
+    margin-bottom: 20px;
+}

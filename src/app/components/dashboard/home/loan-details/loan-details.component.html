@@ -1,0 +1,83 @@
+<div class="row hidden-lg-up" *ngIf="!showNewCashless">
+  <div class="col-xs-12">
+    <hr />
+  </div>
+</div>
+<div class="row hidden-lg-up" *ngIf="!isMobile() && showNewCashless && cashlessEligibility">
+  <div class="col-xs-12">
+    <hr />
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-8 col-xl-8" *ngIf="!showNewCashless">
+    <div class="card m-b-0 border-bottom-blue-grey border-bottom-lighten-5">
+      <div class="card-body">
+        <div class="card-block cleartfix">
+          <div class="media">
+            <div class="media-body dashboard-wrapper-grow-next-level-description">
+              <button (click)="refinanceClick()" class="btn btn-secondary w-100">Refinance</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" *ngIf="(showNewCashless && daysPastDue <= 5) || (showNewCashless && !cashlessEligibility)">
+    <div class="card m-b-0 border-bottom-blue-grey border-bottom-lighten-5">
+      <div class="card-body">
+        <div class="card-block cleartfix">
+          <div class="media">
+            <div class="media-body dashboard-wrapper-grow-next-level-description">
+              <button (click)="refinanceClick()" class="btn btn-secondary w-100">Refinance</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-xl-4 col-md-4" *ngIf="!showNewCashless">
+    <div class="card overflow-hidden m-b-0">
+      <div class="card-body">
+        <div class="card-block cleartfix">
+          <div class="media">
+            <div class="media-left media-middle hidden-xs-down">
+              <i class="fa fa-calendar blue-grey lighten-4 font-large-2 ico-dashboard-bottom"></i>
+            </div>
+            <div class="media-body">
+              <h6 class="m-b-0">Next payment date</h6>
+              <a [routerLink]='["/dashboard/payments"]' class="text-underline">View schedule</a>
+            </div>
+            <div class="media-right media-middle">
+              <h1>
+                <span class="text-nowrap">{{ dashboardInfo.next_due_date | date: 'MMM dd' }}</span>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" id="row-of-items" *ngIf="showNewCashless">
+    <div class="card overflow-hidden m-b-0">
+      <div class="card-body">
+        <div class="card-block cleartfix">
+          <div class="media">
+            <div class="media-left media-middle hidden-xs-down">
+              <i class="fa fa-calendar blue-grey lighten-4 font-large-2 ico-dashboard-bottom"></i>
+            </div>
+            <div class="media-body">
+              <h6 class="m-b-0">Next payment date</h6>
+              <a [routerLink]='["/dashboard/payments"]' class="text-underline">View schedule</a>
+            </div>
+            <div class="media-right media-middle">
+              <h1>
+                <span class="text-nowrap">{{ dashboardInfo.next_due_date | date: 'MMM dd' }}</span>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-dash-loan-details"></div>

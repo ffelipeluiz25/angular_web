@@ -1,0 +1,176 @@
+main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #content {
+    width: 80vw;
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-flow: row;
+  }
+  #menu {
+    width: 70px;
+    height: 100%;
+    background: #354052;
+  }
+  .menuItem {
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    color: #8893a6;
+    cursor: pointer;
+  }
+  .menuItem .icon {
+    font-size: 22px;
+  }
+  .menuItem .title {
+    font-size: 10px;
+  } 
+  .menuItem.active, .menuItem.active:hover, .subMenu .subMenuItem:hover {
+    background: #47bac1;
+    border-color: #47bac1;
+    color: white;
+  }
+  .menuItem:hover {
+    color: #47bac1;
+  }
+  
+  #viewer {
+    height: 100%;
+    width: calc(80vw - 70px - 400px);
+    background: #354052;
+    padding: 0 20px;
+  }
+  .infoBox {
+    color: #47bac1;
+    line-height: 80vh;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  #toolbar {
+    width: 400px;
+    height: calc(100% - 40px);
+    background: white;
+    padding: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #8893a6;
+    overflow-y: auto;
+  }
+  
+  .subMenu .subMenuItemGroup {
+    display: flex;
+  }
+  .subMenu .subMenuItemGroup .subMenuItem, .subMenu .subMenuItemGroup input {
+    margin: 10px 10px 0 0;
+  }
+  .subMenu .subMenuItem, .subMenu input {
+    padding: 4px 6px;
+    margin: 10px 0 0 0;
+    width: fit-content;
+    font-size: 11px;
+    color: #fff;
+  }
+  .subMenu .subMenuItem {
+    cursor: pointer;
+    float: left;
+    margin: 0 3px;
+  }
+  
+  .outline {
+    margin: 0;
+    padding: 0;
+  }
+  .outline h2 {
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 16px;
+    color: black;
+  }
+  .outline ul {
+    margin: 0;
+    padding: 5px 1vw;
+  }
+  .outline li {
+    font-size: 11px;
+  }
+  .outline .outline-main-item {
+    font-weight: bold;
+    color: black;
+  }
+  .outline a {
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .outline a:hover {
+    color: #346680;
+  }
+  
+  .snapshot {
+    width: 30%;
+    margin: 2px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+  }
+  .snapshotsContainer {
+    margin: 15px 0;
+  }
+  .snapshotBig {
+    max-width: calc(100vw - 100px);
+    max-height: calc(100vh - 100px);
+  }
+  
+  .navigation {
+    float: left;
+    background: #354052;
+    padding: 6px;
+    width: 100%;
+  }
+  
+  .search {
+    float: right
+  }
+  .separator {
+    margin: 0 10px;
+    color: #f2f2f2;
+    padding: 2px 0;
+  }
+  .button {    
+    margin: 10px 10px 0 0;
+    padding: 4px 6px;
+    margin: 10px 0 0 0;
+    width: fit-content;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .close {
+    float: right;
+  }
+  .pdfViewerContainer{
+    background-color: currentcolor;
+  }
+  
+  .page, .pdfViewer, .pdfViewer .page {
+    border: none !important;
+  }
+  
+  .pageViewer {
+    margin: auto;
+    border: none;
+  }
+  
+  .modal-body {
+    margin: 0px;
+    padding: 0px;
+  }

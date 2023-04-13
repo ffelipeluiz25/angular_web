@@ -1,0 +1,76 @@
+<div *ngFor="let doc of bankStatementsList">
+    <div *ngIf="!doc.uploaded" class="row item-upload-documents">
+        <ul class="p-l-15 list-unstyled">
+            <li class="li-upload-documents">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="m-b-5">
+                            <h4 class="font-weight-bold">Bank Statement</h4>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="col-xs-12 danger" *ngIf="requestReason">
+            <span><b>Instructions:</b></span>
+            <ul class="p-l-20">
+                <li *ngFor="let request of requestReason">
+                    {{request}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12">
+            <span>Must meet the following criteria:</span>
+            <ul>
+                <li>Last 90 days of transactions (your 3 most recent bank statements)</li>
+                <li>Full name, date, and account number must be visible</li>
+                <li>Provide statement reflecting the direct deposit from your employer</li>
+            </ul>
+        </div>
+        <div class="col-xs-12">
+            <div class="center">
+                <ngx-file-drop [dropZoneLabel]="dropfileText" customstyle="drop-zone-custom" (onFileDrop)="fileDropped($event)" (click)="fileInput(fileInputId);">
+                    <span></span>
+                </ngx-file-drop>
+                <input type="file" data-id="txt_file_6" [id]="fileInputId" (change)="onSelectFile($event.target.files)" style="display:none;" accept=".pdf,.PDF,.jpg,.JPG,.jpeg,.JPEG,.png,.PNG" [name]="fileInputIdDocumentType">
+                <span class="error-message" *ngIf="invalidFormat">Invalid format. Please provide a jpg, png or
+                    pdf</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="doc.uploaded" class="row item-upload-documents">
+        <ul class="p-l-15 list-unstyled">
+            <li class="li-upload-documents">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="m-b-5">
+                            <h4 class="font-weight-bold">Bank Statement</h4>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="col-xs-12">
+            <div class="col-xs-12">
+                <div>
+                    <div class="m-t-10 m-b-10" *ngIf="doc.uploaded || doc.document_setted_with_vendor ||  doc.document_setted_with_plaid">
+                        <span class="tag tag-primary tag-uploaded darken-4 resp-w-100 m-r-5" *ngIf="(doc.uploaded && doc.review_status !== '0' && doc.review_status !== '1') || doc.document_setted_with_vendor || doc.document_setted_with_plaid">
+                            <i class="fa fa-check"></i> Uploaded
+                        </span>
+                        <span class="tag tag-danger tag-uploaded darken-4 resp-w-100 m-r-5" *ngIf="doc.uploaded && doc.review_status === '0'">
+                            <i class="fa fa-times"></i> Declined
+                        </span>
+                        <span class="tag tag-success tag-uploaded darken-4 resp-w-100 m-r-5" *ngIf="doc.uploaded && doc.review_status === '1'">
+                            <i class="fa fa-check"></i> Accepted
+                        </span>
+                        <a class="link-default" *ngIf="!doc.document_setted_with_vendor && !doc.document_setted_with_plaid" class="btn btn-secondary btn-sm resp-w-100 m-r-5" href="javascript:void(0);" (click)="viewDocument(doc.id)">View
+                            document</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+<app-preview-modal #previewModal (confirm-preview)='saveFile($event)'></app-preview-modal>

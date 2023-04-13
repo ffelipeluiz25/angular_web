@@ -1,0 +1,39 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+      <div class="content-header row">
+        <div class="content-header-left col-md-6 col-xs-12 mb-2">
+          <h3 class="content-header-title mb-0">Make a Payment</h3>
+          <div class="row breadcrumbs-top">
+            <div class="breadcrumb-wrapper col-xs-12">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a [routerLink]="['/dashboard']">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <span>Make a Payment</span>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="card card-responsive bg-white">
+              <div class="card-body">
+                <div class="card-block">
+                  <app-recurring-payment-form></app-recurring-payment-form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <a [routerLink]="['/dashboard']" class="btn btn-secondary"><i class="fa fa-angle-double-left"></i> Back to dashboard</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,63 @@
+<ng-template #referralModal let-c="close" let-d="dismiss">
+    <div class="modal-body p-30">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="card-title text-xs-center" *ngIf="!referModal">Refer a coworker or a federal/military retiree and earn {{referralValue | currency}}</h4>
+                <h4 class="card-title text-xs-center" *ngIf="referModal">Refer a coworker or retiree and earn {{referralValue | currency}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="firstName2">Copy and paste:</label>
+                        <fieldset class="form-group position-relative m-b-10">
+                            <input type="text" class="form-control form-control-lg" id="referralLink2" placeholder="Referral Code" aria-describedby="button-addon2" [(ngModel)]="referralLinkCopy" readonly="readonly" (click)="copy('referralLink2')">
+                            <div class="form-control-position ico-copy" data-toggle="tooltip" data-placement="top" title="" data-original-title="Copy your referral link" (click)="copy('referralLink2')">
+                                <i class="fa fa-clone blue-grey font-medium-4"></i>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+
+                    </div>
+                </div>
+                <div class="row" *ngIf="isMobile">
+                    <div class="col-xs-12">
+                        <a [href]="smsMessage" (click)="clickButton('sms')" class="btn btn-social btn-min-width mr-1 mb-1 w-100 btn-sms">
+                            <span class="fa fa-comments"></span> Share via SMS</a>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isMobile">
+                    <div class="col-xs-12">
+                        <a [href]="whatsappMessage" (click)="clickButton('whatsapp')" class="btn btn-social btn-min-width mr-1 mb-1 w-100 btn-whatsapp">
+                            <span class="fa fa-whatsapp"></span> Share via Whatsapp</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#" (click)="shareFB()" class="btn btn-social btn-min-width mr-1 mb-1 w-100 btn-facebook">
+                            <i class="fa fa-facebook"></i> Share via Facebook</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#" (click)="twitterShare()" class="btn btn-social btn-min-width mr-1 mb-1 w-100 btn-twitter">
+                            <span class="fa fa-twitter"></span> Share via Twitter</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a [href]="mailtoMessage" (click)="clickButton('email')" class="btn btn-social btn-min-width mr-1 mb-1 w-100 btn-google">
+                            <span class="fa fa-envelope"></span> Share via Email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click');closeModal()">Close</button>
+    </div>
+</ng-template>

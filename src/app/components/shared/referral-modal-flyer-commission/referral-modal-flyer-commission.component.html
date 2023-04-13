@@ -1,0 +1,27 @@
+<ng-template #referralModalFlyerCommission size="lg" let-c="close" let-d="dismiss" data-backdrop="true">
+    <div class="modal-body p-30" id="modal_flyer_commission" data-backdrop="true">
+        <div class="row">
+            <div class="col-xs-12 text-xs-center">
+                <img [src]="imgBase64" class="w-100">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-xs-center">
+                <a href="https://bmgmoney.com/contest-rules"><span>https://bmgmoney.com/contest-rules</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close click');closeModal()">Close</button>
+        </div>
+        <div class="col-md-2">
+            <a href="javascript:void(0)" class="btn btn-md btn-orange" (click)="referNow()"><span>Refer
+                    Now</span></a>
+        </div>
+    </div>
+</ng-template>
+<app-referral-modal #referralModal [page]="page"></app-referral-modal>

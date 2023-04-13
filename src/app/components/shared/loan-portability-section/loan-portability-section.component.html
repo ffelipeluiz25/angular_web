@@ -1,0 +1,41 @@
+<div class="row f-12-mobile">
+  <div class="col-md-12">
+    <h6 style="color: red;">Please Update Info Below as Needed</h6>
+  </div>
+  <div class="col-md-12">
+    <fieldset class="form-group m-b-0">
+      <label for="basicInput" class="blue-grey lighten-1">Employer or Retirement Status:</label>
+      <span> {{data_model?.currentInfo.employerName}} -
+        {{data_model?.currentInfo.customerAddress.stateAbbreviation}}
+        <i class="fa fa-pencil m-l-5 cursor-pointer ng-star-inserted" (click)="openEditNewOfferModal()"> </i>
+      </span>
+    </fieldset>
+  </div>
+  <div class="col-md-12">
+    <fieldset class="form-group m-b-0">
+      <label for="basicInput" class="blue-grey lighten-1">Payment Method:</label>
+      <app-payment-type-label [paymentType]="data_model?.currentInfo.paymentType"></app-payment-type-label>
+      <i class="fa fa-pencil m-l-5 cursor-pointer ng-star-inserted" (click)="openEditNewOfferModal()"> </i>
+    </fieldset>
+  </div>
+  <div class="col-md-12">
+    <fieldset class="form-group m-b-0">
+      <label for="basicInput" class="blue-grey lighten-1">Pay Frequency:</label>
+      <span>{{data_model?.currentInfo.payFrequency}}
+        <i class="fa fa-pencil m-l-5 cursor-pointer ng-star-inserted" (click)="openEditNewOfferModal()"> </i>
+      </span>
+    </fieldset>
+  </div>
+  <div class="col-md-12">
+    <fieldset class="form-group m-b-0">
+      <label for="basicInput" class="blue-grey lighten-1">First
+        Payment Date:</label>
+      <span>{{data_model?.currentInfo.firstPaymentDate | date: 'MM/dd/yyyy' }}
+        <i class="fa fa-pencil m-l-5 cursor-pointer ng-star-inserted" (click)="openEditNewOfferModal()"> </i>
+      </span>
+    </fieldset>
+  </div>
+</div>
+
+<app-edit-new-offer-modal #editNewOfferModal [data_model]="data_model"
+  (refreshLoanTerms)="reloadSearchLoanTerms($event)"></app-edit-new-offer-modal>

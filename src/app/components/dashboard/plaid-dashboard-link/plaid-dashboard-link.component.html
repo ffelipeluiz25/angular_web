@@ -1,0 +1,61 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body" *ngIf="!linked_plaid">
+            <section class="col-xl-10 offset-xl-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 p-0">
+                <div class="card border-grey border-lighten-3 px-2 py-2 row mb-0">
+                    <div class="card-header no-border p-0">
+                        <div class="card-title text-xs-center">
+                            <img src="assets/images/logo/bmgmoney.png" alt="branding logo">
+                        </div>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="card-block card-login-padding">
+                            <form class="form-horizontal" #emailChangeForm="ngForm">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
+                                            <span>
+                                                Bank Account Linking
+                                            </span>
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 text-xs-center">
+                                        <span class="verification-info">
+                                            Please link the bank account where you receive your
+                                            <span *ngIf="!retiredData?.isRetired">paycheck</span>
+                                        <span *ngIf="retiredData?.isRetired">retirement Benefits</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="padding-top:20px;">
+                                        <button class="btn btn-warning btn-darken-4 btn-lg btn-block" (click)="linkBankAccount()">Link Your Bank Account</button>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        <div class="content-body" *ngIf="linked_plaid">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-block">
+                        <p>You have already linked your account</p>
+                        <button class="btn btn-warning btn-darken-4" (click)="continue()">Return to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-open-banking #openBankingComponent [step]="step" (openBankinCallback)="openBankinCallback($event)"></app-open-banking>

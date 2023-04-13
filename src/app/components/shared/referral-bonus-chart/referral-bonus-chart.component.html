@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="card-header no-border p-b-5">
+                <h4 class="card-title">Referral Program Chart</h4>
+                <h6 class="m-t-10">BMG Money offers its customers money every time they refer us to a coworker.</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-xs-center">Ways to Earn</th>
+                                <th class="text-xs-center">3 referrals</th>
+                                <th class="text-xs-center">5 referrals</th>
+                                <th class="text-xs-center">10 referrals</th>
+                                <th class="text-xs-center">20 referrals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-xs-center">Commissions Per Referrals</td>
+                                <td class="text-xs-center">${{referral.commision}}</td>
+                                <td class="text-xs-center">${{referral.commision}}</td>
+                                <td class="text-xs-center">${{referral.commision}}</td>
+                                <td class="text-xs-center">${{referral.commision}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs-center">Bonus</td>
+                                <td class="text-xs-center" *ngFor="let item of referral.bonus_list">
+                                    ${{item.comission}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs-center">Total Earned</td>
+                                <td class="text-xs-center" *ngFor="let item of referral.bonus_list">
+                                    ${{item.total}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

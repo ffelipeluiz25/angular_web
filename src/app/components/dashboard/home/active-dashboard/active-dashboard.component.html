@@ -1,0 +1,34 @@
+<div class="row hidden-lg-up">
+  <div class="col-xs-12">
+    <hr>
+  </div>
+</div>
+<app-referrral-panels [page]="'dashboard_home_page'"></app-referrral-panels>
+<div [hidden]="!isUSPSBreakInServiceAlert" class="row m-t-20">
+  <div class="col-xs-12">
+    <div class="alert bg-purple fade in mb-2" role="alert">
+      <div class="row">
+        <div class="col-xs-12">
+          Set up your allotment payment after your Break in Service. Failure to do so will cause your payments
+          to be delinquent and therefore you will be ineligible to refinance your loan with us in the future.
+          Please, contact us, at 866 299 0211.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!dashboardInfo.booked" class="row m-t-20">
+  <div class="col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row p-t-20">
+          <div class="col-xs-12"></div>
+        </div>
+        <app-refi-info *ngIf="!dashboardInfo.booked" [page]="'dashboard'" [dashboardInfo]="dashboardInfo"
+          [isUSPSBreakInServiceAlert]="isUSPSBreakInServiceAlert" [hasEmployerAgency]="hasEmployerAgency">
+        </app-refi-info>
+      </div>
+    </div>
+  </div>
+</div>

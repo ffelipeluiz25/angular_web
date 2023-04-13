@@ -1,0 +1,66 @@
+<div class="col-md-12 mt-2">
+  <div class="card">
+    <div class="card-header bg-blue-grey bg-lighten-5">
+      <h4 class="cart-title blue-grey darken-1">
+        Change Address
+      </h4>
+    </div>
+    <div class="card-content">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <fieldset class="form-group">
+              <label for="basicInput">State</label>
+              <select class="form-control" [(ngModel)]="data_model.stateAbbreviation">
+                <option [value]="item.abbreviation" *ngFor="let item of stateList">{{item.name}} -
+                  {{item.abbreviation}}
+                </option>
+              </select>
+              <div *ngIf="!data_model.stateAbbreviation" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Select a state</span>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-8">
+            <fieldset class="form-group">
+              <label for="address" class="blue-grey lighten-1">Street Address</label>
+              <input [(ngModel)]="data_model.streetAddress" type="text" class="form-control" id="address"
+                placeholder="Enter new street address" tabindex="2" required minlength="4" maxlength="60"
+                AlphanumericOnly validatePoBox>
+              <div *ngIf="!data_model.streetAddress" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Enter a new street address</span>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-4">
+            <fieldset class="form-group">
+              <label for="unitNumber" class="blue-grey lighten-1">Unit Number</label>
+              <input [(ngModel)]="data_model.unitNumber" type="text" class="form-control" id="unitNumber"
+                placeholder="Unit Number" tabindex="3" name="unit_number" required AlphanumericOnly validatePoBox>
+            </fieldset>
+          </div>
+          <div class="col-md-8">
+            <fieldset class="form-group">
+              <label for="city_name" class="blue-grey lighten-1">City</label>
+              <input [(ngModel)]="data_model.cityName" type="text" class="form-control" id="city_name"
+                placeholder="Enter new city of residence" tabindex="5" name="city" required>
+              <div *ngIf="!data_model.cityName" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Enter a new city of residence</span>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-4">
+            <fieldset class="form-group">
+              <label for="zipcode" class="blue-grey lighten-1">ZIP code</label>
+              <input [(ngModel)]="data_model.zipCode" type="text" class="form-control" id="zipcode"
+                placeholder="Enter a new zip code" tabindex="4" name="zipcode" required AlphanumericOnly>
+              <div *ngIf="!data_model.zipCode" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Enter a new zip code address</span>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

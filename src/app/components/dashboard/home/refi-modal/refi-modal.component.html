@@ -1,0 +1,184 @@
+<ng-template #refiModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="card-title m-0">Loan Terms</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #refiForm="ngForm">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="m-b-0">Loan Amount</p>
+                            <div class="form-group">
+                                <select id="loan_amount" name="loan_amount" class="form-control form-control-lg form-control-loan-amount success darken-4" [(ngModel)]="selectedAmount" (change)="onChangeLoanAmount()" [disabled]="!initialized">
+                                    <option value="{{item.loan_amount}}" *ngFor="let item of loanTermsList">{{item.loan_amount | currency:'$':'symbol':'2.0'}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row f-12-mobile">
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Payoff Amount</p>
+                            <p class="lead">{{(selectedLoanTerms.outstanding_balance) | currency:'$':'symbol':'2.0' }}</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Amount Paid to Me</p>
+                            <p class="lead">{{selectedLoanTerms.amount_paid | currency:'$':'symbol':'2.0'}}</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Bi-weekly Payment</p>
+                            <p class="lead">{{selectedLoanTerms.amount_of_payment | currency:'$':'symbol':'2.0'}}</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Number of Payments</p>
+                            <p class="lead">{{selectedLoanTerms.number_of_payments}}</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Term in Months</p>
+                            <p class="lead">{{selectedLoanTerms.terms_in_months}}</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Annual Percentage Rate</p>
+                            <p class="lead">{{(selectedLoanTerms.effective_apr/100.0) | percent:'2.2' }}</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0" *ngIf="model.bank_account.state_abbreviation != 'KY'">Credit Origination Fee</p>
+                            <p class="m-b-0" *ngIf="model.bank_account.state_abbreviation == 'KY'">Loan Processing Fee</p>
+                            <p class="lead" *ngIf="selectedLoanTerms.fee > 0">{{selectedLoanTerms.fee | currency:'$':'symbol':'2.0'}}</p>
+                            <p class="lead" *ngIf="selectedLoanTerms.fee == 0">$0</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">Total Loan Amount</p>
+                            <p class="lead">{{selectedLoanTerms.amount_funded | currency:'$':'symbol':'2.0'}}</p>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-4">
+                            <p class="m-b-0">First Payment Date</p>
+                            <p class="lead">{{selectedLoanTerms.first_payment_date | date:'MMM dd'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t-20">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <fieldset class="checkbox">
+                                <label class="blue-grey">
+                                    <input type="checkbox" value="" checked [(ngModel)]="agreed_with_terms" name="agreed_with_terms" (change)="onChangeAgreement()"> I confirm that I have read, understood and agreed to be bound by all terms and conditions
+                                    of the
+                                    <a class="link-default" (click)="getEconsent()">Consent to Electronic Transaction and Disclosures</a> and the
+                                    <a href="#" (click)="openPaymentTransferForm()">Payment Transfer and Allotment Savings Account Set-up</a>.
+                                </label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="showError">
+                        <div class="col-xs-12">
+                            <div class="alert bg-danger alert-icon-left fade in mb-2" role="alert">
+                                You must agree with the terms above.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="text-muted">Please provide your primary bank account to receive your funds.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group m-b-5">
+                                <label for="phoneNumber2">Account Type</label>
+                                <label class="blue-grey lighten-2 f-12">(Select one option)</label>
+                                <app-choose-buttons [choose-data]="accountTypeList" [choose-selected-value]="model.bank_account.bank_account_type" (choose-select)="onSelectAccountType($event)" error-message="Account Type is required" [touched]="accountTypeTouched" [choose-disabled]="model.bank_account.bank_account_verified"
+                                    #chooseAccountType></app-choose-buttons>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group" [ngClass]="{'has-error': !bank_routing_number.valid && bank_routing_number.touched }">
+                                <label for="firstName2">Routing Transit Number</label>
+                                <i class="fa fa-question-circle" [ngbPopover]="popContent" triggers="mouseenter:mouseleave" popoverPlacement="top"></i>
+                                <input type="tel" class="form-control" id="bank_routing_number" placeholder="Your bank's nine digit routing number" tabindex="1" [(ngModel)]="model.bank_account.bank_routing_number" #bank_routing_number="ngModel" data-hj-whitelist name="bank_routing_number"
+                                    required NumbersOnly maxlength="9" [readonly]="model.bank_account.bank_account_verified" (keydown)="hideBankNotFoundError()" (blur)="getBankName()">
+                                <div *ngIf="!bank_routing_number.valid && bank_routing_number.touched" class="help-block font-small-3">
+                                    <span class="error-message" *ngIf="bank_routing_number.errors.required">Routing Transit Number is required</span>
+                                </div>
+                                <span class="error-message" *ngIf="showBankNotFoundError">Bank not found. Please check the provided routing number.</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group">
+                                <label for="emailAddress3">Bank Name</label>
+                                <input type="tel" class="form-control" id="bank_account_name" placeholder="Your bank name" tabindex="2" [(ngModel)]="model.bank_account.bank_name" #bank_account_name="ngModel" name="bank_account_name" [readonly]="true">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group" [ngClass]="{'has-error': !bank_account_number.valid && bank_account_number.touched }">
+                                <label for="emailAddress3">Bank Account Number
+                                    <i class="fa fa-check-circle info" placement="top" title="Bank account verified with Plaid" ngbTooltip="Bank account verified with Plaid"
+                                        *ngIf="model.bank_account.bank_account_verified"></i>
+                                </label>
+                                <i class="fa fa-question-circle" [ngbPopover]="popContent" triggers="mouseenter:mouseleave" popoverPlacement="top"></i>
+                                <input type="tel" class="form-control" id="bank_account_number" placeholder="Your bank account number" tabindex="3" [(ngModel)]="model.bank_account.bank_account_number" #bank_account_number="ngModel" name="bank_account_number" required NumbersOnly maxlength="17"
+                                    [readonly]="model.bank_account.bank_account_verified">
+                                <div *ngIf="!bank_account_number.valid && bank_account_number.touched" class="help-block font-small-3">
+                                    <span class="error-message" *ngIf="bank_account_number.errors.required">Bank Account Number is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group" [ngClass]="{'has-error': !confirm_bank_account_number.valid && confirm_bank_account_number.touched }">
+                                <label for="emailAddress3">Confirm Bank Account Number
+                                    <i class="fa fa-check-circle info" placement="top" title="Bank account verified with Plaid" ngbTooltip="Bank account verified with Plaid"
+                                        *ngIf="model.bank_account.bank_account_verified"></i>
+                                </label>
+                                <i class="fa fa-question-circle" [ngbPopover]="popContent" triggers="mouseenter:mouseleave" popoverPlacement="top"></i>
+                                <input type="tel" class="form-control" id="confirm_bank_account_number" placeholder="Confirm your bank account number" tabindex="4" [(ngModel)]="model.bank_account.confirm_bank_account_number" #confirm_bank_account_number="ngModel" name="confirm_bank_account_number"
+                                    required NumbersOnly matchValidator [compare-with]="'bank_account_number'" [avoid-copy-paste]="true" maxlength="17" [readonly]="model.bank_account.bank_account_verified">
+                                <div *ngIf="!confirm_bank_account_number.valid && confirm_bank_account_number.touched" class="help-block font-small-3">
+                                    <span class="error-message" *ngIf="!confirm_bank_account_number.valid">Bank Account Number doesn't match</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Not now</button>
+        <button type="button" class="btn btn-lg btn-success btn-darken-2" (click)="submitRefi(refiForm)" [disabled]="!btnEnabled">Refinance Now</button>
+    </div>
+</ng-template>
+
+<app-payment-transfer-form-modal #paymentTransferFormModal></app-payment-transfer-form-modal>
+<ng-template #popContent><img src="assets/images/check_color.jpg" class="popover-check" /></ng-template>
+
+<ng-template #eConsentPreview size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      Consent To Eletronic Transactions and Disclosures
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div>
+      <app-pdf-viewer #pdfViewerPN [src]="eConsentB64Img" class="w-100"></app-pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

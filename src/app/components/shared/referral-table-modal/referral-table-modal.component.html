@@ -1,0 +1,73 @@
+<ng-template #referralTableModal size="lg" let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4>Referrals Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-3 col-md-3"></div>
+            <div class="col-lg-6 col-md-6 ">
+                <div class="container">
+                    <iframe   class="video" [src]='safeURL' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3"></div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card text-xs-center">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <h4 class="card-title info">5 Referrals Per Month</h4>
+                            <p class="card-text">$50/Person</p>
+                            <p class="card-text">$50/Bonus</p>
+                            <p class="card-text">$300/Total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card text-xs-center">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <h4 class="card-title info">10 Referrals Per Month</h4>
+                            <p class="card-text">$50/Person</p>
+                            <p class="card-text">$100/Bonus</p>
+                            <p class="card-text">$600/Total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card text-xs-center">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <h4 class="card-title info">15 Referrals Per Month</h4>
+                            <p class="card-text">$50/Person</p>
+                            <p class="card-text">$200/Bonus</p>
+                            <p class="card-text">$950/Total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card text-xs-center">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <h4 class="card-title info">20 Referrals Per Month</h4>
+                            <p class="card-text">$50/Person</p>
+                            <p class="card-text">$400/Bonus</p>
+                            <p class="card-text">$1400/Total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>

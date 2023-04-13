@@ -1,0 +1,18 @@
+<form class="form-horizontal">
+    <app-pinwheel-plugin #openPinwheelComponent *ngIf="vendor == 'pinwheel'"
+        (pinwheelPluginCallback)="pinwheelPluginCallback($event)" [allotmentDocument]="documentData" [step]="step"
+        [setupAllotmentEnabled]="setupAllotmentModeOnly" [centerContent]="true" [alertToConnect]="alertToConnect"
+        (connectionEvent)="onConnectionEvent($event)">
+    </app-pinwheel-plugin>
+    <app-argyle-plugin #openArgyleComponent *ngIf="vendor == 'argyle'"
+        (argylePluginCallback)="argylePluginCallback($event)" [documentData]="documentData" [step]="step"
+        [redirectNextStep]="redirectNextStep" [setupAllotmentModeOnly]="setupAllotmentModeOnly" [center-content]="true"
+        [retired-data]="retiredData" [alertToConnect]="alertToConnect" (connectionEvent)="onConnectionEvent($event)"
+        (hasArgyleConnectionEvent)="onHasArgyleConnection($event)" (hasArgyleConnected)="onHasArgyleConnected($event)">
+    </app-argyle-plugin>
+    <app-atomic-plugin #openAtomicComponent *ngIf="vendor == 'atomic'"
+        (atomicPluginCallback)="atomicPluginCallback($event)" [documentData]="documentData" [step]="step"
+        [redirectNextStep]="redirectNextStep" [setupAllotmentModeOnly]="setupAllotmentModeOnly" [center-content]="true"
+        [alertToConnect]="alertToConnect">
+    </app-atomic-plugin>
+</form>

@@ -1,0 +1,56 @@
+<div class="col-12 mt-2">
+  <div class="card">
+    <div class="card-header bg-blue-grey bg-lighten-5">
+      <h4 class="cart-title blue-grey darken-1">
+        Change Employer or Retirement Status
+      </h4>
+    </div>
+    <div class="card-content">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <fieldset class="form-group">
+              <label for="basicInput">Employer or Retirement Status </label>
+              <input type="text" class="form-control" id="employer" autofocus #employer="ngbTypeahead" name="employer"
+                [editable]="false" placeholder="Enter your employer's name" tabindex="7" data-hj-whitelist
+                [(ngModel)]="selectedEmployer" [ngbTypeahead]="search" [inputFormatter]="formatter"
+                [resultFormatter]="formatter" (click)="click$.next($any($event).target.value)"
+                (selectItem)="changeEmployer($event)">
+              <div *ngIf="!selectedEmployer" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Select an Employer</span>
+              </div>
+            </fieldset>
+            <h6 style="color: red;">Please Call Us at 800-316-8507 If You Do Not See Your Employer</h6>
+          </div>
+          <div class="col-md-12" *ngIf="census">
+            <fieldset class="form-group">
+              <label for="customer_employee_id">Employee ID</label>
+              <input id="customer_employee_id" name="customer_employee_id"
+                [(ngModel)]="data_model.currentInfo.customerEmployeeId" class="form-control"
+                placeholder="Enter a new Employee Id" required AlphanumericOnly>
+              <div *ngIf="!data_model.currentInfo.customerEmployeeId" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Enter a new Employee ID</span>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <fieldset class="form-group">
+              <label for="paymentType">Payment Method</label>
+              <select *ngIf="sameEmployer" id="paymentType" name="paymentType" class="form-control" required
+                [(ngModel)]="paymentType" (change)="onChangePaymentType($event.target.value)">
+                <option *ngFor="let item of paymentListAvailable" [value]="item.name">{{item.name}}</option>
+              </select>
+              <select *ngIf="!sameEmployer" id="paymentType" name="paymentType" class="form-control" required
+                [(ngModel)]="data_model.currentInfo.paymentType" disabled>
+                <option [value]="data_model.currentInfo.paymentType">{{data_model.currentInfo.paymentType}}</option>
+              </select>
+              <div *ngIf="!data_model.currentInfo.paymentType" class="help-block font-small-3 m-t-5">
+                <span class="error-message">*Select a payment method</span>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

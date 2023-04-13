@@ -1,0 +1,108 @@
+<ng-template #importContactsModal let-c="close" let-d="dismiss">
+
+  <div class="modal-body p-30">
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div>
+        <section class="col-xl-12 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+          <div class="collapse in">
+            <div>
+              <form class="form-horizontal">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h6 class="text-muted text-xs-center font-small-3 pt-2">
+                      <span>Select the source to import contacts</span></h6>
+                  </div>
+                </div>
+                <div>
+                  <!--
+                    <div class="row m-t-10">
+                    <div class="col-xs-12">
+                      <button type="button" class="btn btn-google  btn-block" (click)="importGoogle()">
+                        <i class="fa fa-google m-r-10"></i> Get contacts from Google</button>
+                    </div>
+                  </div>
+                  !-->
+                  <div class="row m-t-10">
+                    <div class="col-xs-12">
+                      <button type="button" class="btn btn-user  btn-block" (click)="importManually()">
+                        <img src="assets/images/icons/user.png" class="import-contacts-modal-icon" /> Import
+                        Manually</button>
+                    </div>
+                  </div>
+                  <div class="row m-t-10">
+                    <div class="col-xs-12">
+                      <button type="button" class="btn btn-microsoft  btn-block" (click)="importMicrosoft()">
+                        <img src="assets/images/icons/microsoft.png" class="import-contacts-modal-icon" /> Get contacts
+                        from
+                        Microsoft Outlook</button>
+                    </div>
+                  </div>
+                  <!--
+                    <div class="row m-t-10">
+                    <div class="col-xs-12">
+                      <button type="button" class="btn btn-linkedin  btn-block" (click)="importLinkedin()">
+                        <i class="fa fa-linkedin m-r-10"></i> Get contacts from Linkedin</button>
+                    </div>
+                  </div>
+                  !-->
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        <div *ngIf="import_manually">
+          <div>&nbsp;&nbsp;</div>
+          <textarea id="text_area_manual_contacts" class="form-control input-sm" placeholder=""
+            [(ngModel)]="manual_contacts" name="manual_contacts" required rows="5" cols="120" wrap="soft"></textarea>
+        </div>
+        <div *ngIf="hasNewLeads()">
+          <div>&nbsp;&nbsp;</div>
+          <input placeholder="Search" [(ngModel)]="this.search_text" maxlength="30" class="form-control input-sm"
+            (keyup)="onKeyUpSearchText($event)">
+          <div *ngIf="this.total_pages > 0">
+            <div>&nbsp;&nbsp;</div>
+            <button type="button" class="fa fa-check" (click)="checkAllFilteredLeads()">&nbsp;Check
+              All</button>
+            <div *ngFor="let lead of this.filtered_leads | paginate: { id: 'parameters-pag' , itemsPerPage:
+              this.quantity_per_page, currentPage: this.current_page }">
+              <div class="container-fluid col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 import-contacts-modal-card">
+                <div class="row-fluid">
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <img class="import-contacts-modal-photo" [src]="this.lead.photo"></div>
+                  <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    <div class="short-div import-contacts-modal-name"> {{this.lead.name}}</div>
+                    <div class="short-div import-contacts-modal-email"> {{this.lead.email}}<div
+                        *ngIf="getElementIsNotEmpty(this.lead.phone)">
+                        ({{this.lead.phone}})</div>
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <input type="checkbox" class="import-contacts-modal-checkbox" [disabled]="this.lead.added"
+                      [(ngModel)]="this.lead.to_add">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-xs-right">
+              <div class="col-12">
+                <pagination-controls id="parameters-pag" (pageChange)="this.current_page = $event" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click');closeModal()">Close</button>
+    <button type="button" class="btn btn-md btn-orange" [disabled]="!canEnableImportContactsButton()"
+      (click)="importContacts()">Import contacts</button>
+  </div>
+
+</ng-template>

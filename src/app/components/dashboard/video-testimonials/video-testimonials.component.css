@@ -1,0 +1,39 @@
+.video-testimonial-default {
+  color: #504865;
+  font-weight: bold;
+  background-color: white;
+  text-align: center;
+}
+
+.video-testimonial-orange {
+  color: #fa6300;
+  font-weight: bold;
+}
+
+.video-testimonial-title {
+  font-size: xx-large;
+}
+
+.video-testimonial-title .row {
+  text-align: center;
+}
+
+.video-testimonial-back {
+  text-align: left;
+}
+
+#btnUpload {
+  background-color: #fa6300;
+  color: #fff;
+  font-weight: bold;
+}
+
+#btnContestRules {
+  background-color: #fa6300;
+  color: #504865;
+  font-weight: bold;
+}
+
+.lnk-rules{
+  font-weight: normal;
+}

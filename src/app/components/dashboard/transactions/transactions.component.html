@@ -1,0 +1,131 @@
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-header row">
+      <div class="content-header-left col-md-6 col-xs-12 mb-2">
+        <h3 class="content-header-title mb-0">Transactions</h3>
+        <div class="row breadcrumbs-top">
+          <div class="breadcrumb-wrapper col-xs-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a [routerLink]="['/dashboard']">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <span>Transactions</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-body">
+      <div class="row" *ngIf="loanStatus == 1">
+        <div class="col-xs-12">
+          <div class="card card-responsive bg-white">
+            <div class="card-body">
+              <div class="card-block">
+                <form class="form-horizontal">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th class="text-xs-center">Post Date</th>
+                              <th class="text-xs-center">Process Date</th>
+                              <th class="text-xs-center">Type</th>
+                              <th class="text-xs-center">Amount</th>
+                              <th class="text-xs-center">Principal Paid</th>
+                              <th class="text-xs-center">Interest Paid</th>
+                              <th class="text-xs-center">Late Fee</th>
+                              <th class="text-xs-center">Principal Balance</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of transactions">
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                {{item.actual_payment_post_date | date:'MM/dd/yy'}}</td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                {{item.process_date | date:'MM/dd/yy'}}</td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">{{item.payment_type}}</td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                {{item.actual_payment_amount | currency}}</td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                <span *ngIf="item.type !== 3">{{item.actual_principal_payment_amount | currency}}</span>
+                                <span *ngIf="item.type === 3">-</span>
+                              </td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                <span *ngIf="item.type !== 3">{{item.actual_interest_payment_amount | currency}}</span>
+                                <span *ngIf="item.type === 3">-</span>
+                              </td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                <span *ngIf="item.type !== 3">{{item.actual_fee | currency}}</span>
+                                <span *ngIf="item.type === 3">-</span>
+                              </td>
+                              <td class="text-xs-center" [ngClass]="{'row_warning': item.type === 2 || item.type === 3}">
+                                <span *ngIf="item.type !== 3">{{item.outstanding_principal_balance | currency}}</span>
+                                <span *ngIf="item.type === 3">-</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+
+                      <div class="row p-l-15 p-r-15">
+                        <div class="col-12">
+                          <p class="m-t-15 m-b-5 font-weight-bold">Total</p>
+                          <hr class="m-t-0">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-12">
+                          <fieldset class="form-group m-b-0">
+                            <label for="basicInput" class="blue-grey lighten-1">Total paid:</label>
+                            <span> {{total.total_amount | currency}}</span>
+                          </fieldset>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12">
+                          <fieldset class="form-group m-b-0">
+                            <label for="basicInput" class="blue-grey lighten-1">Total principal paid:</label>
+                            <span> {{total.principal_amount | currency}}</span>
+                          </fieldset>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12">
+                          <fieldset class="form-group m-b-0">
+                            <label for="basicInput" class="blue-grey lighten-1">Total interest paid:</label>
+                            <span> {{total.interest_amount | currency}}</span>
+                          </fieldset>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12">
+                          <fieldset class="form-group m-b-0">
+                            <label for="basicInput" class="blue-grey lighten-1">Outstanding Balance:</label>
+                            <span> {{total.outstanding_balance | currency}}</span>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="loanStatus == 0">
+        <div class="col-xs-12">
+          <p>Once your loan is booked your payment schedule will appear here. This process may take 1-2 business days.</p>
+        </div>
+      </div>
+      <div class="row p-l-15 p-r-15">
+        <div class="col-12">
+          <hr class="m-t-0">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <a [routerLink]="['/dashboard']" class="btn btn-secondary m-l-10"><i class="fa fa-angle-double-left"></i> Back to dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

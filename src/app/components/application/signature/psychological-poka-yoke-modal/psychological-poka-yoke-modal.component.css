@@ -1,0 +1,21 @@
+.card,
+.modal-content {
+  border-radius: 3px !important;
+}
+
+.card-title-poka-yoke {
+  display: block;
+  padding: 4%;
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

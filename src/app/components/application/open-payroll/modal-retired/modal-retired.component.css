@@ -1,0 +1,6 @@
+.cant-connect-text {
+    cursor: pointer !important;
+    text-decoration: underline !important;
+    color: #41a9d6 !important;
+    transition: opacity 0.2s ease !important;
+}

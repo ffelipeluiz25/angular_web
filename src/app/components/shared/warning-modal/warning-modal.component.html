@@ -1,0 +1,15 @@
+<ng-template #warningModal size="lg" let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <i class="fa fa-warning warning f-20 p-t-5 p-r-10"></i>
+    <h4 class="p-t-5">{{this.title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div [innerHTML]="this.message"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

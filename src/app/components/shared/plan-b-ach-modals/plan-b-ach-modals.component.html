@@ -1,0 +1,63 @@
+<ng-template #planbBankAccountModal>
+  <div class="card card-modal" id="main-card-modal">
+    <div class="card-content container">
+      <div class="row f-12-mobile">
+        <h5 class="card-title-poka-yoke">
+          <b>If you would you like to be eligible to apply for a refinance loan sooner, which may include higher loan
+            amounts, register a back up payment method in the event of a failed payment.
+            <br>
+            <br>
+            <u>We can use your bank
+              account
+              already on file.</u></b>
+        </h5>
+      </div>
+      <div class="row f-12-mobile">
+        <div class="btn-group">
+          <div>
+            <button type="button" class="btn btn-success m-t-10" (click)="onConfirmUseBankAccount()">
+              I agree
+            </button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-warning m-t-10" (click)="onDisagreeUseBankAccount()">
+              No thanks
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #planbBankDebitCardAgreeModal>
+  <div class="card card-modal" id="main-card-modal">
+    <div class="card-content container">
+      <div class="row f-12-mobile">
+        <h5 class="card-title-poka-yoke">
+          <b>In the event <u>backup payment fails</u>, we can use your <u>bank account already on file</u> to make sure
+            you
+            do not lose
+            early refinance eligibility.</b>
+        </h5>
+        <div class="col-12 col-centered">
+          <h5 class="text-center"><b>Do you agree?</b></h5>
+        </div>
+      </div>
+      <div class="row f-12-mobile">
+        <div class="btn-group">
+          <div class="col-md-5">
+            <button type="button" class="btn btn-success block m-t-10" (click)="onConfirmUseBankIfDebitFail()">
+              I agree
+            </button>
+          </div>
+          <div class="col-md-5">
+            <button type="button" class="btn btn-warning block m-t-10" (click)="onDisagreeUseBankIfDebitFail()">
+              No thanks
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

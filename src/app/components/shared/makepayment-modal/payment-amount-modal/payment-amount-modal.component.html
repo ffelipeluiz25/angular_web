@@ -1,0 +1,78 @@
+<ng-template #PaymentAmountModal>
+  <div class="modal-header">
+    <h4>Make a payment - One Time Debit Card</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card-content container">
+      <div class="card-body p-t-10 p-b-5" *ngIf="!agreePayment">
+        <div class="row f-12-mobile">
+          <div class="col-md-12">
+            <fieldset class="form-group m-b-0">
+              <label for="basicInput" class="blue-grey lighten-1">Payment Amount:</label>
+              <input id="payment_amount" name="payment_amount" [(ngModel)]="paymentAmount" type="text" currencyMask
+                placeholder="{{paymentAmount}}" class="form-control" maxlength="11" />
+            </fieldset>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-success block m-t-10" (click)="onChangePaymentAgreement(true)">
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-t-10 p-b-5" *ngIf="agreePayment">
+        <div class="row f-12-mobile">
+          <div class="col-md-12">
+            <h4>
+              <fieldset class="form-group m-b-0" id="payment_amount">
+                <label for="basicInput" class="blue-grey lighten-1">Payment Amount:</label>
+                <span>{{ paymentAmount | currency:'$':'symbol':'2.2'}}</span>
+              </fieldset>
+            </h4>
+          </div>
+          <div class="col-md-12">
+            <fieldset class="form-group m-b-0" id="pay_day">
+              <h4>
+                <label for="basicInput" class="blue-grey lighten-1">Pay day:</label>
+                <span> {{ today | date: 'MM/dd/yyyy' }} </span>
+              </h4>
+            </fieldset>
+          </div>
+        </div>
+        <div class="row f-12-mobile">
+          <div class="btn-group">
+            <div class="col-md-6">
+              <button type="button" class="btn btn-danger block m-t-10" (click)="close()">
+                Cancel Payment
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-warning block m-t-10" (click)="onChangePaymentAgreement(false)">
+                Edit amount
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" *ngIf="agreePayment">
+    <button type="button" class="btn btn-success block m-t-10" (click)="save()">
+      Confirm
+    </button>
+  </div>
+  <div class="modal-footer text-right" *ngIf="!agreePayment">
+    <button type="button" class="btn grey btn-outline-secondary" (click)="close()">
+      Cancel Payment
+    </button>
+  </div>
+</ng-template>
+
+<app-paynearme-modal #PaynearmeModalComponent [dataModel]="model" (success)="embeddedIsSuccess($event)">
+</app-paynearme-modal>
+<app-repay-modal #RepayModalComponent [dataModel]="model" (success)="embeddedIsSuccess($event)"></app-repay-modal>
